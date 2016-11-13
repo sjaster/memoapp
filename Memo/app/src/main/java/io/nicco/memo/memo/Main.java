@@ -1,9 +1,9 @@
 package io.nicco.memo.memo;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
 import android.os.Bundle;
 
-public class Main extends AppCompatActivity {
+public class Main extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
