@@ -11,7 +11,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:elevation="0dp">
 
         <ImageView
             android:layout_width="match_parent"
@@ -33,30 +34,96 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:id="@+id/footer"
-        android:layout_height="wrap_content"
+        android:id="@+id/ftr"
+        android:layout_height="@dimen/ftr_height"
         android:filterTouchesWhenObscured="false"
-        android:background="@color/light">
+        android:background="@color/light"
+        android:elevation="2dp">
 
-        <Button
-            android:text="List"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/btn_l"
-            android:layout_weight="1" />
+        <RelativeLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/ftr_l">
 
-        <Button
-            android:text="New"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/btn_c"
-            android:layout_weight="1" />
+            <ImageView
+                android:layout_width="@dimen/ftr_icon_size"
+                android:layout_height="@dimen/ftr_icon_size"
+                app:srcCompat="@drawable/icon_list"
+                android:id="@+id/ftr_img_l"
+                android:adjustViewBounds="false"
+                android:layout_centerInParent="false"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp" />
 
-        <Button
-            android:text="Settings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/btn_r"
-            android:layout_weight="1" />
+            <TextView
+                android:text="@string/menu_txt_l"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ftr_txt_l"
+                android:textAlignment="center"
+                android:layout_below="@+id/ftr_img_l"
+                android:layout_centerHorizontal="true" />
+
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/ftr_c">
+
+            <ImageView
+                android:layout_width="@dimen/ftr_icon_size"
+                android:layout_height="@dimen/ftr_icon_size"
+                app:srcCompat="@drawable/icon_plus"
+                android:id="@+id/ftr_img_c"
+                android:adjustViewBounds="false"
+                android:layout_centerInParent="false"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp" />
+
+            <TextView
+                android:text="@string/menu_txt_c"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ftr_txt_c"
+                android:textAlignment="center"
+                android:layout_below="@+id/ftr_img_c"
+                android:layout_centerHorizontal="true" />
+
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/ftr_r">
+
+            <ImageView
+                android:layout_width="@dimen/ftr_icon_size"
+                android:layout_height="@dimen/ftr_icon_size"
+                app:srcCompat="@drawable/icon_cog"
+                android:id="@+id/ftr_img_r"
+                android:adjustViewBounds="false"
+                android:layout_centerInParent="false"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp" />
+
+            <TextView
+                android:text="@string/menu_txt_r"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ftr_txt_r"
+                android:textAlignment="center"
+                android:layout_below="@+id/ftr_img_r"
+                android:layout_centerHorizontal="true" />
+
+
+        </RelativeLayout>
+
     </LinearLayout>
 </LinearLayout>
