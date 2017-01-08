@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -22,6 +23,7 @@ public class Main extends FragmentActivity {
     public ArrayList<ImageView> menu_icons = new ArrayList<>();
 
     FragmentPagerAdapter adapterViewPager;
+    ViewPager vpPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,16 +53,35 @@ public class Main extends FragmentActivity {
             curLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.i("Clicked", view.toString());
+                    int cur = menu_items.indexOf(view);
+                    vpPager.setCurrentItem(cur);
+                    // setActiveMenuItem(cur);
                 }
             });
         }
 
-        ViewPager vpPager = (ViewPager) findViewById(R.id.pager);
+        vpPager = (ViewPager) findViewById(R.id.pager);
         adapterViewPager = new PagerAdapter(getSupportFragmentManager(), menu_names);
         vpPager.setAdapter(adapterViewPager);
 
 
+    }
+
+    public int toPixel(int dp) {
+        DisplayMetrics metrics;
+        metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        return (dp * metrics.densityDpi) / DisplayMetrics.DENSITY_DEFAULT;
+    }
+
+    public void setActiveMenuItem(int n) {
+        int pxDefault = toPixel(R.dimen.ftr_icon_size);
+        int pxActive = toPixel(R.dimen.ftr_icon_size_active);
+        LinearLayout.LayoutParams defaultSize = new LinearLayout.LayoutParams(pxDefault, pxDefault);
+        for (ImageView tmp : menu_icons) {
+            tmp.setLayoutParams(defaultSize);
+        }
+        menu_icons.get(n).setLayoutParams(new LinearLayout.LayoutParams(pxActive, pxActive));
     }
 
     public static class PagerAdapter extends FragmentPagerAdapter {
@@ -84,6 +105,7 @@ public class Main extends FragmentActivity {
             Fragment frag = null;
 
             try {
+                Log.i("Getting:", PACKAGE_NAME + ".frag_" + menu.get(position));
                 frag = (Fragment) (Class.forName(PACKAGE_NAME + ".frag_" + menu.get(position)).newInstance());
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();

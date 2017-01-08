@@ -10,7 +10,7 @@ public class frag_settings extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_list, container, false);
+        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_settings, container, false);
         return rootView;
     }
 }
