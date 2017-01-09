@@ -3,6 +3,7 @@
 
     <string name="bg">Background</string>
 
+    <!-- MENU -->
     <string name="menu_txt_list">List</string>
     <string name="menu_txt_settings">Settings</string>
 
@@ -10,7 +11,9 @@
     <string name="menu_txt_photo">Photo</string>
     <string name="menu_txt_voice">Voice</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    <!-- BUTTONS -->
+    <string name="btn_save">Save</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_Close">Close</string>
+    
 </resources>
