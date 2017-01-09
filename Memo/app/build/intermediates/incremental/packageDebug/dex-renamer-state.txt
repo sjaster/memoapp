@@ -1,0 +1,7 @@
+#Sun Jan 08 16:13:55 CET 2017
+base.0=/Users/nicco/Documents/git/memoapp/Memo/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_40f76a9b8975cddcb60dc49383d6b7360d913d91
+renamed.1=classes.dex
+renamed.0=classes2.dex
+file.1=/Users/nicco/Documents/git/memoapp/Memo/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_515b4d9c3e045cfc8fac0b415edbf168b1dcca76/classes.dex
+base.1=/Users/nicco/Documents/git/memoapp/Memo/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_515b4d9c3e045cfc8fac0b415edbf168b1dcca76
+file.0=/Users/nicco/Documents/git/memoapp/Memo/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_40f76a9b8975cddcb60dc49383d6b7360d913d91/classes.dex
