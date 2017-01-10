@@ -9,11 +9,11 @@ import android.content.Context;
 public class NoteText extends Note {
 
     public NoteText(Context c) {
-        super(c, super.TYPE_TEXT);
+        super(c, TYPE_TEXT);
     }
 
     public void save (String msg){
         updateTime();
-        u.save();
+        u.save(c, id, "msg", msg);
     }
 }

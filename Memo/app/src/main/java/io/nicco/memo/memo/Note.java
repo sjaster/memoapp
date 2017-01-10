@@ -18,8 +18,8 @@ public class Note {
     public int type;
     public String id;
 
-    private Utils u = new Utils();
-    private Context c;
+    public Utils u = new Utils();
+    public Context c;
 
     public Note(Context c, int t) {
         this.c = c;
