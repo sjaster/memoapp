@@ -17,6 +17,7 @@ public class frag_list extends Fragment {
     private EditText etFile;
     private Button btn_w;
     private Button btn_r;
+    private NoteText nt;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -24,6 +25,7 @@ public class frag_list extends Fragment {
         final Context c = getContext();
         final Utils u = new Utils();
         final String id = u.genRandId();
+        nt = new NoteText(getContext());
 
         tvOut = (TextView) v.findViewById(R.id.tvOut);
         etIn = (EditText) v.findViewById(R.id.etIn);
@@ -34,17 +36,24 @@ public class frag_list extends Fragment {
         btn_r.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tvOut.setText(u.read(c, id, etFile.getText().toString()));
+                tvOut.setText(u.read(c, nt.id, etFile.getText().toString()));
             }
         });
 
         btn_w.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                u.save(c, id, etFile.getText().toString(), etIn.getText().toString());
+                u.save(c, nt.id, etFile.getText().toString(), etIn.getText().toString());
             }
         });
 
         return v;
+    }
+
+    @Override
+    public void onResume(){
+        tvOut.setText(nt.id);
+
+        super.onResume();
     }
 }

@@ -41,7 +41,6 @@ public class Utils {
             Log.i("File", String.valueOf(f.getAbsoluteFile()));
             bw = new BufferedWriter(fw);
             bw.write(msg);
-
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -66,9 +65,23 @@ public class Utils {
                 sb.append("\n");
             }
         } finally {
-            
         }
 
         return sb.toString();
+    }
+
+    public void rm(String path) {
+        try {
+            rm_util(new File(path));
+        } finally {
+
+        }
+    }
+
+    private void rm_util(File f) {
+        if (f.isDirectory())
+            for (File child : f.listFiles())
+                rm_util(child);
+        f.delete();
     }
 }
