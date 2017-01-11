@@ -3,12 +3,9 @@ package io.nicco.memo.memo;
 import android.content.Context;
 import android.util.Log;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Random;
 
@@ -32,43 +29,56 @@ public class Utils {
         return sb.toString();
     }
 
-    public void write(Context c, String file, byte[] msg) {
-        try {
-            File f = new File(c.getFilesDir(), file);
-            f.mkdirs();
+    public void save(Context c, String id, String file, String msg) {
+        File dir = new File(c.getFilesDir(), id);
+        dir.mkdirs();
+        File f = new File(dir, file);
 
-            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(f.getAbsolutePath()));
-            bos.write(msg);
-            bos.flush();
-            bos.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        BufferedWriter bw = null;
+        FileWriter fw = null;
+
+        try {
+            fw = new FileWriter(f.getAbsoluteFile());
+            Log.i("File", String.valueOf(f.getAbsoluteFile()));
+            bw = new BufferedWriter(fw);
+            bw.write(msg);
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (bw != null)
+                    bw.close();
+                if (fw != null)
+                    fw.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         }
+
     }
 
-    public byte[] read(Context c, String file) {
-        File f = new File(c.getFilesDir(), file);
-        byte[] ret = new byte[(int) f.length()];
+    public String read(Context c, String id, String file) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("");
+
         try {
-            BufferedInputStream bis = new BufferedInputStream(new FileInputStream(f.getAbsolutePath()));
-            //FileInputStream fis = new FileInputStream(f.getAbsolutePath());
-            //fis.read(ret);
-            bis.read(ret);
-        } catch (IOException e) {
-            e.printStackTrace();
+            File[] files = new File(c.getFilesDir().toString() + "/" + id).listFiles();
+            if (files != null)
+                for (File aFile : files) {
+                    sb.append(aFile.toString());
+                    sb.append("\n");
+                }
+        } finally {
         }
 
-        Log.i("ReadBytes", new String(ret));
-
-        return ret;
+        return sb.toString();
     }
 
     public void rm(String path) {
         try {
             rm_util(new File(path));
         } finally {
+
         }
     }
 

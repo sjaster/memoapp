@@ -1,12 +1,10 @@
 package io.nicco.memo.memo;
 
 import android.content.Context;
-import android.os.Build;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 /**
@@ -40,7 +38,6 @@ public class Note {
         type = t;
         id = newId;
         updateTime();
-        load();
     }
 
     public void save() {
@@ -54,9 +51,7 @@ public class Note {
             main.put("id", id);
             main.put("like", like);
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                u.write(c, id + "/" + MAIN_FILE, main.toString().getBytes(StandardCharsets.UTF_8));
-            }
+            u.save(c, id, MAIN_FILE, main.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -64,10 +59,8 @@ public class Note {
 
     public void load() {
         try {
-            String jsonString = u.read(c, id + "/" + MAIN_FILE).toString();
+            String jsonString = u.read(c, id, MAIN_FILE);
             JSONObject main = new JSONObject(jsonString);
-
-            //Log.i("JSON String", jsonString);
 
             title = main.getString("title");
             datetime = main.getInt("datetime");
@@ -79,12 +72,8 @@ public class Note {
         }
     }
 
-    public void saveExtra(String file, byte[] b) {
-        u.write(c, id + "" + file, b);
-    }
-
-    public byte[] loadExtra(String file) {
-        return u.read(c, id + "" + file);
+    public void saveExtra(String file, String msg) {
+        u.save(c, id, file, msg);
     }
 
     public void updateTime() {

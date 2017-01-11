@@ -1,9 +1,9 @@
 package io.nicco.memo.memo;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SimpleCursorAdapter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,37 +22,24 @@ public class frag_list extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup v = (ViewGroup) inflater.inflate(R.layout.fragment_list, container, false);
-
+        final Context c = getContext();
+        final Utils u = new Utils();
+        final String id = u.genRandId();
         nt = new NoteText(getContext());
         lv = (ListView) v.findViewById(R.id.frag_list_list);
 
-        return v;
-    }
-
-    @Override
-    public void onResume() {
-        load_list();
-        super.onResume();
-    }
-
-    private void load_list() {
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, read_notes());
-        lv.setAdapter(arrayAdapter);
-    }
-
-    private ArrayList<String> read_notes() {
-        ArrayList<String> notes = new ArrayList<>();
+        ArrayList<String> folders = new ArrayList<>();
         File f = new File(String.valueOf(getContext().getFilesDir()));
         File[] files = f.listFiles();
         for (File inFile : files) {
             if (inFile.isDirectory() && inFile.getName().length() == 32) {
-                Log.i("Path", inFile.getAbsolutePath());
-                String cur = inFile.getName();
-                NoteText nt = new NoteText(getContext(), cur);
-                //Log.i("Title", nt.toString());
-                notes.add(inFile.getName());
+                folders.add(inFile.getName());
             }
         }
-        return notes;
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, folders);
+        lv.setAdapter(arrayAdapter);
+
+        return v;
     }
 }
