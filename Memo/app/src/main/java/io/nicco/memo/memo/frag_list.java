@@ -8,10 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -35,13 +32,12 @@ public class frag_list extends Fragment {
         File f = new File(String.valueOf(getContext().getFilesDir()));
         File[] files = f.listFiles();
         for (File inFile : files) {
-            if (inFile.isDirectory() && inFile.length()==32) {
+            if (inFile.isDirectory() && inFile.getName().length() == 32) {
                 folders.add(inFile.getName());
             }
         }
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String> (getContext(),android.R.layout.simple_list_item_1,folders);
-
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, folders);
         lv.setAdapter(arrayAdapter);
 
         return v;

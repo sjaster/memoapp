@@ -37,14 +37,17 @@ public class frag_text extends Fragment {
         btn_c.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                et_body.setText("");
+                et_title.setText("");
             }
         });
 
         btn_s.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                nt.text = et_body.getText().toString();
+                nt.title = et_title.getText().toString();
+                nt.save();
             }
         });
 
