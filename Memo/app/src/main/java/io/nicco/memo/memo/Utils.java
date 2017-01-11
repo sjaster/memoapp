@@ -1,24 +1,16 @@
 package io.nicco.memo.memo;
 
-import android.content.Context;
-import android.util.Log;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Random;
 
-/**
- * Created by nicco on 10/01/2017.
- */
+class Utils {
 
-public class Utils {
-
-    public String genRandId() {
+    String genRandId() {
         // TODO Check availabilty
         int length = 32;
         Random r = new Random();
@@ -32,40 +24,33 @@ public class Utils {
         return sb.toString();
     }
 
-    public void write(Context c, String file, byte[] msg) {
+    void write(String file, byte[] msg) {
         try {
-            File f = new File(c.getFilesDir(), file);
+            File f = new File(file);
             f.mkdirs();
 
             BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(f.getAbsolutePath()));
             bos.write(msg);
             bos.flush();
             bos.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public byte[] read(Context c, String file) {
-        File f = new File(c.getFilesDir(), file);
+    byte[] read(String file) {
+        File f = new File(file);
         byte[] ret = new byte[(int) f.length()];
         try {
             BufferedInputStream bis = new BufferedInputStream(new FileInputStream(f.getAbsolutePath()));
-            //FileInputStream fis = new FileInputStream(f.getAbsolutePath());
-            //fis.read(ret);
             bis.read(ret);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        Log.i("ReadBytes", new String(ret));
-
         return ret;
     }
 
-    public void rm(String path) {
+    void rm(String path) {
         try {
             rm_util(new File(path));
         } finally {

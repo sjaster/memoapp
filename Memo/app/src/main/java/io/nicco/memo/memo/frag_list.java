@@ -2,7 +2,6 @@ package io.nicco.memo.memo;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SimpleCursorAdapter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +16,6 @@ public class frag_list extends Fragment {
 
     private ListView lv;
     private NoteText nt;
-    SimpleCursorAdapter cursorAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

@@ -1,23 +1,17 @@
 package io.nicco.memo.memo;
 
 import android.content.Context;
-import android.os.Build;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
-/**
- * Created by nicco on 10/01/2017.
- */
-
-public class Note {
-    public static final int TYPE_TEXT = 0;
-    public static final int TYPE_PHOTO = 1;
-    public static final int TYPE_AUDIO = 2;
-    public static final String MAIN_FILE = "main.json";
+class Note {
+    static final int TYPE_TEXT = 0;
+    static final int TYPE_PHOTO = 1;
+    static final int TYPE_AUDIO = 2;
+    static final String MAIN_FILE = "main.json";
 
     public String title;
     public int datetime;
@@ -25,17 +19,17 @@ public class Note {
     public String id;
     public Boolean like;
 
-    public Utils u = new Utils();
-    public Context c;
+    Utils u = new Utils();
+    Context c;
 
-    public Note(Context context, int t) {
+    Note(Context context, int t) {
         c = context;
         type = t;
         id = u.genRandId();
         updateTime();
     }
 
-    public Note(Context context, int t, String newId) {
+    Note(Context context, int t, String newId) {
         c = context;
         type = t;
         id = newId;
@@ -54,9 +48,7 @@ public class Note {
             main.put("id", id);
             main.put("like", like);
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                u.write(c, id + "/" + MAIN_FILE, main.toString().getBytes(StandardCharsets.UTF_8));
-            }
+            u.write(mk_path() + MAIN_FILE, main.toString().getBytes());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -64,10 +56,8 @@ public class Note {
 
     public void load() {
         try {
-            String jsonString = u.read(c, id + "/" + MAIN_FILE).toString();
+            String jsonString = new String(u.read(mk_path() + MAIN_FILE));
             JSONObject main = new JSONObject(jsonString);
-
-            //Log.i("JSON String", jsonString);
 
             title = main.getString("title");
             datetime = main.getInt("datetime");
@@ -79,12 +69,12 @@ public class Note {
         }
     }
 
-    public void saveExtra(String file, byte[] b) {
-        u.write(c, id + "" + file, b);
+    void saveExtra(String file, byte[] b) {
+        u.write(mk_path() + file, b);
     }
 
-    public byte[] loadExtra(String file) {
-        return u.read(c, id + "" + file);
+    byte[] loadExtra(String file) {
+        return u.read(mk_path() + file);
     }
 
     public void updateTime() {
@@ -92,7 +82,11 @@ public class Note {
     }
 
     public void delete() {
-        u.rm(this.c.getFilesDir() + "/" + this.id);
+        u.rm(c.getFilesDir() + "/" + this.id);
+    }
+
+    private String mk_path() {
+        return c.getFilesDir() + "/" + id + "/";
     }
 
 }
