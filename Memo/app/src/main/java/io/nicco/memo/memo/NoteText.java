@@ -15,11 +15,18 @@ public class NoteText extends Note {
         super(c, TYPE_TEXT);
     }
 
+    public NoteText(Context c, String id) {
+        super(c, TYPE_TEXT, id);
+        load();
+    }
+
     public void save() {
-        super.saveExtra(EXTRA_FILE, text);
+        super.saveExtra(EXTRA_FILE, text.getBytes());
         super.save();
     }
 
     public void load() {
+        text = super.loadExtra(EXTRA_FILE).toString();
+        super.load();
     }
 }
