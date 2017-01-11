@@ -6,5 +6,6 @@
     <dimen name="ftr_height">56dp</dimen>
     <dimen name="ftr_icon_size">24dp</dimen>
     <dimen name="ftr_icon_size_active">26dp</dimen>
+    <dimen name="default_padding">8dp</dimen>
 
 </resources>

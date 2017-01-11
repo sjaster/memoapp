@@ -8,17 +8,18 @@ import android.content.Context;
 
 public class NoteText extends Note {
 
+    public String EXTRA_FILE = "body.json";
+    public String text = "";
+
     public NoteText(Context c) {
         super(c, TYPE_TEXT);
     }
 
-    public void save(String msg) {
-        updateTime();
-        u.save(c, id, "msg", msg);
+    public void save() {
+        super.saveExtra(EXTRA_FILE, text);
+        super.save();
     }
 
-    public String[] load() {
-        String[] ret = {"test", "test"};
-        return ret;
+    public void load() {
     }
 }

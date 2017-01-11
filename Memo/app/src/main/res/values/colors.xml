@@ -11,4 +11,8 @@
     <color name="light">#efefef</color>
     <color name="dark">#000000</color>
 
+    <!--CUSTOM-->
+    <color name="custLightGrey">#efefef</color>
+    <color name="custDarkGrey">#66000000</color>
+    <color name="custWhite">#ffffff</color>
 </resources>

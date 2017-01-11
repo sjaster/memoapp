@@ -7,87 +7,42 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="@color/light">
-
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentStart="true">
-
-                <EditText
-                    android:id="@+id/frag_text_editview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:gravity="bottom"
-                    android:inputType="textMultiLine" />
-            </ScrollView>
-        </RelativeLayout>
+        android:background="@color/custLightGrey"
+        android:orientation="vertical"
+        android:padding="@dimen/default_padding">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/ftr_height"
-            android:orientation="horizontal">
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/custWhite"
+            android:orientation="vertical"
+            android:padding="16dp">
 
             <LinearLayout
-                android:id="@+id/menu_list"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/frag_text_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:hint="Title"
+                    android:textAppearance="@android:style/TextAppearance.Material.Large"
+                    android:layout_weight="1"
+                    android:layout_margin="@dimen/default_padding" />
 
                 <ImageView
-                    android:id="@+id/ftr_note_trash"
+                    android:id="@+id/frag_text_trash"
                     android:layout_width="@dimen/ftr_icon_size"
                     android:layout_height="@dimen/ftr_icon_size"
                     android:layout_gravity="center"
                     android:adjustViewBounds="false"
                     android:contentDescription="@string/btn_trash"
-                    android:src="@drawable/trash" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/menu_list"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:orientation="vertical"></LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/menu_list"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:orientation="vertical"></LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/menu_list"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:orientation="vertical"></LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/menu_list"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                    android:src="@drawable/trash"
+                    android:layout_margin="@dimen/default_padding" />
 
                 <ImageView
                     android:id="@+id/frag_text_save"
@@ -95,9 +50,27 @@
                     android:layout_height="@dimen/ftr_icon_size"
                     android:layout_gravity="center"
                     android:contentDescription="@string/btn_save"
-                    android:src="@drawable/save" />
+                    android:src="@drawable/save"
+                    android:layout_margin="@dimen/default_padding" />
             </LinearLayout>
 
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_margin="@dimen/default_padding"
+                android:id="@+id/frag_text_scrollview">
+
+                <EditText
+                    android:id="@+id/frag_text_body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:gravity="bottom"
+                    android:inputType="textMultiLine"
+                    android:textAppearance="@android:style/TextAppearance.Material.Small" />
+            </ScrollView>
         </LinearLayout>
 
 
