@@ -34,9 +34,9 @@ public class Main extends FragmentActivity {
 
         // Defining Names of the options in the bottom footer menu
         menu_names.add("list");
-        menu_names.add("note");
+        menu_names.add("text");
         menu_names.add("photo");
-        menu_names.add("voice");
+        menu_names.add("audio");
         menu_names.add("settings");
 
         // For each name in the List -> save the ImageView in menu_icons and the parent LinearLayout in menu_items
@@ -49,15 +49,21 @@ public class Main extends FragmentActivity {
             menu_items.add(curLayout);
             menu_icons.add(curImg);
 
-            // Set onlick listener for the buttons
-            curLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int cur = menu_items.indexOf(view);
-                    vpPager.setCurrentItem(cur);
-                    // setActiveMenuItem(cur);
-                }
-            });
+            Log.i("Cur", curLayout.toString());
+
+            try {
+                // Set onlick listener for the buttons
+                curLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        int cur = menu_items.indexOf(view);
+                        vpPager.setCurrentItem(cur);
+                        // setActiveMenuItem(cur);
+                    }
+                });
+            } finally {
+
+            }
         }
 
         vpPager = (ViewPager) findViewById(R.id.pager);

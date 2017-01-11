@@ -12,8 +12,13 @@ public class NoteText extends Note {
         super(c, TYPE_TEXT);
     }
 
-    public void save (String msg){
+    public void save(String msg) {
         updateTime();
         u.save(c, id, "msg", msg);
+    }
+
+    public String[] load() {
+        String[] ret = {"test", "test"};
+        return ret;
     }
 }

@@ -16,6 +16,7 @@ import java.util.Random;
 public class Utils {
 
     public String genRandId() {
+        // TODO Check availabilty
         int length = 32;
         Random r = new Random();
         StringBuilder sb = new StringBuilder();
@@ -58,12 +59,15 @@ public class Utils {
 
     public String read(Context c, String id, String file) {
         StringBuilder sb = new StringBuilder();
+        sb.append("");
+
         try {
             File[] files = new File(c.getFilesDir().toString() + "/" + id).listFiles();
-            for (File aFile : files) {
-                sb.append(aFile.toString());
-                sb.append("\n");
-            }
+            if (files != null)
+                for (File aFile : files) {
+                    sb.append(aFile.toString());
+                    sb.append("\n");
+                }
         } finally {
         }
 

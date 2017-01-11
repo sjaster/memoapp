@@ -17,6 +17,8 @@ public class frag_list extends Fragment {
     private EditText etFile;
     private Button btn_w;
     private Button btn_r;
+    private Button btn_n;
+    private Button btn_d;
     private NoteText nt;
 
     @Override
@@ -32,6 +34,8 @@ public class frag_list extends Fragment {
         etFile = (EditText) v.findViewById(R.id.etFile);
         btn_w = (Button) v.findViewById(R.id.frag_list_write);
         btn_r = (Button) v.findViewById(R.id.frag_list_read);
+        btn_n = (Button) v.findViewById(R.id.frag_list_new);
+        btn_d = (Button) v.findViewById(R.id.frag_list_delete);
 
         btn_r.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,11 +51,25 @@ public class frag_list extends Fragment {
             }
         });
 
+        btn_n.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                nt = new NoteText(getContext());
+            }
+        });
+
+        btn_d.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                nt.delete();
+            }
+        });
+
         return v;
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         tvOut.setText(nt.id);
 
         super.onResume();

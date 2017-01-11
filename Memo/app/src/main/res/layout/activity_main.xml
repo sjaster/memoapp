@@ -56,7 +56,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/menu_note"
+            android:id="@+id/menu_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -64,19 +64,19 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/ftr_img_note"
+                android:id="@+id/ftr_img_text"
                 android:layout_width="@dimen/ftr_icon_size"
                 android:layout_height="@dimen/ftr_icon_size"
                 android:layout_gravity="center"
                 android:adjustViewBounds="false"
-                android:contentDescription="@string/menu_txt_note"
+                android:contentDescription="@string/menu_txt_text"
                 android:src="@drawable/icon_file" />
 
             <TextView
-                android:id="@+id/ftr_txt_add_note"
+                android:id="@+id/ftr_txt_add_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/menu_txt_note"
+                android:text="@string/menu_txt_text"
                 android:textAlignment="center"
                 android:visibility="gone" />
         </LinearLayout>
@@ -108,7 +108,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/menu_voice"
+            android:id="@+id/menu_audio"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -116,19 +116,19 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/ftr_img_voice"
+                android:id="@+id/ftr_img_audio"
                 android:layout_width="@dimen/ftr_icon_size"
                 android:layout_height="@dimen/ftr_icon_size"
                 android:layout_gravity="center"
                 android:adjustViewBounds="false"
-                android:contentDescription="@string/menu_txt_voice"
+                android:contentDescription="@string/menu_txt_audio"
                 android:src="@drawable/icon_microphone" />
 
             <TextView
-                android:id="@+id/ftr_txt_add_voice"
+                android:id="@+id/ftr_txt_add_audio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/menu_txt_voice"
+                android:text="@string/menu_txt_audio"
                 android:textAlignment="center"
                 android:visibility="gone" />
         </LinearLayout>
