@@ -41,7 +41,7 @@
                     android:layout_gravity="center"
                     android:adjustViewBounds="false"
                     android:contentDescription="@string/btn_trash"
-                    android:src="@drawable/trash"
+                    android:src="@drawable/icn_trash"
                     android:layout_margin="@dimen/default_padding" />
 
                 <ImageView
@@ -50,7 +50,7 @@
                     android:layout_height="@dimen/ftr_icon_size"
                     android:layout_gravity="center"
                     android:contentDescription="@string/btn_save"
-                    android:src="@drawable/save"
+                    android:src="@drawable/icn_save"
                     android:layout_margin="@dimen/default_padding" />
             </LinearLayout>
 

@@ -8,4 +8,9 @@
     <dimen name="ftr_icon_size_active">26dp</dimen>
     <dimen name="default_padding">8dp</dimen>
 
+    <!--CAMERA-->
+    <dimen name="shutter_ring_width">1dp</dimen>
+    <dimen name="shutter_margin_bottom">32dp</dimen>
+    <dimen name="shutter_size">70dp</dimen>
+
 </resources>

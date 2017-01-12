@@ -15,4 +15,8 @@
     <color name="custLightGrey">#efefef</color>
     <color name="custDarkGrey">#66000000</color>
     <color name="custWhite">#ffffff</color>
+
+    <!--CAMERA-->
+    <color name="shutter_btn_ring">#ee000000</color>
+    <color name="shutter_btn_fill">#3cffffff</color>
 </resources>

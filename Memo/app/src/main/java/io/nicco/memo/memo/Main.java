@@ -39,7 +39,7 @@ public class Main extends FragmentActivity {
         menu_names.add("audio");
         menu_names.add("settings");
 
-        // For each name in the List -> save the ImageView in menu_icons and the parent LinearLayout in menu_items
+        // For each name in the List -> icn_save the ImageView in menu_icons and the parent LinearLayout in menu_items
         for (int i = 0; i < menu_names.size(); ++i) {
             String cur = menu_names.get(i); // Get the current name
             LinearLayout curLayout = (LinearLayout) findViewById(getResources().getIdentifier("menu_" + cur, "id", getPackageName())); // Get the parent linear layout of the button

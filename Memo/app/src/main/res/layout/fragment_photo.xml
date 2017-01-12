@@ -13,6 +13,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
+        <View
+            android:layout_width="@dimen/shutter_size"
+            android:layout_height="@dimen/shutter_size"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/shutter_margin_bottom"
+            android:background="@drawable/shutter_btn" />
+
     </RelativeLayout>
 
 </FrameLayout>

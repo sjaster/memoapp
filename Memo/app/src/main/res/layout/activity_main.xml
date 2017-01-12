@@ -43,7 +43,7 @@
                 android:layout_gravity="center"
                 android:adjustViewBounds="false"
                 android:contentDescription="@string/menu_txt_list"
-                android:src="@drawable/icon_list" />
+                android:src="@drawable/icn_list" />
 
             <TextView
                 android:id="@+id/ftr_txt_list"
@@ -70,7 +70,7 @@
                 android:layout_gravity="center"
                 android:adjustViewBounds="false"
                 android:contentDescription="@string/menu_txt_text"
-                android:src="@drawable/icon_file" />
+                android:src="@drawable/icn_file" />
 
             <TextView
                 android:id="@+id/ftr_txt_add_text"
@@ -96,7 +96,7 @@
                 android:layout_gravity="center"
                 android:adjustViewBounds="false"
                 android:contentDescription="@string/menu_txt_photo"
-                android:src="@drawable/icon_camera" />
+                android:src="@drawable/icn_camera" />
 
             <TextView
                 android:id="@+id/ftr_txt_add_photo"
@@ -122,7 +122,7 @@
                 android:layout_gravity="center"
                 android:adjustViewBounds="false"
                 android:contentDescription="@string/menu_txt_audio"
-                android:src="@drawable/icon_microphone" />
+                android:src="@drawable/icn_microphone" />
 
             <TextView
                 android:id="@+id/ftr_txt_add_audio"
@@ -148,7 +148,7 @@
                 android:layout_gravity="center"
                 android:adjustViewBounds="false"
                 android:contentDescription="@string/menu_txt_settings"
-                android:src="@drawable/icon_cog" />
+                android:src="@drawable/icn_cog" />
 
             <TextView
                 android:id="@+id/ftr_txt_r"
