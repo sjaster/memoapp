@@ -63,7 +63,7 @@ public class frag_audio extends Fragment {
 
         recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        recorder.setAudioEncodingBitRate(16);
+        recorder.setAudioEncodingBitRate(160000);
         recorder.setAudioSamplingRate(44100);
         recorder.setOutputFile(mFileName);
         recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
