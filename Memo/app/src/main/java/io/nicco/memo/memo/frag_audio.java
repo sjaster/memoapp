@@ -80,10 +80,13 @@ public class frag_audio extends Fragment {
         recorder.start();
     }
 
-    private void stopRecorder(){
-        recorder.stop();
-        recorder.release();
-        recorder = null;
+    private void stopRecorder() {
+        if (recorder != null) {
+            recorder.stop();
+            recorder.reset();
+            recorder.release();
+            recorder = null;
+        }
     }
 
 
@@ -101,6 +104,9 @@ public class frag_audio extends Fragment {
             @Override
             public void onClick(View v) {
                 startRecorder();
+                if (recorder != null){
+                    btn_start.setText("Recording");
+                }
             }
         });
 
@@ -113,6 +119,9 @@ public class frag_audio extends Fragment {
         btn_stop.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 stopRecorder();
+                if (recorder == null){
+                    btn_start.setText("Record");
+                }
             }
         });
         return v;
