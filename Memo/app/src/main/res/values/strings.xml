@@ -17,4 +17,10 @@
     <string name="btn_close">Close</string>
     <string name="btn_trash">Trash</string>
 
+    <!--RECORDING-->
+    <string name="record_start">Record</string>
+    <string name="record_recording">Recording...</string>
+    <string name="record_pause">Pause</string>
+    <string name="record_play">Resume</string>
+    <string name="record_stop">Stop</string>
 </resources>
