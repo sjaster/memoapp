@@ -13,4 +13,7 @@
     <dimen name="shutter_margin_bottom">32dp</dimen>
     <dimen name="shutter_size">70dp</dimen>
 
+    <!--LIST-->
+    <dimen name="icon_size">30dp</dimen>
+    <dimen name="icon_small">24dp</dimen>
 </resources>
