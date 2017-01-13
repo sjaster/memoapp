@@ -8,46 +8,39 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/frag_audio_rec"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignStart="@+id/imageView2"
-            android:layout_marginBottom="157dp"
-            android:text="@string/record_start"
-            android:textAlignment="center"
-            android:textStyle="normal|bold" />
-
-        <ImageView
-            android:id="@+id/imageView2"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/frag_audio_rec"
+            android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
-            android:layout_marginBottom="45dp"
-            android:src="@mipmap/ic_launcher" />
+            android:padding="@dimen/default_padding">
 
-        <Button
-            android:id="@+id/frag_audio_stop"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/frag_audio_pause"
-            android:layout_alignBottom="@+id/frag_audio_pause"
-            android:layout_alignParentEnd="true"
-            android:text="@string/record_stop"
-            android:textStyle="normal|bold" />
+            <Button
+                android:id="@+id/frag_audio_rec"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/record_start"
+                android:textAlignment="center"
+                android:textStyle="normal|bold" />
 
-        <Button
-            android:id="@+id/frag_audio_pause"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/frag_audio_rec"
-            android:layout_alignBottom="@+id/frag_audio_rec"
-            android:layout_centerHorizontal="true"
-            android:text="@string/record_pause"
-            android:textStyle="normal|bold" />
+            <Button
+                android:id="@+id/frag_audio_pause"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:text="@string/record_pause"
+                android:textStyle="normal|bold" />
 
+            <Button
+                android:id="@+id/frag_audio_stop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:text="@string/record_stop"
+                android:textStyle="normal|bold" />
+        </RelativeLayout>
     </RelativeLayout>
 
 </FrameLayout>

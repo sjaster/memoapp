@@ -131,11 +131,10 @@ public class frag_audio extends Fragment {
 
     @RequiresApi(Build.VERSION_CODES.N)
     private void toggle() {
-        if (playing){
+        if (playing) {
             recorder.pause();
-            btn_pause.setText(R.string.record_play);
-        }
-        else{
+            btn_pause.setText(R.string.record_resume);
+        } else {
             recorder.resume();
             btn_pause.setText(R.string.record_pause);
         }
