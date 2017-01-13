@@ -57,9 +57,7 @@ public class frag_audio extends Fragment {
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_HH-mm-ss");
         Date now = new Date();
-
-        mFileName = Environment.getExternalStorageDirectory().getAbsolutePath();
-        mFileName += "/record_"+formatter.format(now)+".3gp";
+        mFileName = getContext().getFilesDir().getAbsolutePath() + "/record_"+formatter.format(now)+".3gp";
 
         recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
