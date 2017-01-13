@@ -4,7 +4,7 @@ import android.content.Context;
 
 class NoteText extends Note {
 
-    static final String EXTRA_FILE = "body.json";
+    static final String EXTRA_FILE = "body.txt";
 
     public String text = "";
 
@@ -13,7 +13,7 @@ class NoteText extends Note {
     }
 
     NoteText(Context c, String id) {
-        super(c, TYPE_TEXT, id);
+        super(c, id);
         load();
     }
 

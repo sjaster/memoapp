@@ -1,21 +1,24 @@
 package io.nicco.memo.memo;
 
 import android.content.Context;
+import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Date;
 
+import static android.content.ContentValues.TAG;
+
 class Note {
-    static final int TYPE_TEXT = 0;
-    static final int TYPE_PHOTO = 1;
-    static final int TYPE_AUDIO = 2;
+    static final int TYPE_TEXT = 1;
+    static final int TYPE_PHOTO = 2;
+    static final int TYPE_AUDIO = 3;
     static final String MAIN_FILE = "main.json";
 
     public String title;
     public int datetime;
-    public int type;
+    public int type = 0;
     public String id;
     public Boolean like;
 
@@ -29,9 +32,8 @@ class Note {
         updateTime();
     }
 
-    Note(Context context, int t, String newId) {
+    Note(Context context, String newId) {
         c = context;
-        type = t;
         id = newId;
         updateTime();
         load();
@@ -41,6 +43,16 @@ class Note {
         try {
             updateTime();
             JSONObject main = new JSONObject();
+
+            if (type == 0 || id == null) {
+                Log.e(TAG, "Incorrect Note state");
+                return;
+            }
+
+            if (like == null)
+                like = false;
+            if (title == null)
+                title = "";
 
             main.put("title", title);
             main.put("datetime", datetime);
@@ -87,6 +99,10 @@ class Note {
 
     private String mk_path() {
         return c.getFilesDir() + "/" + id + "/";
+    }
+
+    public String toString() {
+        return title + " " + String.valueOf(datetime);
     }
 
 }

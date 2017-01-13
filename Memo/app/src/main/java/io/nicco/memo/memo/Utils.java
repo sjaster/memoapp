@@ -26,8 +26,10 @@ class Utils {
 
     void write(String file, byte[] msg) {
         try {
-            File f = new File(file);
+            String[] url = splitURL(file);
+            File f = new File(url[0]);
             f.mkdirs();
+            f = new File(url[0], url[1]);
 
             BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(f.getAbsolutePath()));
             bos.write(msg);
@@ -62,5 +64,13 @@ class Utils {
             for (File child : f.listFiles())
                 rm_util(child);
         f.delete();
+    }
+
+    private String[] splitURL(String url) {
+        String[] split_url = new String[2];
+        int pos = url.lastIndexOf("/");
+        split_url[0] = url.substring(0, pos);
+        split_url[1] = url.substring(pos + 1, url.length());
+        return split_url;
     }
 }
