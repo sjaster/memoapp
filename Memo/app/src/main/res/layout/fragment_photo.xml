@@ -14,6 +14,7 @@
             android:layout_height="match_parent" />
 
         <View
+            android:id="@+id/frag_photo_shutter_btn"
             android:layout_width="@dimen/shutter_size"
             android:layout_height="@dimen/shutter_size"
             android:layout_alignParentBottom="true"

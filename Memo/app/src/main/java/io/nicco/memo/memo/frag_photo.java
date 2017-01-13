@@ -34,7 +34,6 @@ import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Toast;
 
 import java.io.File;
@@ -51,7 +50,7 @@ import java.util.List;
 public class frag_photo extends Fragment {
 
     private static final String TAG = "AndroidCameraApi";
-    private Button takePictureButton;
+    private View btn_shutter;
     private TextureView textureView;
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
     private Context c;
@@ -99,7 +98,6 @@ public class frag_photo extends Fragment {
         @Override
         public void onOpened(CameraDevice camera) {
             //This is called when the camera is open
-            Log.e(TAG, "onOpened");
             cameraDevice = camera;
             createCameraPreview();
         }
@@ -263,7 +261,6 @@ public class frag_photo extends Fragment {
 
     private void openCamera() {
         CameraManager manager = (CameraManager) c.getSystemService(Context.CAMERA_SERVICE);
-        Log.e(TAG, "is camera open");
         try {
             cameraId = manager.getCameraIdList()[0];
             CameraCharacteristics characteristics = manager.getCameraCharacteristics(cameraId);
@@ -279,7 +276,6 @@ public class frag_photo extends Fragment {
         } catch (CameraAccessException e) {
             e.printStackTrace();
         }
-        Log.e(TAG, "openCamera X");
     }
 
     protected void updatePreview() {
@@ -318,7 +314,6 @@ public class frag_photo extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Log.e(TAG, "onResume");
         startBackgroundThread();
         if (textureView.isAvailable()) {
             openCamera();
@@ -329,8 +324,7 @@ public class frag_photo extends Fragment {
 
     @Override
     public void onPause() {
-        Log.e(TAG, "onPause");
-        //closeCamera();
+        closeCamera();
         stopBackgroundThread();
         super.onPause();
     }
@@ -343,14 +337,13 @@ public class frag_photo extends Fragment {
 
         textureView = (TextureView) v.findViewById(R.id.frag_photo_preview_field);
         textureView.setSurfaceTextureListener(textureListener);
-        /*
-        takePictureButton = (Button) v.findViewById(R.id.btn_takepicture);
-        takePictureButton.setOnClickListener(new View.OnClickListener() {
+        btn_shutter = (View) v.findViewById(R.id.frag_photo_shutter_btn);
+        btn_shutter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 takePicture();
             }
-        });*/
+        });
 
         return v;
     }
