@@ -1,6 +1,7 @@
 package io.nicco.memo.memo;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,9 @@ public class frag_list extends Fragment {
 
     private ListView lv;
     private NoteText nt;
+    private final Handler handler = new Handler();
+    Runnable runnable;
+    private final int handlerUpdate = 100;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -28,7 +32,14 @@ public class frag_list extends Fragment {
     @Override
     public void onResume() {
         load_list();
+        setListener();
         super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        handler.removeCallbacks(runnable);
+        super.onPause();
     }
 
     private void load_list() {
@@ -47,5 +58,19 @@ public class frag_list extends Fragment {
             }
         }
         return notes;
+    }
+
+    private void setListener() {
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                if (Main.changed) {
+                    load_list();
+                    Main.changed = false;
+                }
+                handler.postDelayed(this, handlerUpdate);
+            }
+        };
+        handler.postDelayed(runnable, handlerUpdate);
     }
 }

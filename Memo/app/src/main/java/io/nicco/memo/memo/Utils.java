@@ -35,6 +35,7 @@ class Utils {
             bos.write(msg);
             bos.flush();
             bos.close();
+            Main.changed = true;
         } catch (IOException e) {
             e.printStackTrace();
         }

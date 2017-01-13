@@ -39,6 +39,26 @@ class Note {
         load();
     }
 
+    /* USER FUNCTIONS */
+
+    public void delete() {
+        u.rm(c.getFilesDir() + "/" + this.id);
+    }
+
+    public String toString() {
+        return title + " " + String.valueOf(datetime);
+    }
+
+    public void toggleLike(Boolean tf){
+        like = tf;
+        save();
+    }
+
+    public void toggleLike(){
+        like = !like;
+        save();
+    }
+
     public void save() {
         try {
             updateTime();
@@ -81,6 +101,8 @@ class Note {
         }
     }
 
+    /* FUNCTIONS FOR EXTENDING CLASSES */
+
     void saveExtra(String file, byte[] b) {
         u.write(mk_path() + file, b);
     }
@@ -89,20 +111,14 @@ class Note {
         return u.read(mk_path() + file);
     }
 
-    public void updateTime() {
-        this.datetime = (int) (new Date().getTime() / 1000);
-    }
+    /* PRIVATE STUFF */
 
-    public void delete() {
-        u.rm(c.getFilesDir() + "/" + this.id);
+    private void updateTime() {
+        this.datetime = (int) (new Date().getTime() / 1000);
     }
 
     private String mk_path() {
         return c.getFilesDir() + "/" + id + "/";
-    }
-
-    public String toString() {
-        return title + " " + String.valueOf(datetime);
     }
 
 }

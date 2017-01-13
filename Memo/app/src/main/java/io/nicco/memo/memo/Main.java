@@ -1,5 +1,6 @@
 package io.nicco.memo.memo;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -21,6 +22,8 @@ public class Main extends FragmentActivity {
     public ArrayList<String> menu_names = new ArrayList<>();
     public ArrayList<LinearLayout> menu_items = new ArrayList<>();
     public ArrayList<ImageView> menu_icons = new ArrayList<>();
+
+    public static boolean changed = false;
 
     FragmentPagerAdapter adapterViewPager;
     ViewPager vpPager;

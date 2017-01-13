@@ -1,6 +1,7 @@
 package io.nicco.memo.memo;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +44,7 @@ public class frag_list_adapter extends BaseAdapter {
         if (convertView == null)
             vi = inflater.inflate(R.layout.fragment_list_item, null);
 
-        Note n = data.get(position);
+        final Note n = data.get(position);
 
         TextView title = (TextView) vi.findViewById(R.id.frag_list_item_title);
         ImageView type = (ImageView) vi.findViewById(R.id.frag_list_item_icon);
@@ -53,6 +54,12 @@ public class frag_list_adapter extends BaseAdapter {
         if (n.like)
             like.setBackgroundResource(R.drawable.icn_like_on);
 
+        like.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                n.toggleLike();
+            }
+        });
 
         title.setText(n.title);
 
