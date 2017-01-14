@@ -19,7 +19,7 @@
 
             <ImageView
                 android:layout_width="match_parent"
-                app:srcCompat="@drawable/bg_github"
+                android:src="@drawable/bg_github"
                 android:id="@+id/imageView"
                 android:layout_below="@+id/linearLayout"
                 android:layout_alignParentStart="true"
