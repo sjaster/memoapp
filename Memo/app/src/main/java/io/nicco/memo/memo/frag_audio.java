@@ -113,7 +113,6 @@ public class frag_audio extends Fragment {
 
         btn_stop.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                chrono.setBase(SystemClock.elapsedRealtime());
                 chrono.stop();
                 stopRecorder();
             }
