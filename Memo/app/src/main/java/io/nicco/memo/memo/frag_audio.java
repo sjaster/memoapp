@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Chronometer;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -25,6 +26,7 @@ public class frag_audio extends Fragment {
 
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
 
+    TextView tv_lastrec;
     String[] permissions = {Manifest.permission.RECORD_AUDIO};
     MediaRecorder recorder;
     Button btn_start, btn_stop, btn_pause;
@@ -97,7 +99,7 @@ public class frag_audio extends Fragment {
         ActivityCompat.requestPermissions((Activity) getContext(), permissions, REQUEST_RECORD_AUDIO_PERMISSION);
 
         chrono = (Chronometer) v.findViewById(R.id.frag_audio_chrono);
-
+        tv_lastrec = (TextView) v.findViewById(R.id.frag_audio_tvlast);
         btn_start = (Button) v.findViewById(R.id.frag_audio_rec);
         btn_stop = (Button) v.findViewById(R.id.frag_audio_stop);
         btn_pause = (Button) v.findViewById(R.id.frag_audio_pause);
@@ -105,6 +107,7 @@ public class frag_audio extends Fragment {
         btn_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                tv_lastrec.setVisibility(View.INVISIBLE);
                 chrono.setBase(SystemClock.elapsedRealtime());
                 chrono.start();
                 startRecorder();
@@ -113,6 +116,7 @@ public class frag_audio extends Fragment {
 
         btn_stop.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                tv_lastrec.setVisibility(View.VISIBLE);
                 chrono.stop();
                 stopRecorder();
             }

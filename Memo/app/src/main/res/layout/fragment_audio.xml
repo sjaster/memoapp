@@ -57,6 +57,19 @@
             android:textSize="18sp"
             android:textStyle="normal|bold" />
 
+        <TextView
+            android:text="Duration of Last Record:"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/frag_audio_chrono"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="11dp"
+            android:id="@+id/frag_audio_tvlast"
+            android:textStyle="normal|bold"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:visibility="invisible"/>
+
     </RelativeLayout>
 
 </FrameLayout>
