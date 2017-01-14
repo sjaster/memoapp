@@ -1,5 +1,4 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,64 +6,56 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="@dimen/default_padding">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/frag_audio_stop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:text="@string/record_stop"
+            android:textStyle="normal|bold" />
+
+        <Button
+            android:id="@+id/frag_audio_pause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:text="@string/record_pause"
+            android:textStyle="normal|bold"
+            android:visibility="invisible" />
+
+        <Button
+            android:id="@+id/frag_audio_rec"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
-            android:padding="@dimen/default_padding">
+            android:text="@string/record_start"
+            android:textAlignment="center"
+            android:textStyle="normal|bold" />
 
-            <Button
-                android:id="@+id/frag_audio_stop"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/record_stop"
-                android:textStyle="normal|bold"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true" />
+        <ImageView
+            android:id="@+id/frag_audio_image"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/icn_microphone" />
 
-            <Button
-                android:id="@+id/frag_audio_pause"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/record_pause"
-                android:textStyle="normal|bold"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true" />
-
-            <Button
-                android:id="@+id/frag_audio_rec"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/record_start"
-                android:textAlignment="center"
-                android:textStyle="normal|bold"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentStart="true" />
-
-            <Chronometer
-                android:layout_gravity="center_horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/frag_audio_chrono"
-                android:textAlignment="center"
-                android:textStyle="normal|bold"
-                android:textSize="18sp"
-                android:layout_marginBottom="22dp"
-                android:layout_above="@+id/frag_audio_stop"
-                android:layout_alignParentStart="true" />
-
-            <ImageView
-                android:src="@drawable/icn_microphone"
-                android:id="@+id/frag_audio_imagev"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true"
-                android:layout_height="150dp"
-                android:layout_width="150dp" />
-
-        </RelativeLayout>
+        <Chronometer
+            android:id="@+id/frag_audio_chrono"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/frag_audio_pause"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="16dp"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textStyle="normal|bold" />
 
     </RelativeLayout>
 

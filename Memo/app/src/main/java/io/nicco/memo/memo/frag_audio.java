@@ -2,7 +2,6 @@ package io.nicco.memo.memo;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.media.MediaRecorder;
 import android.os.Build;
@@ -17,10 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Chronometer;
-import android.widget.ImageView;
 import android.widget.Toast;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 
@@ -28,23 +25,25 @@ public class frag_audio extends Fragment {
 
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
 
-    private boolean permissionToRecordAccepted = false;
-    private String[] permissions = {Manifest.permission.RECORD_AUDIO};
-    private Context c;
-    private MediaRecorder recorder;
-    private Button btn_start, btn_stop, btn_pause;
-    private boolean playing = false;
-    private boolean recording = false;
+    String[] permissions = {Manifest.permission.RECORD_AUDIO};
+    MediaRecorder recorder;
+    Button btn_start, btn_stop, btn_pause;
+    Chronometer chrono;
+
+    boolean playing = false;
+    boolean recording = false;
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case REQUEST_RECORD_AUDIO_PERMISSION:
-                permissionToRecordAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(getContext(), "No permission to audio record", Toast.LENGTH_SHORT).show();
+                    getActivity().finish();
+                }
                 break;
         }
-        // if (!permissionToRecordAccepted ) finish();
     }
 
     protected void startRecorder() {
@@ -97,7 +96,7 @@ public class frag_audio extends Fragment {
 
         ActivityCompat.requestPermissions((Activity) getContext(), permissions, REQUEST_RECORD_AUDIO_PERMISSION);
 
-        final Chronometer chrono = (Chronometer) v.findViewById(R.id.frag_audio_chrono);
+        chrono = (Chronometer) v.findViewById(R.id.frag_audio_chrono);
 
         btn_start = (Button) v.findViewById(R.id.frag_audio_rec);
         btn_stop = (Button) v.findViewById(R.id.frag_audio_stop);
@@ -106,26 +105,29 @@ public class frag_audio extends Fragment {
         btn_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                chrono.setBase(SystemClock.elapsedRealtime());
                 chrono.start();
                 startRecorder();
-            }
-        });
-
-        btn_pause.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    toggle();
-                }
             }
         });
 
         btn_stop.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 chrono.stop();
-                chrono.setBase(SystemClock.elapsedRealtime());
                 stopRecorder();
             }
         });
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            btn_pause.setOnClickListener(new View.OnClickListener() {
+                @RequiresApi(api = Build.VERSION_CODES.N)
+                public void onClick(View v) {
+                    toggle();
+                }
+            });
+            btn_pause.setVisibility(View.VISIBLE);
+        }
+
         return v;
     }
 
@@ -142,9 +144,11 @@ public class frag_audio extends Fragment {
     private void toggle() {
         if (playing) {
             recorder.pause();
+            chrono.stop();
             btn_pause.setText(R.string.record_resume);
         } else {
             recorder.resume();
+            chrono.start();
             btn_pause.setText(R.string.record_pause);
         }
         playing = !playing;
