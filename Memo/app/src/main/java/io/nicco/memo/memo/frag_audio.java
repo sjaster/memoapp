@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.media.MediaRecorder;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
@@ -15,7 +16,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Chronometer;
+import android.widget.Toast;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 
@@ -93,6 +97,8 @@ public class frag_audio extends Fragment {
 
         ActivityCompat.requestPermissions((Activity) getContext(), permissions, REQUEST_RECORD_AUDIO_PERMISSION);
 
+        final Chronometer chrono = (Chronometer) v.findViewById(R.id.frag_audio_chrono);
+
         btn_start = (Button) v.findViewById(R.id.frag_audio_rec);
         btn_stop = (Button) v.findViewById(R.id.frag_audio_stop);
         btn_pause = (Button) v.findViewById(R.id.frag_audio_pause);
@@ -100,6 +106,7 @@ public class frag_audio extends Fragment {
         btn_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                chrono.start();
                 startRecorder();
             }
         });
@@ -114,6 +121,8 @@ public class frag_audio extends Fragment {
 
         btn_stop.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                chrono.stop();
+                chrono.setBase(SystemClock.elapsedRealtime());
                 stopRecorder();
             }
         });

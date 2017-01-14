@@ -16,31 +16,47 @@
             android:padding="@dimen/default_padding">
 
             <Button
-                android:id="@+id/frag_audio_rec"
+                android:id="@+id/frag_audio_stop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/record_start"
-                android:textAlignment="center"
-                android:textStyle="normal|bold" />
+                android:text="@string/record_stop"
+                android:textStyle="normal|bold"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true" />
 
             <Button
                 android:id="@+id/frag_audio_pause"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
                 android:text="@string/record_pause"
-                android:textStyle="normal|bold" />
+                android:textStyle="normal|bold"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true" />
 
             <Button
-                android:id="@+id/frag_audio_stop"
+                android:id="@+id/frag_audio_rec"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentTop="true"
-                android:text="@string/record_stop"
-                android:textStyle="normal|bold" />
+                android:text="@string/record_start"
+                android:textAlignment="center"
+                android:textStyle="normal|bold"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true" />
+
+            <Chronometer
+                android:layout_gravity="center_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/frag_audio_chrono"
+                android:textAlignment="center"
+                android:textStyle="normal|bold"
+                android:textSize="18sp"
+                android:layout_marginBottom="22dp"
+                android:layout_above="@+id/frag_audio_stop"
+                android:layout_alignParentStart="true" />
+
         </RelativeLayout>
+
     </RelativeLayout>
 
 </FrameLayout>
