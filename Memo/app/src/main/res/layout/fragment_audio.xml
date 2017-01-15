@@ -70,6 +70,20 @@
             android:textSize="18sp"
             android:visibility="invisible"/>
 
+        <EditText
+            android:id="@+id/frag_text_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:hint="Title"
+            android:textAppearance="@android:style/TextAppearance.Material.Large"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/default_padding"
+            android:layout_marginRight="@dimen/default_padding"
+            android:layout_marginTop="@dimen/default_padding"
+            android:layout_marginBottom="@dimen/default_padding"
+            android:layout_alignParentStart="true" />
+
     </RelativeLayout>
 
 </FrameLayout>
