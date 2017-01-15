@@ -1,4 +1,5 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,39 +12,7 @@
         android:orientation="vertical"
         android:padding="@dimen/default_padding">
 
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/custWhite"
-            android:padding="16dp"
-            android:id="@+id/frag_audio_main">
-
-            <Chronometer
-                android:id="@+id/frag_audio_chrono"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="16dp"
-                android:textAlignment="center"
-                android:textSize="18sp"
-                android:textStyle="normal|bold"
-                android:visibility="invisible" />
-
-            <TextView
-                android:id="@+id/frag_audio_tvlast"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/frag_audio_chrono"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="11dp"
-                android:text="@string/record_duration_text"
-                android:textAlignment="center"
-                android:textSize="18sp"
-                android:textStyle="normal|bold"
-                android:visibility="invisible" />
-
-            <LinearLayout
+        <LinearLayout
                 android:id="@+id/frag_audio_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -79,32 +48,40 @@
                     android:layout_margin="@dimen/default_padding"
                     android:contentDescription="@string/btn_save"
                     android:src="@drawable/icn_save" />
-            </LinearLayout>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/frag_audio_func"
+            android:orientation="horizontal"
+            android:layout_below="@+id/frag_audio_header"
+            android:layout_alignParentStart="true">
+
+            <TextView
+            android:id="@+id/frag_audio_tvlast"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="11dp"
+            android:text="@string/record_duration_text"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textStyle="normal|bold"
+            android:visibility="invisible"
+                android:layout_weight="1" />
+
+            <Chronometer
+                android:id="@+id/frag_audio_chrono"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginBottom="@dimen/shutter_margin_bottom">
-
-                <ImageView
-                    android:id="@+id/frag_audio_btn_stop"
-                    android:layout_width="@dimen/audio_icn_size"
-                    android:layout_height="@dimen/audio_icn_size"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/icn_rec_stop" />
-
-                <ImageView
-                    android:id="@+id/frag_audio_btn_main"
-                    android:layout_width="@dimen/shutter_size"
-                    android:layout_height="@dimen/shutter_size"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/icn_rec_mic" />
-
-            </RelativeLayout>
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:textStyle="normal|bold"
+                android:visibility="invisible"
+                android:layout_width="match_parent"
+                android:layout_below="@+id/frag_audio_func"
+                android:layout_centerHorizontal="true"
+            android:layout_weight="1" />
 
             <View
                 android:id="@+id/frag_audio_visualizer"
@@ -112,11 +89,42 @@
                 android:background="@color/custDarkGrey"
                 android:padding="@dimen/default_padding"
                 android:layout_height="10dp"
-                android:layout_below="@+id/frag_audio_chrono"
-                android:layout_alignParentStart="true" />
+                android:layout_weight="1" />
 
-        </RelativeLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/frag_audio_btn"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:layout_height="0dp"
+            android:gravity="center|bottom">
+
+            <ImageView
+                android:id="@+id/frag_audio_btn_stop"
+                android:src="@drawable/icn_rec_stop"
+                android:layout_width="@dimen/shutter_size"
+                android:layout_height="@dimen/shutter_size"
+                android:visibility="invisible" />
+
+            <ImageView
+                android:id="@+id/frag_audio_btn_main"
+                android:layout_width="@dimen/shutter_size"
+                android:layout_height="@dimen/shutter_size"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/icn_rec_mic"
+                android:layout_weight="0" />
+
+            <ImageView
+                android:id="@+id/frag_audio_btn_pause"
+                android:layout_width="@dimen/audio_icn_size"
+                android:layout_height="@dimen/audio_icn_size"
+                android:src="@drawable/icn_rec_pause"
+                android:visibility="invisible" />
+
+        </LinearLayout>
+
     </LinearLayout>
-
 
 </FrameLayout>

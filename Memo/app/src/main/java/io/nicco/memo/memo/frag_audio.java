@@ -91,6 +91,13 @@ public class frag_audio extends Fragment {
         recorder.start();
         recording = true;
         playing = true;
+
+        btn_start.setVisibility(View.INVISIBLE);
+        btn_stop.setVisibility(View.VISIBLE);
+        chrono.setVisibility(View.VISIBLE);
+        tv_lastrec.setVisibility(View.INVISIBLE);
+        chrono.setBase(SystemClock.elapsedRealtime());
+        chrono.start();
     }
 
     private void stopRecorder() {
@@ -105,8 +112,13 @@ public class frag_audio extends Fragment {
             recorder.release();
             recorder = null;
         }
-
         readyToSafe = true;
+        Toast.makeText(getContext(), "For Storing click the Save Button", Toast.LENGTH_SHORT).show();
+        btn_start.setVisibility(View.VISIBLE);
+        tv_lastrec.setVisibility(View.VISIBLE);
+        btn_stop.setVisibility(View.INVISIBLE);
+        timeWhenStopped = 0;
+        chrono.stop();
     }
 
     @Override
@@ -121,7 +133,7 @@ public class frag_audio extends Fragment {
         tv_lastrec = (TextView) v.findViewById(R.id.frag_audio_tvlast);
         btn_start = (ImageView) v.findViewById(R.id.frag_audio_btn_main);
         btn_stop = (ImageView) v.findViewById(R.id.frag_audio_btn_stop);
-        //btn_pause = (Button) v.findViewById(R.id.frag_audio_pause);
+        btn_pause = (ImageView) v.findViewById(R.id.frag_audio_btn_pause);
         btn_save = (ImageView) v.findViewById(R.id.frag_audio_save);
         btn_trash = (ImageView) v.findViewById(R.id.frag_audio_trash);
 
@@ -163,10 +175,6 @@ public class frag_audio extends Fragment {
                     Toast.makeText(getContext(), "No Permissions", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                chrono.setVisibility(View.VISIBLE);
-                tv_lastrec.setVisibility(View.INVISIBLE);
-                chrono.setBase(SystemClock.elapsedRealtime());
-                chrono.start();
                 startRecorder();
             }
         });
@@ -175,10 +183,6 @@ public class frag_audio extends Fragment {
             public void onClick(View v) {
                 if (!checkPermission())
                     return;
-                Toast.makeText(getContext(), "For Storing click the Save Button", Toast.LENGTH_SHORT).show();
-                tv_lastrec.setVisibility(View.VISIBLE);
-                timeWhenStopped = 0;
-                chrono.stop();
                 stopRecorder();
             }
         });
