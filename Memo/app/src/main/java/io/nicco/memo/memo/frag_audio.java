@@ -40,6 +40,7 @@ public class frag_audio extends Fragment {
     EditText title;
     NoteAudio gta;
 
+    long timeWhenStopped;
     boolean playing = false;
     boolean recording = false;
     boolean readyToSafe = false;
@@ -128,6 +129,7 @@ public class frag_audio extends Fragment {
         btn_trash = (ImageView) v.findViewById(R.id.frag_audio_trash);
 
         gta = new NoteAudio(getContext());
+        timeWhenStopped = 0;
 
         btn_trash.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,7 +167,9 @@ public class frag_audio extends Fragment {
 
         btn_stop.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                Toast.makeText(getContext(), "For Storing click the Save Button", Toast.LENGTH_SHORT).show();
                 tv_lastrec.setVisibility(View.VISIBLE);
+                timeWhenStopped = 0;
                 chrono.stop();
                 stopRecorder();
             }
@@ -199,10 +203,12 @@ public class frag_audio extends Fragment {
             return;
         if (playing) {
             recorder.pause();
+            timeWhenStopped = chrono.getBase() - SystemClock.elapsedRealtime();
             chrono.stop();
             btn_pause.setText(R.string.record_resume);
         } else {
             recorder.resume();
+            chrono.setBase(SystemClock.elapsedRealtime() + timeWhenStopped);
             chrono.start();
             btn_pause.setText(R.string.record_pause);
         }
