@@ -11,9 +11,12 @@
     <!--CAMERA-->
     <dimen name="shutter_ring_width">1dp</dimen>
     <dimen name="shutter_margin_bottom">32dp</dimen>
-    <dimen name="shutter_size">70dp</dimen>
+    <dimen name="shutter_size">64dp</dimen>
 
     <!--LIST-->
-    <dimen name="icon_size">30dp</dimen>
+    <dimen name="icon_size">32dp</dimen>
     <dimen name="icon_small">24dp</dimen>
+
+    <!--AUDIO-->
+    <dimen name="audio_icn_size">32dp</dimen>
 </resources>

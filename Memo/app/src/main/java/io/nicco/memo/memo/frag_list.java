@@ -71,6 +71,6 @@ public class frag_list extends Fragment {
                 handler.postDelayed(this, handlerUpdate);
             }
         };
-        handler.postDelayed(runnable, handlerUpdate);
+        handler.postDelayed(runnable, 0);
     }
 }

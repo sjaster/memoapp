@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.media.MediaRecorder;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
@@ -15,10 +16,10 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,12 +31,18 @@ public class frag_audio extends Fragment {
 
     TextView tv_lastrec;
     MediaRecorder recorder;
-    Button btn_start, btn_stop, btn_pause;
+    ImageView btn_start, btn_stop, btn_pause;
     ImageView btn_save, btn_trash;
     Chronometer chrono;
     String fileName;
     EditText title;
     NoteAudio gta;
+    private final Handler handler = new Handler();
+    Runnable runnable;
+    View visualizer;
+    RelativeLayout main_window;
+    int main_window_width;
+    int MAX_RANGE = 32767;
 
     long timeWhenStopped;
     boolean playing = false;
@@ -84,7 +91,6 @@ public class frag_audio extends Fragment {
         recorder.start();
         recording = true;
         playing = true;
-        btn_start.setText(R.string.record_recording);
     }
 
     private void stopRecorder() {
@@ -99,8 +105,6 @@ public class frag_audio extends Fragment {
             recorder.release();
             recorder = null;
         }
-        btn_start.setText(R.string.record_start);
-        btn_pause.setText(R.string.record_pause);
 
         readyToSafe = true;
     }
@@ -115,11 +119,15 @@ public class frag_audio extends Fragment {
         title = (EditText) v.findViewById(R.id.frag_audio_title);
         chrono = (Chronometer) v.findViewById(R.id.frag_audio_chrono);
         tv_lastrec = (TextView) v.findViewById(R.id.frag_audio_tvlast);
-        btn_start = (Button) v.findViewById(R.id.frag_audio_rec);
-        btn_stop = (Button) v.findViewById(R.id.frag_audio_stop);
-        btn_pause = (Button) v.findViewById(R.id.frag_audio_pause);
+        btn_start = (ImageView) v.findViewById(R.id.frag_audio_btn_main);
+        btn_stop = (ImageView) v.findViewById(R.id.frag_audio_btn_stop);
+        //btn_pause = (Button) v.findViewById(R.id.frag_audio_pause);
         btn_save = (ImageView) v.findViewById(R.id.frag_audio_save);
         btn_trash = (ImageView) v.findViewById(R.id.frag_audio_trash);
+
+        main_window = ((RelativeLayout) v.findViewById(R.id.frag_audio_main));
+        visualizer = v.findViewById(R.id.frag_audio_visualizer);
+        setVisualizer();
 
         gta = new NoteAudio(getContext());
         timeWhenStopped = 0;
@@ -175,7 +183,7 @@ public class frag_audio extends Fragment {
             }
         });
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && false) {
             btn_pause.setOnClickListener(new View.OnClickListener() {
                 @RequiresApi(api = Build.VERSION_CODES.N)
                 public void onClick(View v) {
@@ -186,6 +194,12 @@ public class frag_audio extends Fragment {
         }
 
         return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        main_window_width = main_window.getWidth();
     }
 
     @Override
@@ -211,17 +225,29 @@ public class frag_audio extends Fragment {
             recorder.pause();
             timeWhenStopped = chrono.getBase() - SystemClock.elapsedRealtime();
             chrono.stop();
-            btn_pause.setText(R.string.record_resume);
+
         } else {
             recorder.resume();
             chrono.setBase(SystemClock.elapsedRealtime() + timeWhenStopped);
             chrono.start();
-            btn_pause.setText(R.string.record_pause);
         }
         playing = !playing;
     }
 
     private boolean checkPermission() {
         return ContextCompat.checkSelfPermission(getContext(), Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void setVisualizer() {
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                if (recorder != null) {
+                    visualizer.getLayoutParams().width = (int) ((double) recorder.getMaxAmplitude() / MAX_RANGE * main_window_width);
+                }
+                handler.postDelayed(this, 250);
+            }
+        };
+        handler.postDelayed(runnable, 0);
     }
 }

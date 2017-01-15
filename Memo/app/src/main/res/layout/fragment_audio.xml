@@ -16,50 +16,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/custWhite"
-            android:padding="16dp">
-
-            <Button
-                android:id="@+id/frag_audio_stop"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:text="@string/record_stop"
-                android:textStyle="normal|bold" />
-
-            <Button
-                android:id="@+id/frag_audio_pause"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:text="@string/record_pause"
-                android:textStyle="normal|bold"
-                android:visibility="invisible" />
-
-            <Button
-                android:id="@+id/frag_audio_rec"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentStart="true"
-                android:text="@string/record_start"
-                android:textAlignment="center"
-                android:textStyle="normal|bold" />
-
-            <ImageView
-                android:id="@+id/frag_audio_image"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/icn_microphone" />
+            android:padding="16dp"
+            android:id="@+id/frag_audio_main">
 
             <Chronometer
                 android:id="@+id/frag_audio_chrono"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_above="@+id/frag_audio_pause"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="16dp"
                 android:textAlignment="center"
@@ -81,41 +44,76 @@
                 android:visibility="invisible" />
 
             <LinearLayout
-                android:orientation="horizontal"
+                android:id="@+id/frag_audio_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentStart="true">
+                android:orientation="horizontal">
 
                 <EditText
                     android:id="@+id/frag_audio_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/default_padding"
+                    android:layout_weight="1"
                     android:background="@android:color/transparent"
                     android:hint="Title"
-                    android:textAppearance="@android:style/TextAppearance.Material.Large"
-                    android:layout_weight="1"
-                    android:layout_margin="@dimen/default_padding" />
+                    android:textAppearance="@android:style/TextAppearance.Material.Large" />
 
                 <ImageView
                     android:id="@+id/frag_audio_trash"
                     android:layout_width="@dimen/ftr_icon_size"
                     android:layout_height="@dimen/ftr_icon_size"
                     android:layout_gravity="center"
+                    android:layout_margin="@dimen/default_padding"
                     android:adjustViewBounds="false"
                     android:contentDescription="@string/btn_trash"
-                    android:src="@drawable/icn_trash"
-                    android:layout_margin="@dimen/default_padding" />
+                    android:src="@drawable/icn_trash" />
 
                 <ImageView
                     android:id="@+id/frag_audio_save"
                     android:layout_width="@dimen/ftr_icon_size"
                     android:layout_height="@dimen/ftr_icon_size"
                     android:layout_gravity="center"
+                    android:layout_margin="@dimen/default_padding"
                     android:contentDescription="@string/btn_save"
-                    android:src="@drawable/icn_save"
-                    android:layout_margin="@dimen/default_padding" />
+                    android:src="@drawable/icn_save" />
             </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginBottom="@dimen/shutter_margin_bottom">
+
+                <ImageView
+                    android:id="@+id/frag_audio_btn_stop"
+                    android:layout_width="@dimen/audio_icn_size"
+                    android:layout_height="@dimen/audio_icn_size"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/icn_rec_stop" />
+
+                <ImageView
+                    android:id="@+id/frag_audio_btn_main"
+                    android:layout_width="@dimen/shutter_size"
+                    android:layout_height="@dimen/shutter_size"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/icn_rec_mic" />
+
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/frag_audio_visualizer"
+                android:layout_width="30dp"
+                android:background="@color/custDarkGrey"
+                android:padding="@dimen/default_padding"
+                android:layout_height="10dp"
+                android:layout_below="@+id/frag_audio_chrono"
+                android:layout_alignParentStart="true" />
 
         </RelativeLayout>
     </LinearLayout>
