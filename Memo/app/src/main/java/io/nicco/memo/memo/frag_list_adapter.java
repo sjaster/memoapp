@@ -1,7 +1,6 @@
 package io.nicco.memo.memo;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,17 +10,14 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-/**
- * Created by nicco on 13/01/2017.
- */
-
-public class frag_list_adapter extends BaseAdapter {
+class frag_list_adapter extends BaseAdapter {
 
     private Context c;
     private ArrayList<Note> data;
     private static LayoutInflater inflater = null;
+    private int[] type_img = {R.drawable.icn_file, R.drawable.icn_camera, R.drawable.icn_microphone};
 
-    public frag_list_adapter(Context context, ArrayList<Note> notes) {
+    frag_list_adapter(Context context, ArrayList<Note> notes) {
         c = context;
         data = notes;
         inflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -62,6 +58,8 @@ public class frag_list_adapter extends BaseAdapter {
         });
 
         title.setText(n.title);
+
+        type.setBackgroundResource(type_img[n.type]);
 
         return vi;
     }

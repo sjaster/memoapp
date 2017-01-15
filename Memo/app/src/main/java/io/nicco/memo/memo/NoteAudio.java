@@ -7,7 +7,7 @@ class NoteAudio extends Note {
     static final String EXTRA_FILE = "audio.mp3";
 
     NoteAudio(Context c) {
-        super(c, TYPE_TEXT);
+        super(c, TYPE_AUDIO);
     }
 
     NoteAudio(Context c, String id) {
@@ -21,7 +21,7 @@ class NoteAudio extends Note {
     }
 
     public void load() {
-      //  text = new String(super.loadExtra(EXTRA_FILE));
+        //  text = new String(super.loadExtra(EXTRA_FILE));
         super.load();
     }
 }

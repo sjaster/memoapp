@@ -11,14 +11,15 @@ import java.util.Date;
 import static android.content.ContentValues.TAG;
 
 class Note {
-    static final int TYPE_TEXT = 1;
-    static final int TYPE_PHOTO = 2;
-    static final int TYPE_AUDIO = 3;
+    static final int TYPE_TEXT = 0;
+    static final int TYPE_PHOTO = 1;
+    static final int TYPE_AUDIO = 2;
+    static final int TYPE_UNDEF = 8;
     static final String MAIN_FILE = "main.json";
 
     public String title;
     public int datetime;
-    public int type = 0;
+    public int type = TYPE_UNDEF;
     public String id;
     public Boolean like;
 
@@ -49,12 +50,12 @@ class Note {
         return title + " " + String.valueOf(datetime);
     }
 
-    public void toggleLike(Boolean tf){
+    public void toggleLike(Boolean tf) {
         like = tf;
         save();
     }
 
-    public void toggleLike(){
+    public void toggleLike() {
         like = !like;
         save();
     }
@@ -64,7 +65,7 @@ class Note {
             updateTime();
             JSONObject main = new JSONObject();
 
-            if (type == 0 || id == null) {
+            if (type == TYPE_UNDEF || id == null) {
                 Log.e(TAG, "Incorrect Note state");
                 return;
             }

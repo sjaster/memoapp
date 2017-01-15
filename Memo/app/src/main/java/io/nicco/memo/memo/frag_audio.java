@@ -3,7 +3,6 @@ package io.nicco.memo.memo;
 import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
-import android.media.Image;
 import android.media.MediaRecorder;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 
@@ -35,22 +36,23 @@ public class frag_audio extends Fragment {
     Button btn_start, btn_stop, btn_pause;
     ImageView btn_save, btn_trash;
     Chronometer chrono;
-    String fileName, audio_title;
+    String fileName;
     EditText title;
     NoteAudio gta;
 
     boolean playing = false;
     boolean recording = false;
+    boolean readyToSafe = false;
+
+    /* PERMISSIONS */
+    boolean granted = false;
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case REQUEST_RECORD_AUDIO_PERMISSION:
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(getContext(), "No permission to audio record", Toast.LENGTH_SHORT).show();
-                    getActivity().finish();
-                }
+                granted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
                 break;
         }
     }
@@ -59,9 +61,17 @@ public class frag_audio extends Fragment {
         if (recording)
             return;
 
+        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(getContext(), "No Permissions", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         recorder = new MediaRecorder();
 
-        fileName = getContext().getFilesDir().getAbsolutePath() + "/record/" + new Date().getTime() + ".aac";
+        fileName = getContext().getFilesDir().getAbsolutePath() + "/record";
+        new File(fileName).mkdirs();
+
+        fileName += "/" + new Date().getTime() + ".mp3";
 
         recorder.setOutputFile(fileName);
         recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
@@ -98,7 +108,8 @@ public class frag_audio extends Fragment {
         }
         btn_start.setText(R.string.record_start);
         btn_pause.setText(R.string.record_pause);
-        Toast.makeText(getContext(), "Record saved!", Toast.LENGTH_SHORT).show();
+
+        readyToSafe = true;
     }
 
     @Override
@@ -118,19 +129,27 @@ public class frag_audio extends Fragment {
 
         gta = new NoteAudio(getContext());
 
-        btn_trash.setOnClickListener(new View.OnClickListener(){
+        btn_trash.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 title.setText("");
-                new Utils().rm(getContext().getFilesDir()+"/record");
+                new Utils().rm(getContext().getFilesDir() + "/record");
+                gta.delete();
+                gta = new NoteAudio(getContext());
             }
         });
 
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!readyToSafe) {
+                    Toast.makeText(getContext(), "No Recording", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 gta.title = title.getText().toString();
                 gta.save(new Utils().read(fileName));
+                new Utils().rm(getContext().getFilesDir() + "/record");
+                Toast.makeText(getContext(), "Record Saved!", Toast.LENGTH_SHORT).show();
             }
         });
 

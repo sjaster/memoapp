@@ -1,13 +1,11 @@
 package io.nicco.memo.memo;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -54,19 +52,13 @@ public class Main extends FragmentActivity {
 
             Log.i("Cur", curLayout.toString());
 
-            try {
-                // Set onlick listener for the buttons
-                curLayout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        int cur = menu_items.indexOf(view);
-                        vpPager.setCurrentItem(cur);
-                        // setActiveMenuItem(cur);
-                    }
-                });
-            } finally {
-
-            }
+            curLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int cur = menu_items.indexOf(view);
+                    vpPager.setCurrentItem(cur);
+                }
+            });
         }
 
         vpPager = (ViewPager) findViewById(R.id.pager);
@@ -76,29 +68,12 @@ public class Main extends FragmentActivity {
 
     }
 
-    public int toPixel(int dp) {
-        DisplayMetrics metrics;
-        metrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        return (dp * metrics.densityDpi) / DisplayMetrics.DENSITY_DEFAULT;
-    }
-
-    public void setActiveMenuItem(int n) {
-        int pxDefault = toPixel(R.dimen.ftr_icon_size);
-        int pxActive = toPixel(R.dimen.ftr_icon_size_active);
-        LinearLayout.LayoutParams defaultSize = new LinearLayout.LayoutParams(pxDefault, pxDefault);
-        for (ImageView tmp : menu_icons) {
-            tmp.setLayoutParams(defaultSize);
-        }
-        menu_icons.get(n).setLayoutParams(new LinearLayout.LayoutParams(pxActive, pxActive));
-    }
-
     public static class PagerAdapter extends FragmentPagerAdapter {
         // https://guides.codepath.com/android/ViewPager-with-FragmentPagerAdapter
         private int NUM_ITEMS = 0;
         private ArrayList<String> menu = new ArrayList<>();
 
-        public PagerAdapter(FragmentManager fragmentManager, ArrayList<String> m) {
+        PagerAdapter(FragmentManager fragmentManager, ArrayList<String> m) {
             super(fragmentManager);
             menu = m;
             NUM_ITEMS = menu.size();
@@ -116,11 +91,11 @@ public class Main extends FragmentActivity {
             try {
                 Log.i("Getting:", PACKAGE_NAME + ".frag_" + menu.get(position));
                 frag = (Fragment) (Class.forName(PACKAGE_NAME + ".frag_" + menu.get(position)).newInstance());
-            } catch (ClassNotFoundException e) {
+            } catch (IllegalAccessException e) {
                 e.printStackTrace();
             } catch (InstantiationException e) {
                 e.printStackTrace();
-            } catch (IllegalAccessException e) {
+            } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
             return frag;

@@ -10,9 +10,8 @@
         android:layout_width="@dimen/icon_size"
         android:layout_height="@dimen/icon_size"
         android:layout_marginBottom="@dimen/default_padding"
-        android:layout_marginRight="@dimen/default_padding"
-        android:layout_marginTop="@dimen/default_padding"
-        android:src="@drawable/icn_file" />
+        android:layout_marginEnd="@dimen/default_padding"
+        android:layout_marginTop="@dimen/default_padding" />
 
     <RelativeLayout
         android:layout_width="0dp"
@@ -31,7 +30,7 @@
                 android:layout_width="@dimen/icon_small"
                 android:layout_height="@dimen/icon_small"
                 android:layout_marginStart="@dimen/default_padding"
-                android:src="@drawable/icn_like_off"/>
+                android:src="@drawable/icn_like_off" />
 
             <ImageView
                 android:id="@+id/frag_list_item_share"

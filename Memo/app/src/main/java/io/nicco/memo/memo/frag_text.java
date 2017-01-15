@@ -15,11 +15,11 @@ import android.widget.Toast;
 
 public class frag_text extends Fragment {
 
-    private ImageView btn_c;
-    private ImageView btn_s;
-    private EditText et_title;
-    private EditText et_body;
-    private ScrollView sv_body;
+    ImageView btn_c;
+    ImageView btn_s;
+    EditText et_title;
+    EditText et_body;
+    ScrollView sv_body;
 
     private NoteText nt;
 

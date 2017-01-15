@@ -4,7 +4,7 @@ import android.content.Context;
 
 class NoteText extends Note {
 
-    static final String EXTRA_FILE = "body.txt";
+    private static final String EXTRA_FILE = "body.txt";
 
     public String text = "";
 

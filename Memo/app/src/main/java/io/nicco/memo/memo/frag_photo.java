@@ -47,6 +47,7 @@ public class frag_photo extends Fragment {
     View shutter;
     TextureView tv;
 
+
     /* CAMERA VARS */
     Surface surfacePreview;
     Surface surfaceJPEG;
@@ -55,6 +56,10 @@ public class frag_photo extends Fragment {
     TotalCaptureResult res;
     Handler handler;
     HandlerThread handlerThread;
+
+    /* PERMISSION */
+    boolean granted = false;
+    private final int REQUEST_CAMERA = 0;
 
     private void cameraOpen() {
         try {
@@ -66,7 +71,7 @@ public class frag_photo extends Fragment {
                 }
 
                 @Override
-                public void onConfigureFailed(CameraCaptureSession cameraCaptureSession) {
+                public void onConfigureFailed(@NonNull CameraCaptureSession cameraCaptureSession) {
 
                 }
             }, handler);
@@ -109,31 +114,23 @@ public class frag_photo extends Fragment {
 
             surfaceJPEG = jpegImageReader.getSurface();
 
-            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(c, "No permission for camera", Toast.LENGTH_SHORT).show();
-
-                if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) c, Manifest.permission.CAMERA)) {
-
-                } else {
-
-                    ActivityCompat.requestPermissions((Activity) c, new String[]{Manifest.permission.CAMERA}, 1);
-                }
+            if (ActivityCompat.checkSelfPermission(c, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                 return;
             }
             cm.openCamera(cameraId, new CameraDevice.StateCallback() {
                 @Override
-                public void onOpened(CameraDevice camera) {
+                public void onOpened(@NonNull CameraDevice camera) {
                     cam = camera;
                     cameraOpen();
                 }
 
                 @Override
-                public void onDisconnected(CameraDevice cameraDevice) {
+                public void onDisconnected(@NonNull CameraDevice cameraDevice) {
 
                 }
 
                 @Override
-                public void onError(CameraDevice cameraDevice, int i) {
+                public void onError(@NonNull CameraDevice cameraDevice, int i) {
 
                 }
             }, handler);
@@ -145,6 +142,7 @@ public class frag_photo extends Fragment {
 
     @Override
     public void onResume() {
+        checkPermissions();
         super.onResume();
         handlerThread = new HandlerThread("Camera");
         handlerThread.start();
@@ -172,7 +170,6 @@ public class frag_photo extends Fragment {
             @Override
             public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int i, int i1) {
                 surfacePreview = new Surface(surfaceTexture);
-                cameraIni();
             }
 
             @Override
@@ -195,11 +192,33 @@ public class frag_photo extends Fragment {
         shutter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //cameraIni();
             }
         });
 
         return v;
     }
 
+    void checkPermissions() {
+        if (ContextCompat.checkSelfPermission(c, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            if (!ActivityCompat.shouldShowRequestPermissionRationale((Activity) c, Manifest.permission.CAMERA)) {
+                Log.i(TAG, "Requesting");
+                ActivityCompat.requestPermissions((Activity) c, new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_CAMERA: {
+                granted = grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                if (granted) {
+                    Toast.makeText(c, "Granted", Toast.LENGTH_SHORT).show();
+                    cameraIni();
+                } else {
+                    Toast.makeText(c, "No Permissions for Camera", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
 }
