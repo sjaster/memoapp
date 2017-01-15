@@ -64,7 +64,8 @@
                 android:layout_marginBottom="16dp"
                 android:textAlignment="center"
                 android:textSize="18sp"
-                android:textStyle="normal|bold" />
+                android:textStyle="normal|bold"
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/frag_audio_tvlast"

@@ -62,11 +62,6 @@ public class frag_audio extends Fragment {
         if (recording)
             return;
 
-        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(getContext(), "No Permissions", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
         recorder = new MediaRecorder();
 
         fileName = getContext().getFilesDir().getAbsolutePath() + "/record";
@@ -138,6 +133,8 @@ public class frag_audio extends Fragment {
                 new Utils().rm(getContext().getFilesDir() + "/record");
                 gta.delete();
                 gta = new NoteAudio(getContext());
+                chrono.setVisibility(View.INVISIBLE);
+                tv_lastrec.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -158,6 +155,11 @@ public class frag_audio extends Fragment {
         btn_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(getContext(), "No Permissions", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                chrono.setVisibility(View.VISIBLE);
                 tv_lastrec.setVisibility(View.INVISIBLE);
                 chrono.setBase(SystemClock.elapsedRealtime());
                 chrono.start();
@@ -167,6 +169,9 @@ public class frag_audio extends Fragment {
 
         btn_stop.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+                    return;
+                }
                 Toast.makeText(getContext(), "For Storing click the Save Button", Toast.LENGTH_SHORT).show();
                 tv_lastrec.setVisibility(View.VISIBLE);
                 timeWhenStopped = 0;
