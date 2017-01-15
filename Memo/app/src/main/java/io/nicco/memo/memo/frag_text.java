@@ -11,6 +11,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 public class frag_text extends Fragment {
 
@@ -47,6 +48,7 @@ public class frag_text extends Fragment {
             public void onClick(View v) {
                 nt.text = et_body.getText().toString();
                 nt.title = et_title.getText().toString();
+                Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
                 nt.save();
             }
         });

@@ -23,4 +23,8 @@
     <string name="record_pause">Pause</string>
     <string name="record_resume">Resume</string>
     <string name="record_stop">Stop</string>
+    <string name="record_duration_text">Duration of Last Record:</string>
+
+    <!--GENERAL PURPOSE-->
+    <string name="title">Title</string>
 </resources>
