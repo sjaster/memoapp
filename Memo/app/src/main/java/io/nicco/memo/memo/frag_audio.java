@@ -3,6 +3,7 @@ package io.nicco.memo.memo;
 import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
+import android.media.Image;
 import android.media.MediaRecorder;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,6 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Chronometer;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,8 +33,11 @@ public class frag_audio extends Fragment {
     String[] permissions = {Manifest.permission.RECORD_AUDIO};
     MediaRecorder recorder;
     Button btn_start, btn_stop, btn_pause;
+    ImageView btn_save, btn_trash;
     Chronometer chrono;
-    String fileName;
+    String fileName, audio_title;
+    EditText title;
+    NoteAudio gta;
 
     boolean playing = false;
     boolean recording = false;
@@ -55,7 +61,7 @@ public class frag_audio extends Fragment {
 
         recorder = new MediaRecorder();
 
-        fileName = getContext().getFilesDir().getAbsolutePath() + "/record_" + new Date().getTime() + ".aac";
+        fileName = getContext().getFilesDir().getAbsolutePath() + "/record/" + new Date().getTime() + ".aac";
 
         recorder.setOutputFile(fileName);
         recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
@@ -91,6 +97,8 @@ public class frag_audio extends Fragment {
             recorder = null;
         }
         btn_start.setText(R.string.record_start);
+        btn_pause.setText(R.string.record_pause);
+        Toast.makeText(getContext(), "Record saved!", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -99,11 +107,32 @@ public class frag_audio extends Fragment {
 
         ActivityCompat.requestPermissions((Activity) getContext(), permissions, REQUEST_RECORD_AUDIO_PERMISSION);
 
+        title = (EditText) v.findViewById(R.id.frag_audio_title);
         chrono = (Chronometer) v.findViewById(R.id.frag_audio_chrono);
         tv_lastrec = (TextView) v.findViewById(R.id.frag_audio_tvlast);
         btn_start = (Button) v.findViewById(R.id.frag_audio_rec);
         btn_stop = (Button) v.findViewById(R.id.frag_audio_stop);
         btn_pause = (Button) v.findViewById(R.id.frag_audio_pause);
+        btn_save = (ImageView) v.findViewById(R.id.frag_audio_save);
+        btn_trash = (ImageView) v.findViewById(R.id.frag_audio_trash);
+
+        gta = new NoteAudio(getContext());
+
+        btn_trash.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                title.setText("");
+                new Utils().rm(getContext().getFilesDir()+"/record");
+            }
+        });
+
+        btn_save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gta.title = title.getText().toString();
+                gta.save(new Utils().read(fileName));
+            }
+        });
 
         btn_start.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,5 +189,4 @@ public class frag_audio extends Fragment {
         }
         playing = !playing;
     }
-
 }
