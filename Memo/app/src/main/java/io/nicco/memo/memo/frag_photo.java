@@ -143,7 +143,7 @@ public class frag_photo extends Fragment {
         handlerThread = new HandlerThread("Camera");
         handlerThread.start();
         handler = new Handler(handlerThread.getLooper());
-        cameraIni();
+        //cameraIni();
     }
 
     @Override

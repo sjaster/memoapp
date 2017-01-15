@@ -128,7 +128,6 @@ public class frag_audio extends Fragment {
             @Override
             public void onClick(View v) {
                 title.setText("");
-                new Utils().rm(getContext().getFilesDir() + "/record");
                 gta.delete();
                 gta = new NoteAudio(getContext());
                 chrono.setVisibility(View.INVISIBLE);
@@ -145,7 +144,6 @@ public class frag_audio extends Fragment {
                 }
                 gta.title = title.getText().toString();
                 gta.save(new Utils().read(fileName));
-                new Utils().rm(getContext().getFilesDir() + "/record");
                 Toast.makeText(getContext(), "Record Saved!", Toast.LENGTH_SHORT).show();
             }
         });
@@ -197,6 +195,12 @@ public class frag_audio extends Fragment {
             recorder.release();
             recorder = null;
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        new Utils().rm(getContext().getFilesDir() + "/record");
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
