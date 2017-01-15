@@ -24,7 +24,7 @@ import java.util.Date;
 
 public class frag_audio extends Fragment {
 
-    private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
+    private static final int REQUEST_RECORD_AUDIO_PERMISSION = 1;
 
     TextView tv_lastrec;
     String[] permissions = {Manifest.permission.RECORD_AUDIO};
@@ -147,6 +147,8 @@ public class frag_audio extends Fragment {
 
     @RequiresApi(Build.VERSION_CODES.N)
     private void toggle() {
+        if (recorder == null)
+            return;
         if (playing) {
             recorder.pause();
             chrono.stop();
