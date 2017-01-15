@@ -31,6 +31,7 @@ public class frag_audio extends Fragment {
     MediaRecorder recorder;
     Button btn_start, btn_stop, btn_pause;
     Chronometer chrono;
+    String fileName;
 
     boolean playing = false;
     boolean recording = false;
@@ -54,7 +55,7 @@ public class frag_audio extends Fragment {
 
         recorder = new MediaRecorder();
 
-        String fileName = getContext().getFilesDir().getAbsolutePath() + "/record_" + new Date().getTime() + ".aac";
+        fileName = getContext().getFilesDir().getAbsolutePath() + "/record_" + new Date().getTime() + ".aac";
 
         recorder.setOutputFile(fileName);
         recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
