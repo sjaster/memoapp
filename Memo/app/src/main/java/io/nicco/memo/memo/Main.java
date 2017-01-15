@@ -22,6 +22,7 @@ public class Main extends FragmentActivity {
     public ArrayList<ImageView> menu_icons = new ArrayList<>();
 
     public static boolean changed = false;
+    public final static int PERMISSION_REQUEST = 8888;
 
     FragmentPagerAdapter adapterViewPager;
     ViewPager vpPager;

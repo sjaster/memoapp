@@ -28,10 +28,7 @@ import java.util.Date;
 
 public class frag_audio extends Fragment {
 
-    private static final int REQUEST_RECORD_AUDIO_PERMISSION = 1;
-
     TextView tv_lastrec;
-    String[] permissions = {Manifest.permission.RECORD_AUDIO};
     MediaRecorder recorder;
     Button btn_start, btn_stop, btn_pause;
     ImageView btn_save, btn_trash;
@@ -52,7 +49,7 @@ public class frag_audio extends Fragment {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
-            case REQUEST_RECORD_AUDIO_PERMISSION:
+            case Main.PERMISSION_REQUEST:
                 granted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
                 break;
         }
@@ -112,7 +109,8 @@ public class frag_audio extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup v = (ViewGroup) inflater.inflate(R.layout.fragment_audio, container, false);
 
-        ActivityCompat.requestPermissions((Activity) getContext(), permissions, REQUEST_RECORD_AUDIO_PERMISSION);
+        if (!checkPermission())
+            ActivityCompat.requestPermissions((Activity) getContext(), new String[]{Manifest.permission.RECORD_AUDIO}, Main.PERMISSION_REQUEST);
 
         title = (EditText) v.findViewById(R.id.frag_audio_title);
         chrono = (Chronometer) v.findViewById(R.id.frag_audio_chrono);
@@ -155,7 +153,7 @@ public class frag_audio extends Fragment {
         btn_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+                if (!checkPermission()) {
                     Toast.makeText(getContext(), "No Permissions", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -169,9 +167,8 @@ public class frag_audio extends Fragment {
 
         btn_stop.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+                if (!checkPermission())
                     return;
-                }
                 Toast.makeText(getContext(), "For Storing click the Save Button", Toast.LENGTH_SHORT).show();
                 tv_lastrec.setVisibility(View.VISIBLE);
                 timeWhenStopped = 0;
@@ -218,5 +215,9 @@ public class frag_audio extends Fragment {
             btn_pause.setText(R.string.record_pause);
         }
         playing = !playing;
+    }
+
+    private boolean checkPermission() {
+        return ContextCompat.checkSelfPermission(getContext(), Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED;
     }
 }

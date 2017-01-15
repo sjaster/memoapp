@@ -23,7 +23,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.util.Size;
 import android.view.LayoutInflater;
@@ -31,7 +30,6 @@ import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import java.util.Arrays;
 import java.util.List;
@@ -59,7 +57,6 @@ public class frag_photo extends Fragment {
 
     /* PERMISSION */
     boolean granted = false;
-    private final int REQUEST_CAMERA = 0;
 
     private void cameraOpen() {
         try {
@@ -142,11 +139,11 @@ public class frag_photo extends Fragment {
 
     @Override
     public void onResume() {
-        checkPermissions();
         super.onResume();
         handlerThread = new HandlerThread("Camera");
         handlerThread.start();
         handler = new Handler(handlerThread.getLooper());
+        cameraIni();
     }
 
     @Override
@@ -164,6 +161,8 @@ public class frag_photo extends Fragment {
         c = getContext();
 
         np = new NotePhoto(c);
+
+        ActivityCompat.requestPermissions((Activity) getContext(), new String[]{Manifest.permission.CAMERA}, Main.PERMISSION_REQUEST);
 
         tv = (TextureView) v.findViewById(R.id.frag_photo_preview_field);
         tv.setSurfaceTextureListener(new TextureView.SurfaceTextureListener() {
@@ -198,27 +197,14 @@ public class frag_photo extends Fragment {
         return v;
     }
 
-    void checkPermissions() {
-        if (ContextCompat.checkSelfPermission(c, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            if (!ActivityCompat.shouldShowRequestPermissionRationale((Activity) c, Manifest.permission.CAMERA)) {
-                Log.i(TAG, "Requesting");
-                ActivityCompat.requestPermissions((Activity) c, new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA);
-            }
-        }
-    }
-
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
-            case REQUEST_CAMERA: {
-                granted = grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED;
-                if (granted) {
-                    Toast.makeText(c, "Granted", Toast.LENGTH_SHORT).show();
-                    cameraIni();
-                } else {
-                    Toast.makeText(c, "No Permissions for Camera", Toast.LENGTH_SHORT).show();
-                }
-            }
+            case Main.PERMISSION_REQUEST:
+                granted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                Log.i("PERMISSION", String.valueOf(granted));
+                break;
         }
     }
 }

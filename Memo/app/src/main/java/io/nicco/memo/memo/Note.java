@@ -42,7 +42,7 @@ class Note {
 
     /* USER FUNCTIONS */
 
-    public void delete() {
+    void delete() {
         u.rm(c.getFilesDir() + "/" + this.id);
     }
 
@@ -50,12 +50,12 @@ class Note {
         return title + " " + String.valueOf(datetime);
     }
 
-    public void toggleLike(Boolean tf) {
+    void toggleLike(Boolean tf) {
         like = tf;
         save();
     }
 
-    public void toggleLike() {
+    void toggleLike() {
         like = !like;
         save();
     }
