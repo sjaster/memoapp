@@ -27,8 +27,7 @@
                     android:layout_margin="@dimen/default_padding"
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
-                    android:hint="Title"
-                    android:textAppearance="@android:style/TextAppearance.Material.Large" />
+                    android:hint="Title"/>
 
                 <ImageView
                     android:id="@+id/frag_audio_trash"
@@ -53,43 +52,43 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="235dp"
+            android:layout_height="@android:dimen/thumbnail_height"
             android:id="@+id/frag_audio_func"
             android:orientation="horizontal">
 
             <View
                 android:id="@+id/frag_audio_visualizer"
                 android:background="@color/custDarkGrey"
-                android:padding="@dimen/default_padding"
                 android:layout_centerHorizontal="true"
                 android:layout_height="14dp"
-                android:layout_width="30dp"
+                android:layout_width="@dimen/shutter_margin_bottom"
                 android:layout_alignBottom="@+id/frag_audio_tvsound"
                 android:layout_alignTop="@+id/frag_audio_tvsound" />
 
             <Chronometer
                 android:id="@+id/frag_audio_chrono"
-                android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:textSize="18sp"
                 android:textStyle="normal|bold"
                 android:visibility="invisible"
+                android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginBottom="18dp" />
+                android:layout_marginBottom="@dimen/shutter_margin_bottom"/>
 
             <TextView
-            android:id="@+id/frag_audio_tvlast"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/record_duration_text"
-            android:textAlignment="center"
-            android:textSize="18sp"
-            android:textStyle="normal|bold"
-            android:visibility="invisible"
-                android:layout_above="@+id/frag_audio_chrono"
-                android:layout_alignParentStart="true" />
+                android:id="@+id/frag_audio_tvlast"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/record_duration_text"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:textStyle="normal|bold"
+                android:visibility="invisible"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/shutter_size"/>
 
             <TextView
                 android:text="Microphone Input:"
@@ -97,9 +96,9 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/frag_audio_tvsound"
                 android:textStyle="normal|bold"
-                android:layout_above="@+id/frag_audio_tvlast"
                 android:layout_alignParentStart="true"
-                android:layout_marginBottom="70dp"
+                android:layout_marginLeft="@dimen/default_padding"
+                android:layout_marginBottom="@dimen/shutter_size"
                 android:textSize="18sp" />
 
         </RelativeLayout>
@@ -108,9 +107,10 @@
             android:id="@+id/frag_audio_btn"
             android:layout_width="match_parent"
             android:layout_weight="1"
-            android:layout_height="0dp">
+            android:layout_height="@android:dimen/thumbnail_height">
 
             <ImageView
+                android:layout_marginBottom="@dimen/shutter_margin_bottom"
                 android:id="@+id/frag_audio_btn_main"
                 android:layout_width="@dimen/shutter_size"
                 android:layout_height="@dimen/shutter_size"
@@ -119,6 +119,7 @@
                 android:layout_centerHorizontal="true" />
 
             <ImageView
+                android:layout_marginBottom="@dimen/shutter_margin_bottom"
                 android:id="@+id/frag_audio_btn_stop"
                 android:src="@drawable/icn_rec_stop"
                 android:layout_width="@dimen/shutter_size"
@@ -128,15 +129,16 @@
                 android:layout_centerHorizontal="true" />
 
             <ImageView
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
                 android:id="@+id/frag_audio_btn_pause"
                 android:layout_width="@dimen/audio_icn_size"
                 android:layout_height="@dimen/audio_icn_size"
                 android:src="@drawable/icn_rec_pause"
                 android:visibility="invisible"
-                android:layout_marginEnd="44dp"
-                android:layout_marginTop="12dp"
-                android:layout_alignTop="@+id/frag_audio_btn_main"
-                android:layout_alignParentEnd="true" />
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="@dimen/shutter_margin_bottom"
+                android:layout_marginBottom="@dimen/shutter_margin_bottom"/>
 
         </RelativeLayout>
 
