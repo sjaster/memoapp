@@ -137,7 +137,7 @@ public class frag_audio extends Fragment {
         btn_save = (ImageView) v.findViewById(R.id.frag_audio_save);
         btn_trash = (ImageView) v.findViewById(R.id.frag_audio_trash);
 
-        main_window = ((RelativeLayout) v.findViewById(R.id.frag_audio_main));
+        main_window = ((RelativeLayout) v.findViewById(R.id.frag_audio_func));
         visualizer = v.findViewById(R.id.frag_audio_visualizer);
         setVisualizer();
 
