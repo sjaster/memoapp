@@ -4,12 +4,13 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <!--GENERAL-->
+    <dimen name="default_padding">8dp</dimen>
     <dimen name="icon_size">24dp</dimen>
 
     <!--FOOTER-->
     <dimen name="ftr_height">56dp</dimen>
     <dimen name="ftr_icon_size_active">26dp</dimen>
-    <dimen name="default_padding">8dp</dimen>
+    <dimen name="ftr_indicator_height">4dp</dimen>
 
     <!--CAMERA-->
     <dimen name="shutter_ring_width">1dp</dimen>

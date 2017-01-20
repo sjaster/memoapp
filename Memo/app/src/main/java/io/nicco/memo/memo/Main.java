@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 
@@ -18,9 +19,13 @@ public class Main extends FragmentActivity {
 
     public static String PACKAGE_NAME;
 
-    public ArrayList<String> menu_names = new ArrayList<>();
-    public ArrayList<LinearLayout> menu_items = new ArrayList<>();
-    public ArrayList<ImageView> menu_icons = new ArrayList<>();
+    public static ArrayList<String> menu_names = new ArrayList<>();
+    public static ArrayList<LinearLayout> menu_items = new ArrayList<>();
+    public static ArrayList<ImageView> menu_icons = new ArrayList<>();
+
+    View indicator;
+    int indicatorW;
+    boolean measured = false;
 
     public static boolean changed = false;
     public final static int PERMISSION_REQUEST = 8888;
@@ -59,21 +64,36 @@ public class Main extends FragmentActivity {
             curLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    int cur = menu_items.indexOf(view);
-                    vpPager.setCurrentItem(cur);
+                    render(menu_items.indexOf(view));
                 }
             });
         }
 
+        indicator = findViewById(R.id.ftr_indicator);
+
         vpPager = (ViewPager) findViewById(R.id.pager);
         adapterViewPager = new PagerAdapter(getSupportFragmentManager(), menu_names);
         vpPager.setAdapter(adapterViewPager);
+    }
 
+    void render(int cur) {
+        if (!measured) {
+            indicatorW = findViewById(R.id.ftr_indicator_w).getWidth() / menu_names.size();
+            measured = true;
+        }
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) indicator.getLayoutParams();
+        params.width = indicatorW;
+        params.leftMargin = indicatorW * cur;
+        indicator.setLayoutParams(params);
 
+        vpPager.setCurrentItem(cur);
     }
 
     public static class PagerAdapter extends FragmentPagerAdapter {
-        // https://guides.codepath.com/android/ViewPager-with-FragmentPagerAdapter
+        /*
+        Code Adapted from:
+        https://guides.codepath.com/android/ViewPager-with-FragmentPagerAdapter
+         */
         private int NUM_ITEMS = 0;
         private ArrayList<String> menu = new ArrayList<>();
 
