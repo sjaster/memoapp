@@ -38,8 +38,8 @@
 
             <ImageView
                 android:id="@+id/ftr_img_list"
-                android:layout_width="@dimen/ftr_icon_size"
-                android:layout_height="@dimen/ftr_icon_size"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
                 android:layout_gravity="center"
                 android:adjustViewBounds="false"
                 android:contentDescription="@string/menu_txt_list"
@@ -65,8 +65,8 @@
 
             <ImageView
                 android:id="@+id/ftr_img_text"
-                android:layout_width="@dimen/ftr_icon_size"
-                android:layout_height="@dimen/ftr_icon_size"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
                 android:layout_gravity="center"
                 android:adjustViewBounds="false"
                 android:contentDescription="@string/menu_txt_text"
@@ -91,8 +91,8 @@
 
             <ImageView
                 android:id="@+id/ftr_img_photo"
-                android:layout_width="@dimen/ftr_icon_size"
-                android:layout_height="@dimen/ftr_icon_size"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
                 android:layout_gravity="center"
                 android:adjustViewBounds="false"
                 android:contentDescription="@string/menu_txt_photo"
@@ -117,8 +117,8 @@
 
             <ImageView
                 android:id="@+id/ftr_img_audio"
-                android:layout_width="@dimen/ftr_icon_size"
-                android:layout_height="@dimen/ftr_icon_size"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
                 android:layout_gravity="center"
                 android:adjustViewBounds="false"
                 android:contentDescription="@string/menu_txt_audio"
@@ -143,8 +143,8 @@
 
             <ImageView
                 android:id="@+id/ftr_img_settings"
-                android:layout_width="@dimen/ftr_icon_size"
-                android:layout_height="@dimen/ftr_icon_size"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
                 android:layout_gravity="center"
                 android:adjustViewBounds="false"
                 android:contentDescription="@string/menu_txt_settings"
