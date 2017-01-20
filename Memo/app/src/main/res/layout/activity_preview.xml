@@ -13,6 +13,16 @@
         android:orientation="horizontal"
         android:padding="@dimen/default_padding">
 
+        <ImageView
+            android:id="@+id/pv_back"
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/default_padding"
+            android:adjustViewBounds="false"
+            android:contentDescription="@string/btn_cancel"
+            android:src="@drawable/icn_back" />
+
         <EditText
             android:id="@+id/pv_title"
             android:layout_width="0dp"
@@ -24,14 +34,23 @@
             android:textAppearance="@android:style/TextAppearance.Material.Large" />
 
         <ImageView
-            android:id="@+id/pv_cancel"
+            android:id="@+id/pv_like"
             android:layout_width="@dimen/icon_size"
             android:layout_height="@dimen/icon_size"
             android:layout_gravity="center"
             android:layout_margin="@dimen/default_padding"
             android:adjustViewBounds="false"
-            android:contentDescription="@string/btn_cancel"
-            android:src="@drawable/icn_cancel" />
+            android:contentDescription="@string/btn_trash" />
+
+        <ImageView
+            android:id="@+id/pv_share"
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/default_padding"
+            android:adjustViewBounds="false"
+            android:contentDescription="@string/btn_trash"
+            android:src="@drawable/icn_share" />
 
         <ImageView
             android:id="@+id/pv_trash"

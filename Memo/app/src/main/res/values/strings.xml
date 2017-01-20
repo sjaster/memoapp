@@ -35,6 +35,8 @@
     <!--GENERAL PURPOSE-->
     <string name="hint_title">Title</string>
     <string name="title_activity_preview">Preview</string>
+    <string name="dialog_delete">Delete</string>
+    <string name="dialog_cancel">Cancel</string>
 
     <!--PREVIEW-->
     <string name="pv_last_modified">Last Modified</string>
