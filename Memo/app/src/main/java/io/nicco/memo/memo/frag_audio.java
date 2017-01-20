@@ -19,7 +19,7 @@ import android.view.ViewGroup;
 import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,18 +31,19 @@ public class frag_audio extends Fragment {
 
     TextView tv_lastrec;
     MediaRecorder recorder;
-    ImageView btn_start, btn_stop, btn_pause;
-    ImageView btn_save, btn_trash;
+    ImageView btn_main, btn_pause, btn_save, btn_trash;
+    View visualizer, visualizerWE;
     Chronometer chrono;
     String fileName;
     EditText title;
-    NoteAudio gta;
+    NoteAudio na;
+
+    int visualizerW = 0;
+    int visualizerH = 0;
+    int MAX_RANGE = 32767;
+
     private final Handler handler = new Handler();
     Runnable runnable;
-    View visualizer;
-    RelativeLayout main_window;
-    int main_window_width;
-    int MAX_RANGE = 32767;
 
     long timeWhenStopped;
     boolean playing = false;
@@ -65,6 +66,11 @@ public class frag_audio extends Fragment {
     protected void startRecorder() {
         if (recording)
             return;
+
+        if (!checkPermission()) {
+            Toast.makeText(getContext(), "No Permissions", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         recorder = new MediaRecorder();
 
@@ -92,8 +98,7 @@ public class frag_audio extends Fragment {
         recording = true;
         playing = true;
 
-        btn_start.setVisibility(View.INVISIBLE);
-        btn_stop.setVisibility(View.VISIBLE);
+        btn_main.setBackgroundResource(R.drawable.icn_rec_stop);
         chrono.setVisibility(View.VISIBLE);
         tv_lastrec.setVisibility(View.INVISIBLE);
         chrono.setBase(SystemClock.elapsedRealtime());
@@ -113,12 +118,39 @@ public class frag_audio extends Fragment {
             recorder = null;
         }
         readyToSafe = true;
-        Toast.makeText(getContext(), "For Storing click the Save Button", Toast.LENGTH_SHORT).show();
-        btn_start.setVisibility(View.VISIBLE);
+        Toast.makeText(getContext(), "To save click the save button", Toast.LENGTH_SHORT).show();
+
+        btn_main.setBackgroundResource(R.drawable.icn_rec_mic);
         tv_lastrec.setVisibility(View.VISIBLE);
-        btn_stop.setVisibility(View.INVISIBLE);
         timeWhenStopped = 0;
         chrono.stop();
+        na.title = title.getText().toString();
+        na.save(new Utils().read(fileName));
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    private void playPause() {
+        if (recorder == null)
+            return;
+        if (playing) {
+            recorder.pause();
+            timeWhenStopped = chrono.getBase() - SystemClock.elapsedRealtime();
+            chrono.stop();
+            btn_pause.setBackgroundResource(R.drawable.icn_rec_play);
+        } else {
+            recorder.resume();
+            chrono.setBase(SystemClock.elapsedRealtime() + timeWhenStopped);
+            chrono.start();
+            btn_pause.setBackgroundResource(R.drawable.icn_rec_pause);
+        }
+        playing = !playing;
+    }
+
+    void toggleRecorder() {
+        if (recording)
+            stopRecorder();
+        else
+            startRecorder();
     }
 
     @Override
@@ -131,25 +163,27 @@ public class frag_audio extends Fragment {
         title = (EditText) v.findViewById(R.id.frag_audio_title);
         chrono = (Chronometer) v.findViewById(R.id.frag_audio_chrono);
         tv_lastrec = (TextView) v.findViewById(R.id.frag_audio_tvlast);
-        btn_start = (ImageView) v.findViewById(R.id.frag_audio_btn_main);
-        btn_stop = (ImageView) v.findViewById(R.id.frag_audio_btn_stop);
+        btn_main = (ImageView) v.findViewById(R.id.frag_audio_btn_main);
         btn_pause = (ImageView) v.findViewById(R.id.frag_audio_btn_pause);
         btn_save = (ImageView) v.findViewById(R.id.frag_audio_save);
         btn_trash = (ImageView) v.findViewById(R.id.frag_audio_trash);
 
-        main_window = ((RelativeLayout) v.findViewById(R.id.frag_audio_func));
+        btn_main.setBackgroundResource(R.drawable.icn_rec_mic);
+        btn_pause.setBackgroundResource(R.drawable.icn_rec_pause);
+
+        visualizerWE = v.findViewById(R.id.frag_audio_visualizer_measure);
         visualizer = v.findViewById(R.id.frag_audio_visualizer);
         setVisualizer();
 
-        gta = new NoteAudio(getContext());
+        na = new NoteAudio(getContext());
         timeWhenStopped = 0;
 
         btn_trash.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 title.setText("");
-                gta.delete();
-                gta = new NoteAudio(getContext());
+                na.delete();
+                na = new NoteAudio(getContext());
                 chrono.setVisibility(View.INVISIBLE);
                 tv_lastrec.setVisibility(View.INVISIBLE);
             }
@@ -162,36 +196,24 @@ public class frag_audio extends Fragment {
                     Toast.makeText(getContext(), "No Recording", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                gta.title = title.getText().toString();
-                gta.save(new Utils().read(fileName));
+                na.title = title.getText().toString();
+                na.save(new Utils().read(fileName));
                 Toast.makeText(getContext(), "Record Saved!", Toast.LENGTH_SHORT).show();
             }
         });
 
-        btn_start.setOnClickListener(new View.OnClickListener() {
+        btn_main.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!checkPermission()) {
-                    Toast.makeText(getContext(), "No Permissions", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                startRecorder();
+                toggleRecorder();
             }
         });
 
-        btn_stop.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if (!checkPermission())
-                    return;
-                stopRecorder();
-            }
-        });
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && false) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             btn_pause.setOnClickListener(new View.OnClickListener() {
                 @RequiresApi(api = Build.VERSION_CODES.N)
                 public void onClick(View v) {
-                    toggle();
+                    playPause();
                 }
             });
             btn_pause.setVisibility(View.VISIBLE);
@@ -203,7 +225,8 @@ public class frag_audio extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        main_window_width = main_window.getWidth();
+        visualizerW = visualizerWE.getWidth();
+        visualizerH = visualizer.getHeight();
     }
 
     @Override
@@ -221,23 +244,6 @@ public class frag_audio extends Fragment {
         new Utils().rm(getContext().getFilesDir() + "/record");
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
-    private void toggle() {
-        if (recorder == null)
-            return;
-        if (playing) {
-            recorder.pause();
-            timeWhenStopped = chrono.getBase() - SystemClock.elapsedRealtime();
-            chrono.stop();
-
-        } else {
-            recorder.resume();
-            chrono.setBase(SystemClock.elapsedRealtime() + timeWhenStopped);
-            chrono.start();
-        }
-        playing = !playing;
-    }
-
     private boolean checkPermission() {
         return ContextCompat.checkSelfPermission(getContext(), Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED;
     }
@@ -247,9 +253,10 @@ public class frag_audio extends Fragment {
             @Override
             public void run() {
                 if (recorder != null) {
-                    visualizer.getLayoutParams().width = (int) ((double) recorder.getMaxAmplitude() / MAX_RANGE * main_window_width);
+                    int cur = (int) ((double) recorder.getMaxAmplitude() / MAX_RANGE * visualizerW);
+                    visualizer.setLayoutParams(new LinearLayout.LayoutParams(cur, visualizerH));
                 }
-                handler.postDelayed(this, 250);
+                handler.postDelayed(this, 50);
             }
         };
         handler.postDelayed(runnable, 0);
