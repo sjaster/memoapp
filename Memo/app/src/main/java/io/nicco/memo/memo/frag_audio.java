@@ -21,7 +21,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
@@ -68,7 +67,7 @@ public class frag_audio extends Fragment {
             return;
 
         if (!checkPermission()) {
-            Toast.makeText(getContext(), "No Permissions", Toast.LENGTH_SHORT).show();
+            new Utils().toast(getContext(), "No Permissions");
             return;
         }
 
@@ -102,6 +101,7 @@ public class frag_audio extends Fragment {
         chrono.setVisibility(View.VISIBLE);
         tv_lastrec.setVisibility(View.INVISIBLE);
         chrono.setBase(SystemClock.elapsedRealtime());
+        btn_pause.setBackgroundResource(R.drawable.icn_rec_pause);
         chrono.start();
     }
 
@@ -118,13 +118,14 @@ public class frag_audio extends Fragment {
             recorder = null;
         }
         readyToSafe = true;
-        Toast.makeText(getContext(), "To save click the save button", Toast.LENGTH_SHORT).show();
+        new Utils().toast(getContext(), "To save click the save button");
 
         btn_main.setBackgroundResource(R.drawable.icn_rec_mic);
         tv_lastrec.setVisibility(View.VISIBLE);
         timeWhenStopped = 0;
         chrono.stop();
         na.title = title.getText().toString();
+        btn_pause.setBackgroundResource(R.drawable.icn_rec_pause);
         na.save(new Utils().read(fileName));
     }
 
@@ -193,12 +194,12 @@ public class frag_audio extends Fragment {
             @Override
             public void onClick(View v) {
                 if (!readyToSafe) {
-                    Toast.makeText(getContext(), "No Recording", Toast.LENGTH_SHORT).show();
+                    new Utils().toast(getContext(), "No Recording");
                     return;
                 }
                 na.title = title.getText().toString();
                 na.save(new Utils().read(fileName));
-                Toast.makeText(getContext(), "Record Saved!", Toast.LENGTH_SHORT).show();
+                new Utils().toast(getContext(), "Recording Saved");
             }
         });
 

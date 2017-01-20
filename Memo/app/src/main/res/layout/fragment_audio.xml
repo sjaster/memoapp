@@ -32,7 +32,8 @@
                     android:layout_margin="@dimen/default_padding"
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
-                    android:hint="@string/hint_title" />
+                    android:hint="@string/hint_title"
+                    android:textAppearance="@android:style/TextAppearance.Material.Large" />
 
                 <ImageView
                     android:id="@+id/frag_audio_trash"
@@ -117,11 +118,11 @@
                     android:id="@+id/frag_audio_btn_pause"
                     android:layout_width="@dimen/audio_icn_size"
                     android:layout_height="@dimen/audio_icn_size"
-                    android:contentDescription="@string/record_pause"
-                    android:visibility="invisible"
-                    android:layout_marginLeft="@dimen/audio_margin_pause"
                     android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/frag_audio_btn_main" />
+                    android:layout_marginLeft="@dimen/audio_margin_pause"
+                    android:layout_toEndOf="@+id/frag_audio_btn_main"
+                    android:contentDescription="@string/record_pause"
+                    android:visibility="invisible" />
 
             </RelativeLayout>
 

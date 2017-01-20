@@ -1,5 +1,8 @@
 package io.nicco.memo.memo;
 
+import android.content.Context;
+import android.widget.Toast;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -22,6 +25,10 @@ class Utils {
         }
 
         return sb.toString();
+    }
+
+    void toast(Context c, String s) {
+        Toast.makeText(c, s, Toast.LENGTH_SHORT).show();
     }
 
     void write(String file, byte[] msg) {

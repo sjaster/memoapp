@@ -10,7 +10,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ScrollView;
-import android.widget.Toast;
 
 public class frag_text extends Fragment {
 
@@ -39,6 +38,7 @@ public class frag_text extends Fragment {
             public void onClick(View v) {
                 et_body.setText("");
                 et_title.setText("");
+                new Utils().toast(getContext(), "Deleted");
             }
         });
 
@@ -47,7 +47,7 @@ public class frag_text extends Fragment {
             public void onClick(View v) {
                 nt.text = et_body.getText().toString();
                 nt.title = et_title.getText().toString();
-                Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
+                new Utils().toast(getContext(), "Saved");
                 nt.save();
             }
         });
@@ -62,5 +62,16 @@ public class frag_text extends Fragment {
         });
 
         return v;
+    }
+
+    @Override
+    public void onPause() {
+        nt.text = et_body.getText().toString();
+        nt.title = et_title.getText().toString();
+        et_body.setText("");
+        et_title.setText("");
+        if (!nt.text.equals(""))
+            nt.save();
+        super.onPause();
     }
 }

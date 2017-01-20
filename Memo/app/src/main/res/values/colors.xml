@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!--GENEREAL-->
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
@@ -12,6 +14,7 @@
     <color name="dark">#000000</color>
 
     <!--CUSTOM-->
+    <color name="custActionBar">#efefef</color>
     <color name="custLightGrey">#efefef</color>
     <color name="custDarkGrey">#66000000</color>
     <color name="custWhite">#ffffff</color>
