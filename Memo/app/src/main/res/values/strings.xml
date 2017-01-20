@@ -24,7 +24,14 @@
     <string name="record_resume">Resume</string>
     <string name="record_stop">Stop</string>
     <string name="record_duration_text">Duration of Last Record:</string>
+    <string name="record_mic_input">Microphone Preview</string>
+
+    <!--SETTINGS-->
+    <string name="settings_contribute">Contribute on Github!</string>
+    <string name="settings_link">https://github.com/sjaster/memoapp</string>
+    <string name="settings_version">Version - 0.2.4</string>
+
 
     <!--GENERAL PURPOSE-->
-    <string name="title">Title</string>
+    <string name="hint_title">Title</string>
 </resources>
