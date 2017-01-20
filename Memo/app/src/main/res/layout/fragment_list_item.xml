@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="@dimen/default_padding">
+    android:padding="@dimen/default_padding"
+    android:id="@+id/frag_list_item_root">
 
     <ImageView
         android:id="@+id/frag_list_item_icon"

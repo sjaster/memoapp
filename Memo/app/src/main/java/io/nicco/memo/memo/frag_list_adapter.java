@@ -1,14 +1,19 @@
 package io.nicco.memo.memo;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 class frag_list_adapter extends BaseAdapter {
 
@@ -46,6 +51,14 @@ class frag_list_adapter extends BaseAdapter {
         ImageView type = (ImageView) vi.findViewById(R.id.frag_list_item_icon);
         ImageView share = (ImageView) vi.findViewById(R.id.frag_list_item_share);
         ImageView like = (ImageView) vi.findViewById(R.id.frag_list_item_like);
+        LinearLayout ll = (LinearLayout) vi.findViewById(R.id.frag_list_item_root);
+
+        ll.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                n.preview();
+            }
+        });
 
         if (n.like)
             like.setBackgroundResource(R.drawable.icn_like_on);

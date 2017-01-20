@@ -34,4 +34,8 @@
 
     <!--GENERAL PURPOSE-->
     <string name="hint_title">Title</string>
+    <string name="title_activity_preview">Preview</string>
+
+    <!--PREVIEW-->
+    <string name="pv_last_modified">Last Modified</string>
 </resources>

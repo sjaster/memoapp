@@ -30,4 +30,5 @@
 
     <!--SETTINGS-->
     <dimen name="settings_icon_size">128dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>

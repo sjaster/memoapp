@@ -1,6 +1,7 @@
 package io.nicco.memo.memo;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import org.json.JSONException;
@@ -9,6 +10,7 @@ import org.json.JSONObject;
 import java.util.Date;
 
 import static android.content.ContentValues.TAG;
+import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 class Note {
     static final int TYPE_TEXT = 0;
@@ -58,6 +60,12 @@ class Note {
     void toggleLike() {
         like = !like;
         save();
+    }
+
+    void preview() {
+        Intent intent = new Intent(c, Preview.class);
+        intent.putExtra(EXTRA_MESSAGE, id);
+        c.startActivity(intent);
     }
 
     public void save() {
