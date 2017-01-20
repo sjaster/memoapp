@@ -21,7 +21,6 @@
 
             <!--HEADER-->
             <LinearLayout
-                android:id="@+id/frag_audio_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -33,12 +32,12 @@
                     android:layout_margin="@dimen/default_padding"
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
-                    android:hint="Title" />
+                    android:hint="@string/hint_title" />
 
                 <ImageView
                     android:id="@+id/frag_audio_trash"
-                    android:layout_width="@dimen/ftr_icon_size"
-                    android:layout_height="@dimen/ftr_icon_size"
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/icon_size"
                     android:layout_gravity="center"
                     android:layout_margin="@dimen/default_padding"
                     android:adjustViewBounds="false"
@@ -47,8 +46,8 @@
 
                 <ImageView
                     android:id="@+id/frag_audio_save"
-                    android:layout_width="@dimen/ftr_icon_size"
-                    android:layout_height="@dimen/ftr_icon_size"
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/icon_size"
                     android:layout_gravity="center"
                     android:layout_margin="@dimen/default_padding"
                     android:contentDescription="@string/btn_save"
@@ -56,35 +55,35 @@
 
             </LinearLayout>
 
-            <RelativeLayout
-                android:id="@+id/frag_audio_func"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="@dimen/default_padding">
 
                 <TextView
-                    android:id="@+id/frag_audio_tvsound"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:text="Microphone Input:"
-                    android:textSize="18sp"
-                    android:textStyle="normal|bold" />
+                    android:text="@string/record_mic_input"
+                    android:textSize="18sp" />
+
+                <View
+                    android:id="@+id/frag_audio_visualizer_measure"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp" />
 
                 <View
                     android:id="@+id/frag_audio_visualizer"
-                    android:layout_width="@dimen/shutter_margin_bottom"
-                    android:layout_height="16dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/frag_audio_tvsound"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/audio_preview_height"
                     android:background="@color/custDarkGrey" />
 
                 <TextView
                     android:id="@+id/frag_audio_tvlast"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/frag_audio_visualizer"
+                    android:layout_marginTop="@dimen/default_padding"
                     android:text="@string/record_duration_text"
                     android:textAlignment="center"
                     android:textSize="18sp"
@@ -95,45 +94,34 @@
                     android:id="@+id/frag_audio_chrono"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/frag_audio_tvlast"
                     android:textAlignment="center"
                     android:textSize="18sp"
                     android:textStyle="normal|bold"
                     android:visibility="invisible" />
 
-            </RelativeLayout>
+            </LinearLayout>
 
             <RelativeLayout
-                android:id="@+id/frag_audio_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/shutter_margin_bottom">
+                android:layout_marginBottom="@dimen/audio_margin_bottom">
 
                 <ImageView
                     android:id="@+id/frag_audio_btn_main"
                     android:layout_width="@dimen/shutter_size"
                     android:layout_height="@dimen/shutter_size"
                     android:layout_centerInParent="true"
-                    android:src="@drawable/icn_rec_mic" />
-
-                <ImageView
-                    android:id="@+id/frag_audio_btn_stop"
-                    android:layout_width="@dimen/shutter_size"
-                    android:layout_height="@dimen/shutter_size"
-                    android:layout_centerInParent="true"
-                    android:layout_marginBottom="@dimen/shutter_margin_bottom"
-                    android:src="@drawable/icn_rec_stop"
-                    android:visibility="invisible" />
+                    android:contentDescription="@string/record_start" />
 
                 <ImageView
                     android:id="@+id/frag_audio_btn_pause"
                     android:layout_width="@dimen/audio_icn_size"
                     android:layout_height="@dimen/audio_icn_size"
-                    android:layout_alignParentEnd="true"
+                    android:contentDescription="@string/record_pause"
+                    android:visibility="invisible"
+                    android:layout_marginLeft="@dimen/audio_margin_pause"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/icn_rec_pause"
-                    android:visibility="invisible" />
+                    android:layout_toEndOf="@+id/frag_audio_btn_main" />
 
             </RelativeLayout>
 
