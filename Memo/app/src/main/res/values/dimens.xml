@@ -3,8 +3,11 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+    <!--GENERAL-->
+    <dimen name="icon_size">24dp</dimen>
+
+    <!--FOOTER-->
     <dimen name="ftr_height">56dp</dimen>
-    <dimen name="ftr_icon_size">24dp</dimen>
     <dimen name="ftr_icon_size_active">26dp</dimen>
     <dimen name="default_padding">8dp</dimen>
 
@@ -14,9 +17,16 @@
     <dimen name="shutter_size">64dp</dimen>
 
     <!--LIST-->
-    <dimen name="icon_size">32dp</dimen>
-    <dimen name="icon_small">24dp</dimen>
+    <dimen name="list_icon_left">20dp</dimen>
+    <dimen name="list_icon_left_padding">10dp</dimen>
+    <dimen name="list_padding">8dp</dimen>
 
     <!--AUDIO-->
-    <dimen name="audio_icn_size">32dp</dimen>
+    <dimen name="audio_icn_size">40dp</dimen>
+    <dimen name="audio_margin_bottom">16dp</dimen>
+    <dimen name="audio_margin_pause">32dp</dimen>
+    <dimen name="audio_preview_height">4dp</dimen>
+
+    <!--SETTINGS-->
+    <dimen name="settings_icon_size">128dp</dimen>
 </resources>
