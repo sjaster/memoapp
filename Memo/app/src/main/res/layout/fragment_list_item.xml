@@ -7,46 +7,30 @@
 
     <ImageView
         android:id="@+id/frag_list_item_icon"
+        android:layout_width="@dimen/list_icon_left"
+        android:layout_height="@dimen/list_icon_left"
+        android:layout_margin="@dimen/list_icon_left_padding" />
+
+    <TextView
+        android:id="@+id/frag_list_item_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@android:style/TextAppearance.Material.Medium"
+        android:layout_weight="1"
+        android:layout_margin="@dimen/list_padding" />
+
+    <ImageView
+        android:id="@+id/frag_list_item_like"
         android:layout_width="@dimen/icon_size"
         android:layout_height="@dimen/icon_size"
-        android:layout_marginBottom="@dimen/default_padding"
-        android:layout_marginEnd="@dimen/default_padding"
-        android:layout_marginTop="@dimen/default_padding" />
+        android:src="@drawable/icn_like_off"
+        android:layout_margin="@dimen/list_padding" />
 
-    <RelativeLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
+    <ImageView
+        android:id="@+id/frag_list_item_share"
+        android:layout_width="@dimen/icon_size"
+        android:layout_height="@dimen/icon_size"
+        android:src="@drawable/icn_share"
+        android:layout_margin="@dimen/list_padding" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/frag_list_item_like"
-                android:layout_width="@dimen/icon_small"
-                android:layout_height="@dimen/icon_small"
-                android:layout_marginStart="@dimen/default_padding"
-                android:src="@drawable/icn_like_off" />
-
-            <ImageView
-                android:id="@+id/frag_list_item_share"
-                android:layout_width="@dimen/icon_small"
-                android:layout_height="@dimen/icon_small"
-                android:layout_marginStart="@dimen/default_padding"
-                android:src="@drawable/icn_share" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/frag_list_item_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:textAppearance="@android:style/TextAppearance.Material.Medium" />
-
-    </RelativeLayout>
 </LinearLayout>

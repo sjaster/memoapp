@@ -22,8 +22,8 @@
 
             <ImageView
                 android:id="@+id/imageView2"
-                android:layout_width="@dimen/ftr_icon_size"
-                android:layout_height="@dimen/ftr_icon_size"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
                 android:src="@drawable/icn_sort"
                 android:layout_margin="@dimen/default_padding" />
         </LinearLayout>
