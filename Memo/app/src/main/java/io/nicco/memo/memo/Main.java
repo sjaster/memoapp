@@ -1,5 +1,6 @@
 package io.nicco.memo.memo;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -64,7 +65,7 @@ public class Main extends FragmentActivity {
             curLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    render(menu_items.indexOf(view));
+                    vpPager.setCurrentItem(menu_items.indexOf(view));
                 }
             });
         }
@@ -74,19 +75,22 @@ public class Main extends FragmentActivity {
         vpPager = (ViewPager) findViewById(R.id.pager);
         adapterViewPager = new PagerAdapter(getSupportFragmentManager(), menu_names);
         vpPager.setAdapter(adapterViewPager);
-    }
 
-    void render(int cur) {
-        if (!measured) {
-            indicatorW = findViewById(R.id.ftr_indicator_w).getWidth() / menu_names.size();
-            measured = true;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            vpPager.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+                @Override
+                public void onScrollChange(View view, int i, int i1, int i2, int i3) {
+                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) indicator.getLayoutParams();
+                    if (!measured) {
+                        indicatorW = findViewById(R.id.ftr_indicator_w).getWidth() / menu_names.size();
+                        params.width = indicatorW;
+                        measured = true;
+                    }
+                    params.leftMargin = (int) (float) i / menu_names.size();
+                    indicator.setLayoutParams(params);
+                }
+            });
         }
-        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) indicator.getLayoutParams();
-        params.width = indicatorW;
-        params.leftMargin = indicatorW * cur;
-        indicator.setLayoutParams(params);
-
-        vpPager.setCurrentItem(cur);
     }
 
     public static class PagerAdapter extends FragmentPagerAdapter {
