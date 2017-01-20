@@ -20,57 +20,62 @@
             android:padding="16dp">
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <EditText
                     android:id="@+id/frag_text_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:hint="Title"
-                    android:textAppearance="@android:style/TextAppearance.Material.Large"
+                    android:layout_margin="@dimen/default_padding"
                     android:layout_weight="1"
-                    android:layout_margin="@dimen/default_padding" />
+                    android:background="@android:color/transparent"
+                    android:hint="@string/hint_title"
+                    android:textAppearance="@android:style/TextAppearance.Material.Large" />
 
                 <ImageView
                     android:id="@+id/frag_text_trash"
-                    android:layout_width="@dimen/ftr_icon_size"
-                    android:layout_height="@dimen/ftr_icon_size"
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/icon_size"
                     android:layout_gravity="center"
+                    android:layout_margin="@dimen/default_padding"
                     android:adjustViewBounds="false"
                     android:contentDescription="@string/btn_trash"
-                    android:src="@drawable/icn_trash"
-                    android:layout_margin="@dimen/default_padding" />
+                    android:src="@drawable/icn_trash" />
 
                 <ImageView
                     android:id="@+id/frag_text_save"
-                    android:layout_width="@dimen/ftr_icon_size"
-                    android:layout_height="@dimen/ftr_icon_size"
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/icon_size"
                     android:layout_gravity="center"
+                    android:layout_margin="@dimen/default_padding"
                     android:contentDescription="@string/btn_save"
-                    android:src="@drawable/icn_save"
-                    android:layout_margin="@dimen/default_padding" />
+                    android:src="@drawable/icn_save" />
             </LinearLayout>
 
             <ScrollView
+                android:id="@+id/frag_text_scrollview"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:layout_margin="@dimen/default_padding"
-                android:id="@+id/frag_text_scrollview">
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_padding">
 
                 <EditText
                     android:id="@+id/frag_text_body"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:background="@android:color/transparent"
+                    android:clickable="false"
                     android:gravity="bottom"
                     android:inputType="textMultiLine"
-                    android:textAppearance="@android:style/TextAppearance.Material.Small" />
+                    android:textAppearance="@android:style/TextAppearance.Material.Medium" />
             </ScrollView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:id="@+id/frag_text_space" />
         </LinearLayout>
 
 
