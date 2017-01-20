@@ -1,8 +1,6 @@
 package io.nicco.memo.memo;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,7 +12,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static android.content.ContentValues.TAG;
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 public class Preview extends Activity {
@@ -37,6 +34,8 @@ public class Preview extends Activity {
         id = getIntent().getStringExtra(EXTRA_MESSAGE);
         Log.i("NEW NOTE ID", id);
         n = new Note(this, id);
+
+        Main.setActionBar(this);
 
         tv_date = (TextView) findViewById(R.id.pv_time);
         et_title = (EditText) findViewById(R.id.pv_title);
@@ -62,19 +61,9 @@ public class Preview extends Activity {
         btn_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(TAG, "DELETE");
-                AlertDialog.Builder builder = new AlertDialog.Builder(Preview.this);
-                builder.setPositiveButton(R.string.dialog_delete, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        n.delete();
-                        Preview.super.onBackPressed();
-                    }
-                });
-                builder.setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                    }
-                });
-                builder.create();
+                n.delete();
+                new Utils().toast(getApplicationContext(), "Deleted");
+                Preview.super.onBackPressed();
             }
         });
 

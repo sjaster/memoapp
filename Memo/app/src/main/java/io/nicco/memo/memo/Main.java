@@ -1,5 +1,6 @@
 package io.nicco.memo.memo;
 
+import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -42,6 +44,8 @@ public class Main extends FragmentActivity {
         PACKAGE_NAME = getApplicationContext().getPackageName();
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
+        setActionBar(this);
 
         // Defining Names of the options in the bottom footer menu
         menu_names.add("list");
@@ -90,6 +94,15 @@ public class Main extends FragmentActivity {
                     indicator.setLayoutParams(params);
                 }
             });
+        }
+    }
+
+    public static void setActionBar(Activity a) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = a.getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(a.getResources().getColor(R.color.custActionBar));
         }
     }
 
