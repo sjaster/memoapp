@@ -28,8 +28,7 @@
         <activity
             android:name=".Preview"
             android:label="@string/title_activity_preview"
-            android:parentActivityName=".Main"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:parentActivityName=".Main">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="io.nicco.memo.memo.Main" />
