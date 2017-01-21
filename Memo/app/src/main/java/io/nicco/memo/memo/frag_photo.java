@@ -1,7 +1,6 @@
 package io.nicco.memo.memo;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.ImageFormat;
@@ -23,16 +22,15 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.util.Size;
 import android.view.LayoutInflater;
 import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import java.util.Arrays;
-import java.util.List;
 
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 public class frag_photo extends Fragment {
@@ -41,17 +39,18 @@ public class frag_photo extends Fragment {
     Context c;
     NotePhoto np;
     View shutter;
+    ImageView btn_change;
     TextureView tv;
-
 
     /* CAMERA VARS */
     Surface surfacePreview;
     Surface surfaceJPEG;
-    ImageReader jpegImageReader;
     CameraDevice cam;
     CameraCaptureSession camSession;
     CaptureRequest.Builder request;
-    TotalCaptureResult res;
+    CameraCharacteristics cc;
+    int curCam = 0;
+    int maxCam = 1;
 
     Handler handler;
     HandlerThread handlerThread;
@@ -61,74 +60,125 @@ public class frag_photo extends Fragment {
 
     String TAG = "CAMERA";
 
-    private void cameraOpen() {
+    final TextureView.SurfaceTextureListener surfacePreviewListener = new TextureView.SurfaceTextureListener() {
+        @Override
+        public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int i, int i1) {
+            cameraIni();
+        }
+
+        @Override
+        public void onSurfaceTextureSizeChanged(SurfaceTexture surfaceTexture, int i, int i1) {
+
+        }
+
+        @Override
+        public boolean onSurfaceTextureDestroyed(SurfaceTexture surfaceTexture) {
+            return false;
+        }
+
+        @Override
+        public void onSurfaceTextureUpdated(SurfaceTexture surfaceTexture) {
+
+        }
+    };
+
+    void createPreview() {
         try {
-            List<Surface> surfaces = Arrays.asList(surfacePreview, surfaceJPEG);
-
-            if (surfacePreview == null || surfaceJPEG == null) {
-                Log.i(TAG, "Surfaces null");
+            if (camSession == null)
                 return;
-            }
+            request = cam.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
+            request.set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
+            request.addTarget(surfacePreview);
+            camSession.setRepeatingRequest(request.build(), new CameraCaptureSession.CaptureCallback() {
+                @Override
+                public void onCaptureCompleted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, @NonNull TotalCaptureResult result) {
+                }
+            }, handler);
+        } catch (CameraAccessException e) {
+            e.printStackTrace();
+        }
+    }
 
-            cam.createCaptureSession(surfaces, new CameraCaptureSession.StateCallback() {
+    void shutter() {
+        try {
+            if (camSession == null)
+                return;
+            request = cam.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE);
+            request.addTarget(surfaceJPEG);
+            camSession.stopRepeating();
+            camSession.capture(request.build(), new CameraCaptureSession.CaptureCallback() {
+                @Override
+                public void onCaptureCompleted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, @NonNull TotalCaptureResult result) {
+                }
+            }, handler);
+        } catch (CameraAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
+    void cameraOpen() {
+        try {
+            if (cam == null)
+                return;
+
+            StreamConfigurationMap streamConfigs = cc.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
+            assert streamConfigs != null;
+            Size[] jpegSizes = streamConfigs.getOutputSizes(ImageFormat.JPEG);
+
+            ImageReader jpegImageReader = ImageReader.newInstance(jpegSizes[0].getWidth(), jpegSizes[0].getHeight(), ImageFormat.JPEG, 1);
+            jpegImageReader.setOnImageAvailableListener(new ImageReader.OnImageAvailableListener() {
+
+                @Override
+                public void onImageAvailable(ImageReader imageReader) {
+                    np.img = imageReader.acquireNextImage();
+                    new Utils().toast(getContext(), "Image Saved");
+                    np.save();
+                    createPreview();
+                }
+            }, handler);
+            surfaceJPEG = jpegImageReader.getSurface();
+
+            surfacePreview = new Surface(tv.getSurfaceTexture());
+
+            cam.createCaptureSession(Arrays.asList(surfacePreview, surfaceJPEG), new CameraCaptureSession.StateCallback() {
                 @Override
                 public void onConfigured(@NonNull CameraCaptureSession session) {
+                    if (cam == null)
+                        return;
                     camSession = session;
+
+                    createPreview();
                 }
 
                 @Override
                 public void onConfigureFailed(@NonNull CameraCaptureSession cameraCaptureSession) {
 
                 }
-            }, handler);
-
-            request = cam.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
-            request.addTarget(surfacePreview);
-
-            try {
-                camSession.setRepeatingRequest(request.build(), new CameraCaptureSession.CaptureCallback() {
-                    @Override
-                    public void onCaptureCompleted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, @NonNull TotalCaptureResult result) {
-                        res = result;
-                    }
-                }, null);
-            } catch (CameraAccessException e) {
-                e.printStackTrace();
-            }
+            }, null);
 
         } catch (CameraAccessException e) {
             e.printStackTrace();
         }
     }
 
-    private void cameraIni() {
+    void cycleCam() {
+        curCam++;
+        if (curCam >= maxCam)
+            curCam = 0;
+        cameraIni();
+    }
+
+    void cameraIni() {
         try {
             CameraManager cm = (CameraManager) c.getSystemService(Context.CAMERA_SERVICE);
-            for (String tmp : cm.getCameraIdList()) {
-                Log.i("Cams", tmp);
-            }
-            String cameraId = cm.getCameraIdList()[0];
-            CameraCharacteristics cc = cm.getCameraCharacteristics(cameraId);
-            StreamConfigurationMap streamConfigs = cc.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
-            assert streamConfigs != null;
-            Size[] jpegSizes = streamConfigs.getOutputSizes(ImageFormat.JPEG);
-
-            jpegImageReader = ImageReader.newInstance(jpegSizes[0].getWidth(), jpegSizes[0].getHeight(), ImageFormat.JPEG, 1);
-            jpegImageReader.setOnImageAvailableListener(new ImageReader.OnImageAvailableListener() {
-
-                @Override
-                public void onImageAvailable(ImageReader imageReader) {
-                    Log.i(TAG, "Image taken");
-                    //np.img = imageReader.acquireLatestImage();
-                }
-            }, handler);
-
-            surfaceJPEG = jpegImageReader.getSurface();
+            maxCam = cm.getCameraIdList().length;
+            String camId = cm.getCameraIdList()[curCam];
+            cc = cm.getCameraCharacteristics(camId);
 
             if (ActivityCompat.checkSelfPermission(c, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                 return;
             }
-            cm.openCamera(cameraId, new CameraDevice.StateCallback() {
+            cm.openCamera(camId, new CameraDevice.StateCallback() {
                 @Override
                 public void onOpened(@NonNull CameraDevice camera) {
                     cam = camera;
@@ -137,12 +187,14 @@ public class frag_photo extends Fragment {
 
                 @Override
                 public void onDisconnected(@NonNull CameraDevice cameraDevice) {
-
+                    cam.close();
+                    cam = null;
                 }
 
                 @Override
                 public void onError(@NonNull CameraDevice cameraDevice, int i) {
-
+                    cam.close();
+                    cam = null;
                 }
             }, handler);
 
@@ -151,25 +203,32 @@ public class frag_photo extends Fragment {
         }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        handlerThread = new HandlerThread("Camera");
+    void closeCamera() {
+        if (null != camSession) {
+            camSession.close();
+            camSession = null;
+        }
+        if (null != cam) {
+            cam.close();
+            cam = null;
+        }
+    }
+
+    private void startBackgroundThread() {
+        handlerThread = new HandlerThread("CameraBackground");
         handlerThread.start();
         handler = new Handler(handlerThread.getLooper());
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        if (cam != null)
-            cam.close();
-
+    private void stopBackgroundThread() {
         handlerThread.quitSafely();
-        handlerThread = null;
-        handler.getLooper().quit();
-        handler = null;
-
+        try {
+            handlerThread.join();
+            handlerThread = null;
+            handler = null;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -177,55 +236,44 @@ public class frag_photo extends Fragment {
         ViewGroup v = (ViewGroup) inflater.inflate(R.layout.fragment_photo, container, false);
 
         c = getContext();
-
         np = new NotePhoto(c);
 
-        ActivityCompat.requestPermissions((Activity) getContext(), new String[]{Manifest.permission.CAMERA}, Main.PERMISSION_REQUEST);
-
         tv = (TextureView) v.findViewById(R.id.frag_photo_preview_field);
-        tv.setSurfaceTextureListener(new TextureView.SurfaceTextureListener() {
-            @Override
-            public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int i, int i1) {
-                surfacePreview = new Surface(surfaceTexture);
-                cameraIni();
-            }
-
-            @Override
-            public void onSurfaceTextureSizeChanged(SurfaceTexture surfaceTexture, int i, int i1) {
-
-            }
-
-            @Override
-            public boolean onSurfaceTextureDestroyed(SurfaceTexture surfaceTexture) {
-                return false;
-            }
-
-            @Override
-            public void onSurfaceTextureUpdated(SurfaceTexture surfaceTexture) {
-
-            }
-        });
-
         shutter = v.findViewById(R.id.frag_photo_shutter_btn);
         shutter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(TAG, "Shutter Pressed");
-                jpegImageReader.acquireLatestImage();
+                shutter();
             }
         });
+        btn_change = (ImageView) v.findViewById(R.id.frag_photo_change_btn);
+        btn_change.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cycleCam();
+            }
+        });
+
+        if (new Utils().getPref(getContext(), Main.PREF_CAM_DEF).equals("true"))
+            curCam = 1;
 
         return v;
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case Main.PERMISSION_REQUEST:
-                granted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-                Log.i("PERMISSION", String.valueOf(granted));
-                break;
-        }
+    public void onResume() {
+        super.onResume();
+        startBackgroundThread();
+        if (tv.isAvailable())
+            cameraIni();
+        else
+            tv.setSurfaceTextureListener(surfacePreviewListener);
+    }
+
+    @Override
+    public void onPause() {
+        closeCamera();
+        stopBackgroundThread();
+        super.onPause();
     }
 }
