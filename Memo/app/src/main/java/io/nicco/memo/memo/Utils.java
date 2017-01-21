@@ -1,6 +1,8 @@
 package io.nicco.memo.memo;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.widget.Toast;
 
 import java.io.BufferedInputStream;
@@ -29,6 +31,18 @@ class Utils {
 
     void toast(Context c, String s) {
         Toast.makeText(c, s, Toast.LENGTH_SHORT).show();
+    }
+
+    void putPref(Context c, String k, String v) {
+        SharedPreferences sharedPref = ((Activity) c).getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(k, v);
+        editor.apply();
+    }
+
+    String getPref(Context c, String k) {
+        SharedPreferences sharedPref = ((Activity) c).getPreferences(Context.MODE_PRIVATE);
+        return sharedPref.getString(k, "");
     }
 
     void write(String file, byte[] msg) {
@@ -64,6 +78,7 @@ class Utils {
         try {
             rm_util(new File(path));
         } finally {
+            Main.changed = true;
         }
     }
 
