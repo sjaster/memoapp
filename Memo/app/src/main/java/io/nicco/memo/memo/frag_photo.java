@@ -34,8 +34,6 @@ import android.view.ViewGroup;
 import java.util.Arrays;
 import java.util.List;
 
-import static android.content.ContentValues.TAG;
-
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 public class frag_photo extends Fragment {
 
@@ -49,18 +47,29 @@ public class frag_photo extends Fragment {
     /* CAMERA VARS */
     Surface surfacePreview;
     Surface surfaceJPEG;
+    ImageReader jpegImageReader;
     CameraDevice cam;
     CameraCaptureSession camSession;
+    CaptureRequest.Builder request;
     TotalCaptureResult res;
+
     Handler handler;
     HandlerThread handlerThread;
 
     /* PERMISSION */
     boolean granted = false;
 
+    String TAG = "CAMERA";
+
     private void cameraOpen() {
         try {
             List<Surface> surfaces = Arrays.asList(surfacePreview, surfaceJPEG);
+
+            if (surfacePreview == null || surfaceJPEG == null) {
+                Log.i(TAG, "Surfaces null");
+                return;
+            }
+
             cam.createCaptureSession(surfaces, new CameraCaptureSession.StateCallback() {
                 @Override
                 public void onConfigured(@NonNull CameraCaptureSession session) {
@@ -73,15 +82,20 @@ public class frag_photo extends Fragment {
                 }
             }, handler);
 
-            CaptureRequest.Builder request = cam.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
+            request = cam.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
             request.addTarget(surfacePreview);
 
-            camSession.setRepeatingRequest(request.build(), new CameraCaptureSession.CaptureCallback() {
-                @Override
-                public void onCaptureCompleted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, @NonNull TotalCaptureResult result) {
-                    res = result;
-                }
-            }, null);
+            try {
+                camSession.setRepeatingRequest(request.build(), new CameraCaptureSession.CaptureCallback() {
+                    @Override
+                    public void onCaptureCompleted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, @NonNull TotalCaptureResult result) {
+                        res = result;
+                    }
+                }, null);
+            } catch (CameraAccessException e) {
+                e.printStackTrace();
+            }
+
         } catch (CameraAccessException e) {
             e.printStackTrace();
         }
@@ -99,7 +113,7 @@ public class frag_photo extends Fragment {
             assert streamConfigs != null;
             Size[] jpegSizes = streamConfigs.getOutputSizes(ImageFormat.JPEG);
 
-            ImageReader jpegImageReader = ImageReader.newInstance(jpegSizes[0].getWidth(), jpegSizes[0].getHeight(), ImageFormat.JPEG, 1);
+            jpegImageReader = ImageReader.newInstance(jpegSizes[0].getWidth(), jpegSizes[0].getHeight(), ImageFormat.JPEG, 1);
             jpegImageReader.setOnImageAvailableListener(new ImageReader.OnImageAvailableListener() {
 
                 @Override
@@ -143,15 +157,19 @@ public class frag_photo extends Fragment {
         handlerThread = new HandlerThread("Camera");
         handlerThread.start();
         handler = new Handler(handlerThread.getLooper());
-        //cameraIni();
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        if (cam != null)
+            cam.close();
+
         handlerThread.quitSafely();
         handlerThread = null;
+        handler.getLooper().quit();
         handler = null;
+
     }
 
     @Override
@@ -169,6 +187,7 @@ public class frag_photo extends Fragment {
             @Override
             public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int i, int i1) {
                 surfacePreview = new Surface(surfaceTexture);
+                cameraIni();
             }
 
             @Override
@@ -191,6 +210,8 @@ public class frag_photo extends Fragment {
         shutter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.i(TAG, "Shutter Pressed");
+                jpegImageReader.acquireLatestImage();
             }
         });
 
