@@ -1,8 +1,10 @@
 package io.nicco.memo.memo;
 
+import android.Manifest;
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -32,6 +34,7 @@ public class Main extends FragmentActivity {
 
     public static boolean changed = false;
     public final static int PERMISSION_REQUEST = 8888;
+    public final static String PREF_CAM_DEF = "PREF_CAM_DEF";
 
     FragmentPagerAdapter adapterViewPager;
     ViewPager vpPager;
@@ -44,6 +47,8 @@ public class Main extends FragmentActivity {
         PACKAGE_NAME = getApplicationContext().getPackageName();
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO}, PERMISSION_REQUEST);
 
         setActionBar(this);
 

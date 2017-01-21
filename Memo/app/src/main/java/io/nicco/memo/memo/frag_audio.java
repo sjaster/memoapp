@@ -1,7 +1,6 @@
 package io.nicco.memo.memo;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.media.MediaRecorder;
 import android.os.Build;
@@ -10,7 +9,6 @@ import android.os.Handler;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
@@ -118,8 +116,6 @@ public class frag_audio extends Fragment {
             recorder = null;
         }
         readyToSafe = true;
-        new Utils().toast(getContext(), "To save click the save button");
-
         btn_main.setBackgroundResource(R.drawable.icn_rec_mic);
         tv_lastrec.setVisibility(View.VISIBLE);
         timeWhenStopped = 0;
@@ -157,9 +153,6 @@ public class frag_audio extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup v = (ViewGroup) inflater.inflate(R.layout.fragment_audio, container, false);
-
-        if (!checkPermission())
-            ActivityCompat.requestPermissions((Activity) getContext(), new String[]{Manifest.permission.RECORD_AUDIO}, Main.PERMISSION_REQUEST);
 
         title = (EditText) v.findViewById(R.id.frag_audio_title);
         chrono = (Chronometer) v.findViewById(R.id.frag_audio_chrono);
@@ -233,15 +226,12 @@ public class frag_audio extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
+        if (recording)
+            stopRecorder();
         if (recorder != null) {
             recorder.release();
             recorder = null;
         }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
         new Utils().rm(getContext().getFilesDir() + "/record");
     }
 

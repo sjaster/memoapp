@@ -6,6 +6,8 @@
     <!--GENERAL-->
     <dimen name="default_padding">8dp</dimen>
     <dimen name="icon_size">24dp</dimen>
+    <dimen name="divider_margin_top">4dp</dimen>
+    <dimen name="divider_height">1dp</dimen>
 
     <!--FOOTER-->
     <dimen name="ftr_height">56dp</dimen>
@@ -16,6 +18,7 @@
     <dimen name="shutter_ring_width">1dp</dimen>
     <dimen name="shutter_margin_bottom">32dp</dimen>
     <dimen name="shutter_size">64dp</dimen>
+    <dimen name="shutter_rotate">40dp</dimen>
 
     <!--LIST-->
     <dimen name="list_icon_left">20dp</dimen>

@@ -33,6 +33,7 @@
     <string name="settings_contribute">Contribute on Github!</string>
     <string name="settings_link">https://github.com/sjaster/memoapp</string>
     <string name="settings_version">Version - 0.2.4</string>
+    <string name="settings_delete_all">Delete All Notes</string>
 
 
     <!--GENERAL PURPOSE-->
