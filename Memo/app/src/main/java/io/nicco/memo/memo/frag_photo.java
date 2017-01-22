@@ -41,24 +41,19 @@ public class frag_photo extends Fragment {
     View shutter;
     ImageView btn_change;
     TextureView tv;
+    boolean takingPic = false;
 
     /* CAMERA VARS */
     Surface surfacePreview;
     Surface surfaceJPEG;
     CameraDevice cam;
     CameraCaptureSession camSession;
-    CaptureRequest.Builder request;
     CameraCharacteristics cc;
     int curCam = 0;
     int maxCam = 1;
 
     Handler handler;
     HandlerThread handlerThread;
-
-    /* PERMISSION */
-    boolean granted = false;
-
-    String TAG = "CAMERA";
 
     final TextureView.SurfaceTextureListener surfacePreviewListener = new TextureView.SurfaceTextureListener() {
         @Override
@@ -86,7 +81,7 @@ public class frag_photo extends Fragment {
         try {
             if (camSession == null)
                 return;
-            request = cam.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
+            CaptureRequest.Builder request = cam.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
             request.set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
             request.addTarget(surfacePreview);
             camSession.setRepeatingRequest(request.build(), new CameraCaptureSession.CaptureCallback() {
@@ -101,17 +96,21 @@ public class frag_photo extends Fragment {
 
     void shutter() {
         try {
-            if (camSession == null)
+            if (camSession == null || takingPic)
                 return;
-            request = cam.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE);
+            takingPic = true;
+            CaptureRequest.Builder request = cam.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE);
             request.addTarget(surfaceJPEG);
             camSession.stopRepeating();
             camSession.capture(request.build(), new CameraCaptureSession.CaptureCallback() {
                 @Override
                 public void onCaptureCompleted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, @NonNull TotalCaptureResult result) {
+                    takingPic = false;
                 }
             }, handler);
         } catch (CameraAccessException e) {
+            takingPic = false;
+            createPreview();
             e.printStackTrace();
         }
     }
@@ -125,14 +124,15 @@ public class frag_photo extends Fragment {
             assert streamConfigs != null;
             Size[] jpegSizes = streamConfigs.getOutputSizes(ImageFormat.JPEG);
 
-            ImageReader jpegImageReader = ImageReader.newInstance(jpegSizes[0].getWidth(), jpegSizes[0].getHeight(), ImageFormat.JPEG, 1);
+            final ImageReader jpegImageReader = ImageReader.newInstance(jpegSizes[0].getWidth(), jpegSizes[0].getHeight(), ImageFormat.JPEG, 1);
             jpegImageReader.setOnImageAvailableListener(new ImageReader.OnImageAvailableListener() {
 
                 @Override
                 public void onImageAvailable(ImageReader imageReader) {
                     np.img = imageReader.acquireNextImage();
-                    new Utils().toast(getContext(), "Image Saved");
                     np.save();
+                    new Utils().toast(getContext(), "Image Saved");
+                    imageReader.close();
                     createPreview();
                 }
             }, handler);
@@ -146,13 +146,11 @@ public class frag_photo extends Fragment {
                     if (cam == null)
                         return;
                     camSession = session;
-
                     createPreview();
                 }
 
                 @Override
                 public void onConfigureFailed(@NonNull CameraCaptureSession cameraCaptureSession) {
-
                 }
             }, null);
 
@@ -165,6 +163,7 @@ public class frag_photo extends Fragment {
         curCam++;
         if (curCam >= maxCam)
             curCam = 0;
+        closeCamera();
         cameraIni();
     }
 

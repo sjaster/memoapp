@@ -2,7 +2,6 @@ package io.nicco.memo.memo;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -32,7 +31,6 @@ public class Preview extends Activity {
         setContentView(R.layout.activity_preview);
 
         id = getIntent().getStringExtra(EXTRA_MESSAGE);
-        Log.i("NEW NOTE ID", id);
         n = new Note(this, id);
 
         Main.setActionBar(this);
