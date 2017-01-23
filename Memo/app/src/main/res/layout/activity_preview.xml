@@ -21,7 +21,7 @@
             android:layout_margin="@dimen/default_padding"
             android:adjustViewBounds="false"
             android:contentDescription="@string/btn_cancel"
-            android:src="@drawable/icn_back" />
+            android:src="@drawable/icn_arrow_l" />
 
         <EditText
             android:id="@+id/pv_title"

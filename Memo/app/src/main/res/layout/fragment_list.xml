@@ -28,10 +28,9 @@
                 android:textAppearance="@android:style/TextAppearance.Material.Large.Inverse" />
 
             <ImageView
-                android:id="@+id/imageView2"
                 android:layout_width="@dimen/icon_size"
                 android:layout_height="@dimen/icon_size"
-                android:src="@drawable/icn_sort" />
+                android:src="@drawable/icn_sort_inv" />
 
         </LinearLayout>
 
