@@ -1,43 +1,47 @@
 # TODO
 
-###### List of task that need to be addressed
-
 ### ~ Preview
 
-##### Important
+###### Important
 
-* Implement multiple views for different data types
+* [ ] Implement multiple views for different data types
 
 ### ~ Camera
 
-##### Important
+###### Important
 
-* Switch Cams
-* Resize/Transform Surface to fir screen
+* [x] Switch Cams 
+* [ ] Resize/Transform Surface to fit screen without skew
 
-##### Optional
+###### Optional
 
-* Flash
-* Grid
+* [ ] Flash
+* [ ] Grid
 
 ### ~ Text
 
-##### Optional
+###### Optional
 
-* Formatting
+* [ ] Formatting
 
 ### ~ List
 
-##### Important
+###### Important
 
-* Share function
+* [ ] Share function
 
-##### Optional
+###### Optional
 
-* Multi-item actions
+* [ ] Multi-item actions
 
 ### ~ Settings
 
-##### Optional
+###### Optional
 
-* Make github link cliccable
+* [ ] Make github link cliccable
+
+### ~ Start Screen
+
+###### Important
+
+* [ ] Add Logo font
