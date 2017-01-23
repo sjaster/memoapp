@@ -19,7 +19,7 @@ class frag_list_adapter extends BaseAdapter {
     private Context c;
     private ArrayList<Note> data;
     private static LayoutInflater inflater = null;
-    private int[] type_img = {R.drawable.icn_file, R.drawable.icn_camera, R.drawable.icn_microphone};
+    private int[] type_img = {R.drawable.icn_file_inv, R.drawable.icn_camera_inv, R.drawable.icn_microphone_inv};
 
     frag_list_adapter(Context context, ArrayList<Note> notes) {
         c = context;
