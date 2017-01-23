@@ -16,9 +16,9 @@ import java.util.Date;
 
 class frag_list_adapter extends BaseAdapter {
 
+    private static LayoutInflater inflater = null;
     private Context c;
     private ArrayList<Note> data;
-    private static LayoutInflater inflater = null;
     private int[] type_img = {R.drawable.icn_file_inv, R.drawable.icn_camera_inv, R.drawable.icn_microphone_inv};
 
     frag_list_adapter(Context context, ArrayList<Note> notes) {

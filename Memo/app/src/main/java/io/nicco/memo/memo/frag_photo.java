@@ -53,8 +53,6 @@ public class frag_photo extends Fragment {
     int maxCam = 1;
 
     Handler handler;
-    HandlerThread handlerThread;
-
     final TextureView.SurfaceTextureListener surfacePreviewListener = new TextureView.SurfaceTextureListener() {
         @Override
         public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int i, int i1) {
@@ -76,6 +74,7 @@ public class frag_photo extends Fragment {
 
         }
     };
+    HandlerThread handlerThread;
 
     void createPreview() {
         try {

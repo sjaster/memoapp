@@ -26,10 +26,10 @@
             android:id="@+id/frag_photo_change_btn"
             android:layout_width="@dimen/shutter_rotate"
             android:layout_height="@dimen/shutter_rotate"
-            android:src="@drawable/icn_rotate"
             android:layout_alignBottom="@+id/frag_photo_shutter_btn"
+            android:layout_marginStart="@dimen/audio_margin_pause"
             android:layout_toEndOf="@+id/frag_photo_shutter_btn"
-            android:layout_marginStart="@dimen/audio_margin_pause" />
+            android:src="@drawable/icn_rotate" />
 
     </RelativeLayout>
 

@@ -26,6 +26,7 @@ import java.util.Date;
 
 public class frag_audio extends Fragment {
 
+    private final Handler handler = new Handler();
     TextView tv_lastrec;
     MediaRecorder recorder;
     ImageView btn_main, btn_pause, btn_save, btn_trash;
@@ -34,12 +35,9 @@ public class frag_audio extends Fragment {
     String fileName;
     EditText title;
     NoteAudio na;
-
     int visualizerW = 0;
     int visualizerH = 0;
     int MAX_RANGE = 32767;
-
-    private final Handler handler = new Handler();
     Runnable runnable;
 
     long timeWhenStopped;

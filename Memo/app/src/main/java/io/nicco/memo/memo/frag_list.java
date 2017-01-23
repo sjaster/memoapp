@@ -13,11 +13,11 @@ import java.util.ArrayList;
 
 public class frag_list extends Fragment {
 
+    private final Handler handler = new Handler();
+    private final int handlerUpdate = 100;
+    Runnable runnable;
     private ListView lv;
     private NoteText nt;
-    private final Handler handler = new Handler();
-    Runnable runnable;
-    private final int handlerUpdate = 100;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

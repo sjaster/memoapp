@@ -3,9 +3,9 @@
     android:id="@+id/frag_list_item_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:padding="@dimen/list_item_padding"
-    android:gravity="center_vertical">
+    android:padding="@dimen/list_item_padding">
 
     <RelativeLayout
         android:layout_width="@dimen/list_icon_left"
@@ -45,14 +45,14 @@
         android:id="@+id/frag_list_item_like"
         android:layout_width="@dimen/icon_size"
         android:layout_height="@dimen/icon_size"
-        android:src="@drawable/icn_like_off"
-        android:layout_marginStart="@dimen/default_padding" />
+        android:layout_marginStart="@dimen/default_padding"
+        android:src="@drawable/icn_like_off" />
 
     <ImageView
         android:id="@+id/frag_list_item_share"
         android:layout_width="@dimen/icon_size"
         android:layout_height="@dimen/icon_size"
-        android:src="@drawable/icn_share"
-        android:layout_marginStart="@dimen/default_padding" />
+        android:layout_marginStart="@dimen/default_padding"
+        android:src="@drawable/icn_share" />
 
 </LinearLayout>

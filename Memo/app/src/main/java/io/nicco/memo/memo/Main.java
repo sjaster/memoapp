@@ -22,22 +22,27 @@ import java.util.ArrayList;
 
 public class Main extends FragmentActivity {
 
+    public final static int PERMISSION_REQUEST = 8888;
+    public final static String PREF_CAM_DEF = "PREF_CAM_DEF";
     public static String PACKAGE_NAME;
-
     public static ArrayList<String> menu_names = new ArrayList<>();
     public static ArrayList<LinearLayout> menu_items = new ArrayList<>();
     public static ArrayList<ImageView> menu_icons = new ArrayList<>();
-
+    public static boolean changed = false;
     View indicator;
     int indicatorW;
     boolean measured = false;
-
-    public static boolean changed = false;
-    public final static int PERMISSION_REQUEST = 8888;
-    public final static String PREF_CAM_DEF = "PREF_CAM_DEF";
-
     FragmentPagerAdapter adapterViewPager;
     ViewPager vpPager;
+
+    public static void setActionBar(Activity a) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = a.getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(a.getResources().getColor(R.color.colorPrimaryDark));
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,15 +104,6 @@ public class Main extends FragmentActivity {
                     indicator.setLayoutParams(params);
                 }
             });
-        }
-    }
-
-    public static void setActionBar(Activity a) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = a.getWindow();
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(a.getResources().getColor(R.color.colorPrimaryDark));
         }
     }
 
