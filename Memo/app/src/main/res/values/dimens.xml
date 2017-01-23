@@ -21,9 +21,8 @@
     <dimen name="shutter_rotate">40dp</dimen>
 
     <!--LIST-->
-    <dimen name="list_icon_left">20dp</dimen>
-    <dimen name="list_icon_left_padding">10dp</dimen>
-    <dimen name="list_padding">8dp</dimen>
+    <dimen name="list_icon_left">48dp</dimen>
+    <dimen name="list_item_padding">16dp</dimen>
 
     <!--AUDIO-->
     <dimen name="audio_icn_size">40dp</dimen>
@@ -34,4 +33,8 @@
     <!--SETTINGS-->
     <dimen name="settings_icon_size">128dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+
+    <!--START SCREEN (ss) -->
+    <dimen name="ss_logo_size">128dp</dimen>
+    <dimen name="ss_title_margin_top">18dp</dimen>
 </resources>

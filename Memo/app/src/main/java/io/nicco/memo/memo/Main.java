@@ -107,7 +107,7 @@ public class Main extends FragmentActivity {
             Window window = a.getWindow();
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(a.getResources().getColor(R.color.custActionBar));
+            window.setStatusBarColor(a.getResources().getColor(R.color.colorPrimaryDark));
         }
     }
 

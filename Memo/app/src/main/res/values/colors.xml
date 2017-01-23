@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!--GENEREAL-->
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
-
+    <!-- GENERAL -->
+    <color name="colorPrimary">#91e4fb</color>
+    <color name="colorPrimaryDark">#1f2fad</color>
+    <color name="colorAccent">#fff2767e</color>
     <color name="black_overlay">#66000000</color>
 
-    <color name="primary">#000000</color>
-    <color name="secondary">#000000</color>
-    <color name="light">#efefef</color>
-    <color name="dark">#000000</color>
 
     <!--CUSTOM-->
     <color name="custActionBar">#efefef</color>
@@ -22,4 +17,5 @@
     <!--CAMERA-->
     <color name="shutter_btn_ring">#ee000000</color>
     <color name="shutter_btn_fill">#3cffffff</color>
+
 </resources>

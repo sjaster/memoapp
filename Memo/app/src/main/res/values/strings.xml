@@ -44,4 +44,10 @@
 
     <!--PREVIEW-->
     <string name="pv_last_modified">Last Modified</string>
+
+    <!--LIST-->
+    <string name="list_title">My Notes</string>
+
+    <!--START SCREEN (ss)-->
+    <string name="ss_title">Notizian</string>
 </resources>
