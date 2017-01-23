@@ -1,19 +1,18 @@
 package io.nicco.memo.memo;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
-import static android.provider.AlarmClock.EXTRA_MESSAGE;
+import java.util.Date;
 
 class frag_list_adapter extends BaseAdapter {
 
@@ -48,14 +47,15 @@ class frag_list_adapter extends BaseAdapter {
         final Note n = data.get(position);
 
         TextView title = (TextView) vi.findViewById(R.id.frag_list_item_title);
+        TextView subtitle = (TextView) vi.findViewById(R.id.frag_list_item_subtitle);
         ImageView type = (ImageView) vi.findViewById(R.id.frag_list_item_icon);
         ImageView share = (ImageView) vi.findViewById(R.id.frag_list_item_share);
         ImageView like = (ImageView) vi.findViewById(R.id.frag_list_item_like);
         LinearLayout ll = (LinearLayout) vi.findViewById(R.id.frag_list_item_root);
 
-        ll.setOnClickListener(new View.OnClickListener(){
+        ll.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
                 n.preview();
             }
         });
@@ -71,6 +71,9 @@ class frag_list_adapter extends BaseAdapter {
         });
 
         title.setText(n.title);
+
+        DateFormat fmt = new SimpleDateFormat("dd MMM yyyy");
+        subtitle.setText(fmt.format(new Date((long) n.datetime * 1000)));
 
         type.setBackgroundResource(type_img[n.type]);
 
