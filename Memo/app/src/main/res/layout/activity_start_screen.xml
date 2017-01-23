@@ -22,14 +22,16 @@
         <ImageView
             android:layout_width="@dimen/ss_logo_size"
             android:layout_height="@dimen/ss_logo_size"
-            android:src="@drawable/logo" />
+            android:src="@drawable/logo_light" />
 
         <TextView
+            android:id="@+id/ss_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/ss_title_margin_top"
             android:text="@string/ss_title"
-            android:textAppearance="@android:style/TextAppearance.Material.Large.Inverse" />
+            android:textSize="@dimen/ss_title_size"
+            android:textColor="@color/custWhite"/>
 
     </LinearLayout>
 

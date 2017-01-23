@@ -36,5 +36,6 @@
 
     <!--START SCREEN (ss) -->
     <dimen name="ss_logo_size">128dp</dimen>
-    <dimen name="ss_title_margin_top">18dp</dimen>
+    <dimen name="ss_title_margin_top">8dp</dimen>
+    <dimen name="ss_title_size">64sp</dimen>
 </resources>
