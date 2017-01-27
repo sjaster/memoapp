@@ -52,7 +52,7 @@ public class Main extends FragmentActivity {
         PACKAGE_NAME = getApplicationContext().getPackageName();
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-
+        
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO}, PERMISSION_REQUEST);
 
         setActionBar(this);
