@@ -26,4 +26,8 @@ class NoteText extends Note {
         text = new String(super.loadExtra(EXTRA_FILE));
         super.load();
     }
+
+    public void share() {
+
+    }
 }

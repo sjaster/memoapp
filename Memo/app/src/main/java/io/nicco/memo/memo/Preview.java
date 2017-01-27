@@ -1,7 +1,9 @@
 package io.nicco.memo.memo;
 
 import android.app.Activity;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -78,7 +80,10 @@ public class Preview extends Activity {
                 loadAudio();
                 break;
             case Note.TYPE_PHOTO:
-                loadPhoto();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+                    loadPhoto();
+                else
+                    finish();
                 break;
             case Note.TYPE_TEXT:
                 loadText();
@@ -94,15 +99,55 @@ public class Preview extends Activity {
     }
 
     void loadAudio() {
+        findViewById(R.id.pv_cont_audio).setVisibility(View.VISIBLE);
         na = new NoteAudio(this, id);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     void loadPhoto() {
         np = new NotePhoto(this, id);
+
+        findViewById(R.id.pv_cont_photo).setVisibility(View.VISIBLE);
+        ImageView iv = (ImageView) findViewById(R.id.pv_cont_photo_img);
+        iv.setImageBitmap(np.bm);
+
+        btn_save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                np.title = et_title.getText().toString();
+                np.save();
+                new Utils().toast(getApplicationContext(), "Saved");
+            }
+        });
     }
 
     void loadText() {
         nt = new NoteText(this, id);
+
+        findViewById(R.id.pv_cont_text).setVisibility(View.VISIBLE);
+        final EditText et_body = (EditText) findViewById(R.id.pv_cont_text_body);
+
+        et_body.setText(nt.text);
+
+        btn_save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                nt.text = et_body.getText().toString();
+                nt.title = et_title.getText().toString();
+                nt.save();
+                new Utils().toast(getApplicationContext(), "Saved");
+            }
+        });
+
+        btn_share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                nt.text = et_body.getText().toString();
+                nt.title = et_title.getText().toString();
+                nt.save();
+                nt.share();
+            }
+        });
     }
 
 }

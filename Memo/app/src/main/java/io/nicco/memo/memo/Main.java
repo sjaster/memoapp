@@ -107,6 +107,11 @@ public class Main extends FragmentActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        this.finishAffinity();
+    }
+
     public static class PagerAdapter extends FragmentPagerAdapter {
         /*
         Code Adapted from:
