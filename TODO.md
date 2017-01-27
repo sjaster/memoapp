@@ -4,7 +4,7 @@
 
 ###### Important
 
-* [ ] Implement multiple views for different data types
+* [ ] Implement audio views for audio data types
 
 ### ~ Camera
 
@@ -28,6 +28,7 @@
 
 ###### Important
 
+* [ ] Sort function
 * [ ] Share function
 
 ###### Optional
@@ -38,10 +39,10 @@
 
 ###### Optional
 
-* [ ] Make github link cliccable
+* [x] Make github link cliccable
 
 ### ~ Start Screen
 
 ###### Important
 
-* [ ] Add Logo font
+* [x] Add Logo font

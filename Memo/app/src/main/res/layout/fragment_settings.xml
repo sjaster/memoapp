@@ -100,7 +100,9 @@
                     android:fontFamily="sans-serif"
                     android:text="@string/settings_link"
                     android:textAlignment="center"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:id="@+id/frag_settings_link"
+                    android:autoLink="web"/>
 
                 <TextView
                     android:layout_width="match_parent"
