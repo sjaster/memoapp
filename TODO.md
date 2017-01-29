@@ -28,7 +28,11 @@
 
 ###### Important
 
+<<<<<<< Updated upstream
 * [ ] Sort function
+=======
+* [ ] Sort Function
+>>>>>>> Stashed changes
 * [ ] Share function
 
 ###### Optional
@@ -45,4 +49,8 @@
 
 ###### Important
 
+<<<<<<< Updated upstream
 * [x] Add Logo font
+=======
+* [x] Add Logo font
+>>>>>>> Stashed changes

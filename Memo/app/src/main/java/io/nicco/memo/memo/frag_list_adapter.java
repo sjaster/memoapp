@@ -1,12 +1,12 @@
 package io.nicco.memo.memo;
 
 import android.content.Context;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.text.DateFormat;
@@ -20,6 +20,8 @@ class frag_list_adapter extends BaseAdapter {
     private Context c;
     private ArrayList<Note> data;
     private int[] type_img = {R.drawable.icn_file_inv, R.drawable.icn_camera_inv, R.drawable.icn_microphone_inv};
+
+    private SparseBooleanArray selected = new SparseBooleanArray();
 
     frag_list_adapter(Context context, ArrayList<Note> notes) {
         c = context;
@@ -51,14 +53,13 @@ class frag_list_adapter extends BaseAdapter {
         ImageView type = (ImageView) vi.findViewById(R.id.frag_list_item_icon);
         ImageView share = (ImageView) vi.findViewById(R.id.frag_list_item_share);
         ImageView like = (ImageView) vi.findViewById(R.id.frag_list_item_like);
-        LinearLayout ll = (LinearLayout) vi.findViewById(R.id.frag_list_item_root);
 
-        ll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                n.preview();
-            }
-        });
+//        ll.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                n.preview();
+//            }
+//        });
 
         if (n.like)
             like.setBackgroundResource(R.drawable.icn_like_on);
@@ -72,11 +73,24 @@ class frag_list_adapter extends BaseAdapter {
 
         title.setText(n.title);
 
-        DateFormat fmt = new SimpleDateFormat("dd MMM yyyy");
+        DateFormat fmt = new SimpleDateFormat("dd MMM yyyy - HH:mm");
         subtitle.setText(fmt.format(new Date((long) n.datetime * 1000)));
 
         type.setBackgroundResource(type_img[n.type]);
 
         return vi;
     }
+
+    void toggle(int i) {
+        if (selected.get(i, false)) {
+            selected.delete(i);
+        } else {
+            selected.put(i, true);
+        }
+    }
+
+    SparseBooleanArray getSelected() {
+        return selected;
+    }
+
 }

@@ -3,6 +3,7 @@
     android:id="@+id/frag_list_item_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/bg_list_item"
     android:gravity="center_vertical"
     android:orientation="horizontal"
     android:padding="@dimen/list_item_padding">
@@ -18,6 +19,7 @@
             android:layout_width="@dimen/icon_size"
             android:layout_height="@dimen/icon_size"
             android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
             android:layout_centerVertical="true" />
 
     </RelativeLayout>

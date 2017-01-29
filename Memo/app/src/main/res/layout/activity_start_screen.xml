@@ -30,8 +30,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/ss_title_margin_top"
             android:text="@string/ss_title"
-            android:textSize="@dimen/ss_title_size"
-            android:textColor="@color/custWhite"/>
+            android:textColor="@color/custWhite"
+            android:textSize="@dimen/ss_title_size" />
 
     </LinearLayout>
 

@@ -2,17 +2,15 @@ package io.nicco.memo.memo;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
-import android.widget.TextView;
 
 public class frag_settings extends Fragment {
-    
+
     Switch default_cam;
     Button btn_del_all;
 
@@ -37,7 +35,6 @@ public class frag_settings extends Fragment {
                 new Utils().toast(getContext(), "All notes deleted");
             }
         });
-
 
 
         return v;

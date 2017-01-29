@@ -2,6 +2,7 @@ package io.nicco.memo.memo;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -10,7 +11,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -29,9 +30,12 @@ public class Main extends FragmentActivity {
     public static ArrayList<LinearLayout> menu_items = new ArrayList<>();
     public static ArrayList<ImageView> menu_icons = new ArrayList<>();
     public static boolean changed = false;
+
     View indicator;
     int indicatorW;
+    int indicatorI = 0;
     boolean measured = false;
+
     FragmentPagerAdapter adapterViewPager;
     ViewPager vpPager;
 
@@ -50,9 +54,7 @@ public class Main extends FragmentActivity {
         setContentView(R.layout.activity_main);
 
         PACKAGE_NAME = getApplicationContext().getPackageName();
-
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO}, PERMISSION_REQUEST);
 
         setActionBar(this);
@@ -74,8 +76,6 @@ public class Main extends FragmentActivity {
             menu_items.add(curLayout);
             menu_icons.add(curImg);
 
-            Log.i("Cur", curLayout.toString());
-
             curLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -94,22 +94,35 @@ public class Main extends FragmentActivity {
             vpPager.setOnScrollChangeListener(new View.OnScrollChangeListener() {
                 @Override
                 public void onScrollChange(View view, int i, int i1, int i2, int i3) {
-                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) indicator.getLayoutParams();
-                    if (!measured) {
-                        indicatorW = findViewById(R.id.ftr_indicator_w).getWidth() / menu_names.size();
-                        params.width = indicatorW;
-                        measured = true;
-                    }
-                    params.leftMargin = (int) (float) i / menu_names.size();
-                    indicator.setLayoutParams(params);
+                    indicatorI = i;
+                    updateIndicator();
                 }
             });
         }
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+
+        measured = false;
+        updateIndicator();
+    }
+
+    @Override
     public void onBackPressed() {
         this.finishAffinity();
+    }
+
+    void updateIndicator() {
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) indicator.getLayoutParams();
+        if (!measured) {
+            indicatorW = findViewById(R.id.ftr_indicator_w).getWidth() / menu_names.size();
+            params.width = indicatorW;
+            measured = true;
+        }
+        params.leftMargin = (int) (float) indicatorI / menu_names.size();
+        indicator.setLayoutParams(params);
     }
 
     public static class PagerAdapter extends FragmentPagerAdapter {
@@ -136,7 +149,6 @@ public class Main extends FragmentActivity {
             Fragment frag = null;
 
             try {
-                Log.i("Getting:", PACKAGE_NAME + ".frag_" + menu.get(position));
                 frag = (Fragment) (Class.forName(PACKAGE_NAME + ".frag_" + menu.get(position)).newInstance());
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
@@ -152,7 +164,5 @@ public class Main extends FragmentActivity {
         public CharSequence getPageTitle(int position) {
             return menu.get(position);
         }
-
     }
-
 }

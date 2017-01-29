@@ -95,14 +95,14 @@
                     android:textStyle="normal|bold" />
 
                 <TextView
+                    android:id="@+id/frag_settings_link"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:autoLink="web"
                     android:fontFamily="sans-serif"
                     android:text="@string/settings_link"
                     android:textAlignment="center"
-                    android:textSize="14sp"
-                    android:id="@+id/frag_settings_link"
-                    android:autoLink="web"/>
+                    android:textSize="14sp" />
 
                 <TextView
                     android:layout_width="match_parent"
