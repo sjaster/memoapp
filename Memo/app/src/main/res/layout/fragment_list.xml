@@ -20,12 +20,14 @@
             android:padding="32dp">
 
             <TextView
+                android:id="@+id/frag_list_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="@dimen/default_padding"
                 android:text="@string/list_title"
-                android:textAppearance="@android:style/TextAppearance.Material.Large.Inverse" />
+                android:textAppearance="@android:style/TextAppearance.Material.Large.Inverse"
+                android:textSize="@dimen/list_title_size" />
 
             <ImageView
                 android:id="@+id/frag_list_sort"

@@ -23,6 +23,7 @@
     <!--LIST-->
     <dimen name="list_icon_left">48dp</dimen>
     <dimen name="list_item_padding">16dp</dimen>
+    <dimen name="list_title_size">40sp</dimen>
 
     <!--AUDIO-->
     <dimen name="audio_icn_size">40dp</dimen>

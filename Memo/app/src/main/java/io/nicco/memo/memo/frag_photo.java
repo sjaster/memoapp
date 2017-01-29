@@ -2,6 +2,7 @@ package io.nicco.memo.memo;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.ImageFormat;
 import android.graphics.SurfaceTexture;
@@ -22,12 +23,15 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
+import android.text.InputType;
 import android.util.Size;
 import android.view.LayoutInflater;
 import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import java.util.Arrays;
@@ -99,6 +103,9 @@ public class frag_photo extends Fragment {
                 return;
             takingPic = true;
             CaptureRequest.Builder request = cam.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE);
+            request.set(CaptureRequest.JPEG_ORIENTATION, 270);
+
+
             request.addTarget(surfaceJPEG);
             camSession.stopRepeating();
             camSession.capture(request.build(), new CameraCaptureSession.CaptureCallback() {
@@ -127,12 +134,38 @@ public class frag_photo extends Fragment {
             jpegImageReader.setOnImageAvailableListener(new ImageReader.OnImageAvailableListener() {
 
                 @Override
-                public void onImageAvailable(ImageReader imageReader) {
+                public void onImageAvailable(final ImageReader imageReader) {
                     np.img = imageReader.acquireNextImage();
-                    np.save();
-                    new Utils().toast(getContext(), "Image Saved");
-                    imageReader.close();
-                    createPreview();
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setTitle(getContext().getResources().getString(R.string.hint_title));
+                    final EditText input = new EditText(getContext());
+                    input.setInputType(InputType.TYPE_CLASS_TEXT);
+                    builder.setView(input);
+                    builder.setPositiveButton(getContext().getResources().getString(R.string.btn_save), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            np.title = input.getText().toString();
+                            np.save();
+                            new Utils().toast(getContext(), "Image Saved");
+                            dialog.dismiss();
+                            imageReader.close();
+                            jpegImageReader.close();
+                            createPreview();
+                        }
+                    });
+                    builder.setNegativeButton(getContext().getResources().getString(R.string.btn_cancel), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                            np = new NotePhoto(getContext());
+                            imageReader.close();
+                            jpegImageReader.close();
+                            createPreview();
+                        }
+                    });
+                    builder.show();
+
                 }
             }, handler);
             surfaceJPEG = jpegImageReader.getSurface();

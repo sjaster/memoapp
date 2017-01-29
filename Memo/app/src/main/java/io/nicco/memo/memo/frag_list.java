@@ -1,6 +1,7 @@
 package io.nicco.memo.memo;
 
 import android.content.DialogInterface;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 public class frag_list extends Fragment {
 
@@ -30,6 +32,9 @@ public class frag_list extends Fragment {
     ArrayList<Note> lvd;
 
     int sort_type = 0;
+    boolean sort_asc = true;
+    final String SORT_TYPE = "list_sort_type";
+    final String SORT_ASC = "list_sort_asc";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -39,18 +44,22 @@ public class frag_list extends Fragment {
         btn_sort = (ImageView) v.findViewById(R.id.frag_list_sort);
         empty = (TextView) v.findViewById(R.id.frag_list_empty);
 
+        TextView title = (TextView) v.findViewById(R.id.frag_list_title);
+        Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "Blanche-de-la-Fontaine.ttf");
+        title.setTypeface(tf);
+
         btn_sort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("LIST", "Sort btn");
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 CharSequence items[] = new CharSequence[]{getResources().getString(R.string.list_sort_title), getResources().getString(R.string.list_sort_date)};
                 builder.setSingleChoiceItems(items, sort_type, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface d, int n) {
                         d.dismiss();
+                        if (sort_type == n)
+                            sort_asc = !sort_asc;
                         sort_type = n;
-                        Log.i("DIALOG", String.valueOf(sort_type));
                         load_list();
                     }
                 });
@@ -64,15 +73,36 @@ public class frag_list extends Fragment {
 
     @Override
     public void onResume() {
+        super.onResume();
+
+        loadState();
         load_list();
         setListener();
-        super.onResume();
     }
 
     @Override
     public void onPause() {
-        handler.removeCallbacks(runnable);
         super.onPause();
+
+        handler.removeCallbacks(runnable);
+        saveState();
+    }
+
+    void saveState() {
+        Utils u = new Utils();
+        u.putPref(getContext(), SORT_ASC, String.valueOf(sort_asc));
+        u.putPref(getContext(), SORT_TYPE, String.valueOf(sort_type));
+    }
+
+    void loadState() {
+        Utils u = new Utils();
+        try {
+            sort_asc = Boolean.parseBoolean(u.getPref(getContext(), SORT_ASC));
+            sort_type = Integer.parseInt(u.getPref(getContext(), SORT_TYPE));
+        } catch (Exception ignored) {
+            sort_asc = true;
+            sort_type = 0;
+        }
     }
 
     private void load_list() {
@@ -87,12 +117,16 @@ public class frag_list extends Fragment {
 
         switch (sort_type) {
             case 0:
-                sort_title(lvd, false, 0, lvd.size() - 1);
+                Log.i("SORTING", "TITLE");
+                Collections.sort(lvd, new ComparatorTitle());
                 break;
             case 1:
-                sort_date(lvd, false, 0, lvd.size() - 1);
+                Log.i("SORTING", "Date");
+                Collections.sort(lvd, new ComparatorTime());
                 break;
         }
+        if (!sort_asc)
+            Collections.reverse(lvd);
 
         final frag_list_adapter adapter = new frag_list_adapter(getContext(), lvd);
 
@@ -127,30 +161,21 @@ public class frag_list extends Fragment {
         return notes;
     }
 
-    void sort_title(ArrayList<Note> o, boolean asc, int from, int to) {
-        Log.i("SORT", "titile");
-        if (from == to)
-            return;
-        Note tmp = o.get(from);
-        for (int i = from; i <= to; i++) {
-            if (tmp.title.compareToIgnoreCase(o.get(i).title) > 0)
-                tmp = o.get(i);
+    class ComparatorTitle implements Comparator<Note> {
+        public int compare(Note left, Note right) {
+            return left.title.compareToIgnoreCase(right.title);
         }
-        Collections.swap(o, 0, o.indexOf(tmp));
-        sort_title(o, asc, from + 1, to);
     }
 
-    void sort_date(ArrayList<Note> o, boolean asc, int from, int to) {
-        Log.i("SORT", "date");
-        if (from == to)
-            return;
-        Note tmp = o.get(from);
-        for (int i = from; i <= to; i++) {
-            if (tmp.datetime < o.get(i).datetime)
-                tmp = o.get(i);
+    class ComparatorTime implements Comparator<Note> {
+        public int compare(Note left, Note right) {
+            if (left.datetime == right.datetime)
+                return 0;
+            else if (left.datetime > right.datetime)
+                return 1;
+            else
+                return -1;
         }
-        Collections.swap(o, 0, o.indexOf(tmp));
-        sort_date(o, asc, from + 1, to);
     }
 
     void setListener() {
