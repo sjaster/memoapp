@@ -22,19 +22,17 @@ import java.util.Comparator;
 
 public class frag_list extends Fragment {
 
+    final String SORT_TYPE = "list_sort_type";
+    final String SORT_ASC = "list_sort_asc";
     private final Handler handler = new Handler();
     private final int handlerUpdate = 100;
     Runnable runnable;
-
     ListView lv;
     TextView empty;
     ImageView btn_sort;
     ArrayList<Note> lvd;
-
     int sort_type = 0;
     boolean sort_asc = true;
-    final String SORT_TYPE = "list_sort_type";
-    final String SORT_ASC = "list_sort_asc";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -161,6 +159,20 @@ public class frag_list extends Fragment {
         return notes;
     }
 
+    void setListener() {
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                if (Main.changed) {
+                    load_list();
+                    Main.changed = false;
+                }
+                handler.postDelayed(this, handlerUpdate);
+            }
+        };
+        handler.postDelayed(runnable, 0);
+    }
+
     class ComparatorTitle implements Comparator<Note> {
         public int compare(Note left, Note right) {
             return left.title.compareToIgnoreCase(right.title);
@@ -176,19 +188,5 @@ public class frag_list extends Fragment {
             else
                 return -1;
         }
-    }
-
-    void setListener() {
-        runnable = new Runnable() {
-            @Override
-            public void run() {
-                if (Main.changed) {
-                    load_list();
-                    Main.changed = false;
-                }
-                handler.postDelayed(this, handlerUpdate);
-            }
-        };
-        handler.postDelayed(runnable, 0);
     }
 }
