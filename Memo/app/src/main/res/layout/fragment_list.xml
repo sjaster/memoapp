@@ -35,7 +35,7 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="@dimen/default_padding"
@@ -43,13 +43,30 @@
             android:background="@color/custWhite"
             android:orientation="vertical">
 
-            <ListView
-                android:id="@+id/frag_list_list"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:divider="@null" />
+                android:orientation="vertical">
 
-        </LinearLayout>
+                <ListView
+                    android:id="@+id/frag_list_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:divider="@null" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/frag_list_empty"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/custWhite"
+                android:gravity="center"
+                android:text="@string/list_empty"
+                android:textAppearance="@android:style/TextAppearance.Material.Medium"
+                android:visibility="gone" />
+
+        </RelativeLayout>
 
     </LinearLayout>
 

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class frag_list extends Fragment {
     Runnable runnable;
 
     ListView lv;
+    TextView empty;
     ImageView btn_sort;
     ArrayList<Note> lvd;
 
@@ -35,6 +37,7 @@ public class frag_list extends Fragment {
 
         lv = (ListView) v.findViewById(R.id.frag_list_list);
         btn_sort = (ImageView) v.findViewById(R.id.frag_list_sort);
+        empty = (TextView) v.findViewById(R.id.frag_list_empty);
 
         btn_sort.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,6 +77,13 @@ public class frag_list extends Fragment {
 
     private void load_list() {
         lvd = read_notes();
+
+        if (lvd.size() == 0) {
+            empty.setVisibility(View.VISIBLE);
+            return;
+        } else {
+            empty.setVisibility(View.GONE);
+        }
 
         switch (sort_type) {
             case 0:
