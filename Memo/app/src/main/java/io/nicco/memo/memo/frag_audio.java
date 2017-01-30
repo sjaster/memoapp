@@ -26,7 +26,6 @@ import java.util.Date;
 
 public class frag_audio extends Fragment {
 
-    private final Handler handler = new Handler();
     TextView tv_lastrec;
     MediaRecorder recorder;
     ImageView btn_main, btn_pause, btn_save, btn_trash;
@@ -35,18 +34,15 @@ public class frag_audio extends Fragment {
     String fileName;
     EditText title;
     NoteAudio na;
-    int visualizerW = 0;
-    int visualizerH = 0;
     int MAX_RANGE = 32767;
     Runnable runnable;
-
     long timeWhenStopped;
     boolean playing = false;
     boolean recording = false;
     boolean readyToSafe = false;
-
     /* PERMISSIONS */
     boolean granted = false;
+    private Handler handler;
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -92,6 +88,7 @@ public class frag_audio extends Fragment {
         recorder.start();
         recording = true;
         playing = true;
+        setVisualizer();
 
         btn_main.setBackgroundResource(R.drawable.icn_rec_stop);
         chrono.setVisibility(View.VISIBLE);
@@ -102,6 +99,7 @@ public class frag_audio extends Fragment {
     }
 
     private void stopRecorder() {
+
         if (!recording)
             return;
 
@@ -165,7 +163,6 @@ public class frag_audio extends Fragment {
 
         visualizerWE = v.findViewById(R.id.frag_audio_visualizer_measure);
         visualizer = v.findViewById(R.id.frag_audio_visualizer);
-        setVisualizer();
 
         na = new NoteAudio(getContext());
         timeWhenStopped = 0;
@@ -217,8 +214,6 @@ public class frag_audio extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        visualizerW = visualizerWE.getWidth();
-        visualizerH = visualizer.getHeight();
     }
 
     @Override
@@ -238,16 +233,19 @@ public class frag_audio extends Fragment {
     }
 
     private void setVisualizer() {
+        handler = new Handler();
         runnable = new Runnable() {
             @Override
             public void run() {
-                if (recorder != null) {
-                    int cur = (int) ((double) recorder.getMaxAmplitude() / MAX_RANGE * visualizerW);
-                    visualizer.setLayoutParams(new LinearLayout.LayoutParams(cur, visualizerH));
-                }
+                int cur;
+                if (recorder != null)
+                    cur = (int) ((double) recorder.getMaxAmplitude() / MAX_RANGE * visualizerWE.getWidth());
+                else
+                    cur = 0;
+                visualizer.setLayoutParams(new LinearLayout.LayoutParams(cur, visualizer.getHeight()));
                 handler.postDelayed(this, 50);
             }
         };
-        handler.postDelayed(runnable, 0);
+        handler.postDelayed(runnable, 50);
     }
 }
