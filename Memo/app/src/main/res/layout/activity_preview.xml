@@ -118,7 +118,50 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:visibility="invisible">
+            android:visibility="visible">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/pv_cont_audio_cur_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <SeekBar
+                    android:id="@+id/pv_cont_audio_seek"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:max="100"
+                    android:progress="1" />
+
+                <TextView
+                    android:id="@+id/pv_cont_audio_tot_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/audio_margin_bottom">
+
+                <ImageView
+                    android:id="@+id/pv_cont_audio_play"
+                    android:layout_width="@dimen/shutter_size"
+                    android:layout_height="@dimen/shutter_size"
+                    android:layout_centerInParent="true"
+                    android:contentDescription="@string/record_start" />
+
+            </RelativeLayout>
 
 
         </LinearLayout>

@@ -126,7 +126,7 @@ class Note {
         this.datetime = (int) (new Date().getTime() / 1000);
     }
 
-    private String mk_path() {
+    String mk_path() {
         return c.getFilesDir() + "/" + id + "/";
     }
 
