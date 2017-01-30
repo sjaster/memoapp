@@ -53,7 +53,6 @@ class NotePhoto extends Note {
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("image/jpg");
         sharingIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(super.mk_path() + EXTRA_FILE)));
-        Log.i(Uri.fromFile(new File(super.mk_path() + EXTRA_FILE)).to);
         c.startActivity(Intent.createChooser(sharingIntent, "Share via"));
     }
 }

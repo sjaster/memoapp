@@ -161,7 +161,7 @@ public class Preview extends Activity {
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 Log.i("SEEKER", String.valueOf(touching));
                 if (touching) {
-                    mp.seekTo(i * tot / 100);
+                    mp.seekTo(i * mp.getDuration() / 100);
                 }
             }
 
@@ -180,8 +180,10 @@ public class Preview extends Activity {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                cur_time.setText(fmtTime(mp.getCurrentPosition() / 1000));
-                seek.setProgress((int) ((float) mp.getCurrentPosition()) / tot / 10);
+                if (!touching) {
+                    cur_time.setText(fmtTime(mp.getCurrentPosition() / 1000));
+                    seek.setProgress((int) ((float) mp.getCurrentPosition()) / tot / 10);
+                }
                 handler.postDelayed(this, 100);
             }
         };

@@ -3,8 +3,6 @@ package io.nicco.memo.memo;
 import android.content.Context;
 import android.content.Intent;
 
-import static java.security.AccessController.getContext;
-
 class NoteText extends Note {
 
     private static final String EXTRA_FILE = "body.txt";
@@ -33,7 +31,7 @@ class NoteText extends Note {
     public void share() {
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
-        sharingIntent.putExtra(Intent.EXTRA_TEXT, title+"\n"+text);
+        sharingIntent.putExtra(Intent.EXTRA_TEXT, title + "\n" + text);
         c.startActivity(Intent.createChooser(sharingIntent, "Share via"));
     }
 }

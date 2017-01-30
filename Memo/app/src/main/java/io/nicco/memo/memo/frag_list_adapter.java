@@ -73,7 +73,7 @@ class frag_list_adapter extends BaseAdapter {
 
         title.setText(n.title);
 
-        DateFormat fmt = new SimpleDateFormat("dd MM yy - HH:mm");
+        DateFormat fmt = new SimpleDateFormat("dd|MM|yy - HH:mm");
         subtitle.setText(fmt.format(new Date((long) n.datetime * 1000)));
 
         type.setBackgroundResource(type_img[n.type]);
