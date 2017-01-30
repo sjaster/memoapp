@@ -52,6 +52,10 @@
     <string name="list_sort_date">Date</string>
     <string name="list_empty">No Notes :(</string>
 
+    <!--LIST MENU-->
+    <string name="list_menu_like">Like</string>
+    <string name="list_menu_del">Delete</string>
+
     <string-array name="list_sort_types">
         <item>Date</item>
         <item>Name</item>

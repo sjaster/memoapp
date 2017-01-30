@@ -52,11 +52,6 @@ class Note {
         return title + " " + String.valueOf(datetime);
     }
 
-    void toggleLike(Boolean tf) {
-        like = tf;
-        save();
-    }
-
     void toggleLike() {
         like = !like;
         save();
@@ -119,8 +114,6 @@ class Note {
     byte[] loadExtra(String file) {
         return u.read(mk_path() + file);
     }
-
-    /* PRIVATE STUFF */
 
     private void updateTime() {
         this.datetime = (int) (new Date().getTime() / 1000);

@@ -6,7 +6,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.RequiresApi;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -109,6 +108,22 @@ public class Preview extends Activity {
         findViewById(R.id.pv_cont_audio).setVisibility(View.VISIBLE);
         na = new NoteAudio(this, id);
 
+        btn_share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                na.share();
+            }
+        });
+
+        btn_save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                na.title = et_title.getText().toString();
+                na.save();
+                new Utils().toast(getApplicationContext(), "Saved");
+            }
+        });
+
         final TextView cur_time, tot_time;
         final SeekBar seek;
         final ImageView pp;
@@ -159,10 +174,8 @@ public class Preview extends Activity {
         seek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                Log.i("SEEKER", String.valueOf(touching));
-                if (touching) {
+                if (touching)
                     mp.seekTo(i * mp.getDuration() / 100);
-                }
             }
 
             @Override

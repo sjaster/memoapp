@@ -50,11 +50,4 @@
         android:layout_marginStart="@dimen/default_padding"
         android:src="@drawable/icn_like_off" />
 
-    <ImageView
-        android:id="@+id/frag_list_item_share"
-        android:layout_width="@dimen/icon_size"
-        android:layout_height="@dimen/icon_size"
-        android:layout_marginStart="@dimen/default_padding"
-        android:src="@drawable/icn_share" />
-
 </LinearLayout>
