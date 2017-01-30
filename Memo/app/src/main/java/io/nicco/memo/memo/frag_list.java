@@ -6,7 +6,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.PopupMenu;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -25,13 +28,15 @@ public class frag_list extends Fragment {
     final String SORT_ASC = "list_sort_asc";
     private final Handler handler = new Handler();
     private final int handlerUpdate = 100;
-    Runnable runnable;
-    ListView lv;
-    TextView empty;
-    ImageView btn_sort;
-    ArrayList<Note> lvd;
     int sort_type = 0;
     boolean sort_asc = true;
+    private Runnable runnable;
+
+    private ListView lv;
+    private TextView empty;
+    private ImageView btn_sort;
+    private ArrayList<Note> lvd;
+    private int curMenuItem = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -134,10 +139,28 @@ public class frag_list extends Fragment {
                 lvd.get(i).preview();
             }
         });
+
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                adapter.toggle(i);
+                curMenuItem = i;
+                PopupMenu popup = new PopupMenu(getContext(), view, Gravity.CENTER);
+                popup.getMenuInflater().inflate(R.menu.list_menu, popup.getMenu());
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.list_menu_like:
+                                lvd.get(curMenuItem).toggleLike();
+                                break;
+                            case R.id.list_menu_del:
+                                lvd.get(curMenuItem).delete();
+                                break;
+                        }
+                        return false;
+                    }
+                });
+                popup.show();
                 return true;
             }
         });

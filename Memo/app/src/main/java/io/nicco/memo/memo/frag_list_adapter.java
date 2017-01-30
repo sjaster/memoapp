@@ -1,7 +1,6 @@
 package io.nicco.memo.memo;
 
 import android.content.Context;
-import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +19,6 @@ class frag_list_adapter extends BaseAdapter {
     private Context c;
     private ArrayList<Note> data;
     private int[] type_img = {R.drawable.icn_file_inv, R.drawable.icn_camera_inv, R.drawable.icn_microphone_inv};
-
-    private SparseBooleanArray selected = new SparseBooleanArray();
 
     frag_list_adapter(Context context, ArrayList<Note> notes) {
         c = context;
@@ -51,15 +48,7 @@ class frag_list_adapter extends BaseAdapter {
         TextView title = (TextView) vi.findViewById(R.id.frag_list_item_title);
         TextView subtitle = (TextView) vi.findViewById(R.id.frag_list_item_subtitle);
         ImageView type = (ImageView) vi.findViewById(R.id.frag_list_item_icon);
-        ImageView share = (ImageView) vi.findViewById(R.id.frag_list_item_share);
         ImageView like = (ImageView) vi.findViewById(R.id.frag_list_item_like);
-
-//        ll.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                n.preview();
-//            }
-//        });
 
         if (n.like)
             like.setBackgroundResource(R.drawable.icn_like_on);
@@ -80,17 +69,4 @@ class frag_list_adapter extends BaseAdapter {
 
         return vi;
     }
-
-    void toggle(int i) {
-        if (selected.get(i, false)) {
-            selected.delete(i);
-        } else {
-            selected.put(i, true);
-        }
-    }
-
-    SparseBooleanArray getSelected() {
-        return selected;
-    }
-
 }
