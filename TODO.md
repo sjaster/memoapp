@@ -4,13 +4,13 @@
 
 ###### Important
 
-* [ ] Implement audio views for audio data types
+* [x] Implement audio views for audio data types
 
 ### ~ Camera
 
 ###### Important
 
-* [x] Switch Cams 
+* [x] Switch Cams
 * [ ] Resize/Transform Surface to fit screen without skew
 
 ###### Optional

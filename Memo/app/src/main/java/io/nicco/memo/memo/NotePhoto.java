@@ -1,12 +1,16 @@
 package io.nicco.memo.memo;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.Image;
+import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.util.Log;
 
+import java.io.File;
 import java.nio.ByteBuffer;
 
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -43,5 +47,13 @@ class NotePhoto extends Note {
 
         }
         super.load();
+    }
+
+    public void share() {
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("image/jpg");
+        sharingIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(super.mk_path() + EXTRA_FILE)));
+        Log.i(Uri.fromFile(new File(super.mk_path() + EXTRA_FILE)).to);
+        c.startActivity(Intent.createChooser(sharingIntent, "Share via"));
     }
 }

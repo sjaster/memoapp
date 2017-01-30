@@ -119,6 +119,13 @@ public class Preview extends Activity {
                 new Utils().toast(getApplicationContext(), "Saved");
             }
         });
+        btn_share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                np.share();
+            }
+        });
     }
 
     void loadText() {
