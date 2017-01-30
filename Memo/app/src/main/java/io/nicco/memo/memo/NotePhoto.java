@@ -50,9 +50,12 @@ class NotePhoto extends Note {
     }
 
     public void share() {
+        String pathURL = super.mk_path() + EXTRA_FILE;
+        Uri picture = Uri.fromFile(new File(pathURL));
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("image/jpg");
-        sharingIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(super.mk_path() + EXTRA_FILE)));
+        sharingIntent.putExtra(Intent.EXTRA_STREAM, picture);
+        Log.i("test", picture.toString());
         c.startActivity(Intent.createChooser(sharingIntent, "Share via"));
     }
 }
