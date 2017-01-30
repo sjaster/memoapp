@@ -146,7 +146,7 @@ public class frag_photo extends Fragment {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             np.title = input.getText().toString();
-                            np.save();
+                            np.saveExtra();
                             new Utils().toast(getContext(), "Image Saved");
                             dialog.dismiss();
                             imageReader.close();

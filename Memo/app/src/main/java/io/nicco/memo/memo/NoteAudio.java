@@ -22,15 +22,15 @@ class NoteAudio extends Note {
 
     NoteAudio(Context c, String id) {
         super(c, id);
-        load();
+        loadExtra();
     }
 
-    public void save(byte[] b) {
+    void saveExtra(byte[] b) {
         super.saveExtra(EXTRA_FILE, b);
         super.save();
     }
 
-    public void load() {
+    void loadExtra() {
         super.load();
     }
 

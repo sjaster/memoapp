@@ -48,7 +48,7 @@ public class frag_text extends Fragment {
                 nt.text = et_body.getText().toString();
                 nt.title = et_title.getText().toString();
                 new Utils().toast(getContext(), "Saved");
-                nt.save();
+                nt.saveExtra();
             }
         });
 
@@ -72,6 +72,6 @@ public class frag_text extends Fragment {
         et_body.setText("");
         et_title.setText("");
         if (!nt.text.equals(""))
-            nt.save();
+            nt.saveExtra();
     }
 }

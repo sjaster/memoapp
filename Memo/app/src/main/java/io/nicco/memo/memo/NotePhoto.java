@@ -32,10 +32,10 @@ class NotePhoto extends Note {
 
     NotePhoto(Context c, String id) {
         super(c, id);
-        load();
+        loadExtra();
     }
 
-    public void save() {
+    void saveExtra() {
         ByteBuffer buffer = img.getPlanes()[0].getBuffer();
         byte[] bytes = new byte[buffer.capacity()];
         buffer.get(bytes);
@@ -44,7 +44,7 @@ class NotePhoto extends Note {
         super.save();
     }
 
-    public void load() {
+    void loadExtra() {
         byte[] img = super.loadExtra(EXTRA_FILE);
         try {
             bm = BitmapFactory.decodeByteArray(img, 0, img.length);

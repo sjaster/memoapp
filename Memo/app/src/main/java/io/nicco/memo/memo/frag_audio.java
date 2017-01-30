@@ -118,7 +118,7 @@ public class frag_audio extends Fragment {
         chrono.stop();
         na.title = title.getText().toString();
         btn_pause.setBackgroundResource(R.drawable.icn_rec_pause);
-        na.save(new Utils().read(fileName));
+        na.saveExtra(new Utils().read(fileName));
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -186,7 +186,7 @@ public class frag_audio extends Fragment {
                     return;
                 }
                 na.title = title.getText().toString();
-                na.save(new Utils().read(fileName));
+                na.saveExtra(new Utils().read(fileName));
                 new Utils().toast(getContext(), "Recording Saved");
             }
         });

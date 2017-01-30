@@ -63,7 +63,7 @@ class Note {
         c.startActivity(intent);
     }
 
-    public void save() {
+    void save() {
         try {
             updateTime();
             JSONObject main = new JSONObject();
@@ -90,7 +90,7 @@ class Note {
         }
     }
 
-    public void load() {
+    void load() {
         try {
             String jsonString = new String(u.read(mk_path() + MAIN_FILE));
             JSONObject main = new JSONObject(jsonString);

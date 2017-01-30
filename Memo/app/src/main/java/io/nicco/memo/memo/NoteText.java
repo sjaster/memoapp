@@ -15,23 +15,23 @@ class NoteText extends Note {
 
     NoteText(Context c, String id) {
         super(c, id);
-        load();
+        loadExtra();
     }
 
-    public void save() {
+    void saveExtra() {
         super.saveExtra(EXTRA_FILE, text.getBytes());
         super.save();
     }
 
-    public void load() {
+    void loadExtra() {
         text = new String(super.loadExtra(EXTRA_FILE));
         super.load();
     }
 
-    public void share() {
+    void share() {
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
-        sharingIntent.putExtra(Intent.EXTRA_TEXT, title + "\n" + text);
+        sharingIntent.putExtra(Intent.EXTRA_TEXT, title + "\n\n" + text);
         c.startActivity(Intent.createChooser(sharingIntent, "Share via"));
     }
 }
