@@ -28,7 +28,6 @@
 
 ###### Important
 
-* Sort function
 * [x] Sort Function
 * [ ] Share function
 
@@ -46,5 +45,4 @@
 
 ###### Important
 
-* [x] Add Logo font
 * [x] Add Logo font
