@@ -21,7 +21,10 @@ class NoteAudio extends Note {
     }
 
     public void load() {
-        //  text = new String(super.loadExtra(EXTRA_FILE));
         super.load();
+    }
+
+    String getExtraFile() {
+        return super.mk_path() + EXTRA_FILE;
     }
 }

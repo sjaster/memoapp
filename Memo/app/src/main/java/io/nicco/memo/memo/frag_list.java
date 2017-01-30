@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -115,11 +114,9 @@ public class frag_list extends Fragment {
 
         switch (sort_type) {
             case 0:
-                Log.i("SORTING", "TITLE");
                 Collections.sort(lvd, new ComparatorTitle());
                 break;
             case 1:
-                Log.i("SORTING", "Date");
                 Collections.sort(lvd, new ComparatorTime());
                 break;
         }
