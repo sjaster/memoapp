@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -57,6 +58,8 @@ public class Main extends FragmentActivity {
 
         setActionBar(this);
 
+        Log.i("MAIN", "STARTING");
+
         // Defining Names of the options in the bottom footer menu
         menu_names.add("list");
         menu_names.add("text");
@@ -102,7 +105,6 @@ public class Main extends FragmentActivity {
     @Override
     public void onResume() {
         super.onResume();
-
         measured = false;
         updateIndicator();
     }
@@ -155,6 +157,10 @@ public class Main extends FragmentActivity {
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
+
+            if (frag == null)
+                frag = new frag_404();
+
             return frag;
         }
 

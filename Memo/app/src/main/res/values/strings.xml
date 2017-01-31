@@ -63,4 +63,7 @@
 
     <!--START SCREEN (ss)-->
     <string name="ss_title">Notizian</string>
+
+    <!--404-->
+    <string name="frag_404_text">Android 5 Required :/</string>
 </resources>

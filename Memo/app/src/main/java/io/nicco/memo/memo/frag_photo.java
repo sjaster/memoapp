@@ -200,6 +200,8 @@ public class frag_photo extends Fragment {
     }
 
     void cameraIni() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
+            return;
         try {
             CameraManager cm = (CameraManager) c.getSystemService(Context.CAMERA_SERVICE);
             maxCam = cm.getCameraIdList().length;
@@ -295,6 +297,10 @@ public class frag_photo extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
+            return;
+
         startBackgroundThread();
         if (tv.isAvailable())
             cameraIni();
