@@ -261,6 +261,7 @@ public class frag_photo extends Fragment {
             e.printStackTrace();
         }
     }
+    
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
